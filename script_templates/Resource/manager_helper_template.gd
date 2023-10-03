@@ -1,5 +1,5 @@
 #class_name SomeManagerHelper
-extends "res://kamran_wali/codeoptpro_godot/resources/managers/base_manager_helper.gd"
+extends Resource
 
 # Please provide a type for the _manager var for better performance.
 ## Storing the manager reference. Do NOT set/get this variable directly.

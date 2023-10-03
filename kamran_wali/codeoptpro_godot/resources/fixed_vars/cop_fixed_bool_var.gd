@@ -1,5 +1,5 @@
 class_name COP_FixedBoolVar
-extends "res://kamran_wali/codeoptpro_godot/resources/fixed_vars/base_fixed_var.gd"
+extends Resource
 
 ## Set the boolean value. Do NOT change value from script.
 @export var _value: bool
