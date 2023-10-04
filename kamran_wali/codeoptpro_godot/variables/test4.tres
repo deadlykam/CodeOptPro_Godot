@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="COP_FixedBoolVar" load_steps=2 format=3 uid="uid://bsx56ebbgnsgk"]
+
+[ext_resource type="Script" path="res://kamran_wali/codeoptpro_godot/scripts/resources/fixed_vars/cop_fixed_bool_var.gd" id="1_c4wwg"]
+
+[resource]
+script = ExtResource("1_c4wwg")
+_value = true

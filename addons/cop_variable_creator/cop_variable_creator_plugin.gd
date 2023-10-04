@@ -12,3 +12,6 @@ func _enter_tree():
 func _exit_tree():
 	remove_control_from_docks(_dock)
 	_dock.free()
+
+func _scan_file_system() -> void:
+	self.get_editor_interface().get_resource_filesystem().scan()
