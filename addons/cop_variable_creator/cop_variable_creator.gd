@@ -2,12 +2,29 @@
 extends Control
 
 const _RESOURCE_PATH = "res://kamran_wali/codeoptpro_godot/scripts/resources/"
+const _FIXED_VARS = "fixed_vars"
+const _FIXED_BOOL = "fixed_bool"
+const _FIXED_FLOAT = "fixed_float"
+const _FIXED_INT = "fixed_int"
+const _FIXED_STRING = "fixed_string"
+const _FIXED_VECTOR2 = "fixed_vector2"
+const _FIXED_VECTOR3 = "fixed_vector3"
 
 # Properties from the scene.
 var _name_txt: LineEdit
 var _create_button: CanvasItem
 var _category_options: OptionButton
 var _action_options: OptionButton
+var _input_container: HBoxContainer
+var _input_bool: CheckBox
+var _input_txt: TextEdit
+var _vector2_input_holder: HBoxContainer
+var _input_vec2_x: TextEdit
+var _input_vec2_y: TextEdit
+var _vector3_input_holder: HBoxContainer
+var _input_vec3_x: TextEdit
+var _input_vec3_y: TextEdit
+var _input_vec3_z: TextEdit
 
 # Properties needed internally.
 var _data_folders: Array[String]
@@ -15,33 +32,60 @@ var _data_files: Dictionary
 var _dir
 var _file_name: String
 var _temp_array: Array[String]
+var _index_category: int
+var _index_actions: int
 var _index
 
 func _enter_tree():
+	# Setting up the scene variables
 	_name_txt = $MainContainer/NameContainer/Name_Txt
 	_create_button = $MainContainer/CreateButton
 	_category_options = $MainContainer/CategoryContainer/Category_Options
 	_action_options = $MainContainer/ActionContainer/Action_Options
-
+	_input_container = $MainContainer/InputContainer
+	_input_bool = $MainContainer/InputContainer/Input_Bool
+	_input_txt = $MainContainer/InputContainer/Input_Txt
+	_vector2_input_holder = $MainContainer/InputContainer/Vector2_Input_Holder
+	_input_vec2_x = $MainContainer/InputContainer/Vector2_Input_Holder/Input_Vec2_X
+	_input_vec2_y = $MainContainer/InputContainer/Vector2_Input_Holder/Input_Vec2_Y
+	_vector3_input_holder = $MainContainer/InputContainer/Vector3_Input_Holder
+	_input_vec3_x = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_X
+	_input_vec3_y = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Y
+	_input_vec3_z = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Z
+	
+	# Setting up the scene at start
+	_input_container.hide()
 	_data_folders = _get_file_names(_RESOURCE_PATH)
 	_set_file_data()
-	_set_option_button(_category_options, _data_folders)
+	_set_option_button(_category_options, _data_folders, true, false)
 	# Setting the first files in the action options
-	_set_option_button(_action_options, _data_files[0])
+	_set_option_button(_action_options, _data_files[0], true, true)
+	# Storing the first category selected
+	_index_category = 0
+	# Storing the first action type selected
+	_index_actions = 0
 
 func _on_create_button_pressed():
-	var res = COP_FixedBoolVar.new()
-	res._value = true
+	var res = load(_RESOURCE_PATH + "/" + _data_folders[_index_category] + "/" 
+		+ _data_files[_index_category][_index_actions]).new()
+	# TODO: Set the variables values
 	ResourceSaver.save(res, "res://kamran_wali/codeoptpro_godot/variables/" + _name_txt.text + ".tres", 0)
 	print("Creating Variable")
 
 func _on_name_txt_text_changed(new_text):
+	# TODO: Give more conditions for showing the create button
 	# Condition for hiding/showing the create button
 	if _create_button.visible != _is_validate():
 		_create_button.visible = _is_validate()
 
 func _on_category_options_item_selected(index):
-	_set_option_button(_action_options, _data_files[index])
+	# Setting the current category selected
+	_index_category = index
+	_set_option_button(_action_options, _data_files[index], true, true)
+
+func _on_action_options_item_selected(index):
+	# Setting the current action type selected
+	_index_actions = index
 
 ## This method validates if to show the create button.
 func _is_validate() -> bool:
@@ -65,12 +109,52 @@ func _get_file_names(path: String) -> Array[String]:
 
 ## This method sets the option button.
 func _set_option_button(optionButton: OptionButton, 
-	items: Array[String]) -> void:
+	items: Array[String], is_modify: bool, is_type: bool) -> void:
 	optionButton.clear()
 	for _index in items:
-		optionButton.add_item(_index)
+		if !is_modify:
+			optionButton.add_item(_index)
+		else:
+			if !is_type:
+				optionButton.add_item(_index.replace("_", " ").to_pascal_case())
+			else:
+				optionButton.add_item(_index.erase(_index.length() - 3, _index.length())
+					.erase(0, 3).replace("_", " ").to_pascal_case())
 
 ## This method sets all the file name data.
 func _set_file_data() -> void:
 	for _index in range(0, _data_folders.size()):
 		_data_files[_index] = _get_file_names(_RESOURCE_PATH + _data_folders[_index] + "/")
+
+## This method sets the proper input.
+func _set_inputs() -> void:
+	
+	pass
+
+## This method checks if the current category is fixed vars.
+func _is_fixed_vars() -> bool:
+	return _data_folders[_index_category].contains(_FIXED_VARS)
+
+## This method checks if the current action type is fixed bool.
+func _is_fixed_bool() -> bool:
+	return _data_files[_index_category][_index_actions].contains(_FIXED_BOOL)
+
+## This method checks if the current action type is fixed float.
+func _is_fixed_float() -> bool:
+	return _data_files[_index_category][_index_actions].contains(_FIXED_FLOAT)
+
+## This method checks if the current action type is fixed int.
+func _is_fixed_int() -> bool:
+	return _data_files[_index_category][_index_actions].contains(_FIXED_INT)
+
+## This method checks if the current action type is fixed string.
+func _is_fixed_string() -> bool:
+	return _data_files[_index_category][_index_actions].contains(_FIXED_STRING)
+
+## This method checks if the current action type is fixed vector2.
+func _is_fixed_vector2() -> bool:
+	return _data_files[_index_category][_index_actions].contains(_FIXED_VECTOR2)
+
+## This method checks if the current action type is fixed vector3.
+func _is_fixed_vector3() -> bool:
+	return _data_files[_index_category][_index_actions].contains(_FIXED_VECTOR3)

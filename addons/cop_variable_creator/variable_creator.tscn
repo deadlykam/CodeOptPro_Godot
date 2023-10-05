@@ -66,7 +66,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 30
 alignment = 1
+item_count = 2
 selected = 0
+popup/item_0/text = "fixed_vars"
+popup/item_0/id = 0
+popup/item_1/text = "vars"
+popup/item_1/id = 1
 
 [node name="ActionContainer" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2
@@ -82,13 +87,107 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 30
 alignment = 1
+item_count = 6
+selected = 0
+popup/item_0/text = "cop_fixed_bool_var.gd"
+popup/item_0/id = 0
+popup/item_1/text = "cop_fixed_float_var.gd"
+popup/item_1/id = 1
+popup/item_2/text = "cop_fixed_int_var.gd"
+popup/item_2/id = 2
+popup/item_3/text = "cop_fixed_string_var.gd"
+popup/item_3/id = 3
+popup/item_4/text = "cop_fixed_vector2_var.gd"
+popup/item_4/id = 4
+popup/item_5/text = "cop_fixed_vector3_var.gd"
+popup/item_5/id = 5
+
+[node name="InputContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="Label_Value" type="Label" parent="MainContainer/InputContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Value"
+
+[node name="Input_Bool" type="CheckBox" parent="MainContainer/InputContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Input_Txt" type="TextEdit" parent="MainContainer/InputContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+
+[node name="Vector2_Input_Holder" type="HBoxContainer" parent="MainContainer/InputContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label_Vec2_X" type="Label" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "x"
+
+[node name="Input_Vec2_X" type="TextEdit" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+
+[node name="Label_Vec2_Y" type="Label" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "        y"
+
+[node name="Input_Vec2_Y" type="TextEdit" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+
+[node name="Vector3_Input_Holder" type="HBoxContainer" parent="MainContainer/InputContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label_Vec3_X" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "x"
+
+[node name="Input_Vec3_X" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+
+[node name="Label_Vec3_Y" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "        y"
+
+[node name="Input_Vec3_Y" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+
+[node name="Label_Vec3_Z" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "        z"
+
+[node name="Input_Vec3_Z" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
 
 [node name="CreateButton" type="Button" parent="MainContainer"]
-visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Create _Var Type_"
 
 [connection signal="text_changed" from="MainContainer/NameContainer/Name_Txt" to="." method="_on_name_txt_text_changed"]
 [connection signal="item_selected" from="MainContainer/CategoryContainer/Category_Options" to="." method="_on_category_options_item_selected"]
+[connection signal="item_selected" from="MainContainer/ActionContainer/Action_Options" to="." method="_on_action_options_item_selected"]
 [connection signal="pressed" from="MainContainer/CreateButton" to="." method="_on_create_button_pressed"]
