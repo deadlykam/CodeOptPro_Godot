@@ -29,12 +29,14 @@ var _input_vec3_z: TextEdit
 # Properties needed internally.
 var _data_folders: Array[String]
 var _data_files: Dictionary
+var _data_inputs: Array[CanvasItem]
 var _dir
 var _file_name: String
 var _temp_array: Array[String]
 var _index_category: int
 var _index_actions: int
 var _index
+var _index_input
 
 func _enter_tree():
 	# Setting up the scene variables
@@ -53,7 +55,9 @@ func _enter_tree():
 	_input_vec3_y = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Y
 	_input_vec3_z = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Z
 	
-	# Setting up the scene at start
+	# Setting up the scene at start #
+	# Setting the data inputs
+	_set_data_inputs()
 	_input_container.hide()
 	_data_folders = _get_file_names(_RESOURCE_PATH)
 	_set_file_data()
@@ -64,6 +68,8 @@ func _enter_tree():
 	_index_category = 0
 	# Storing the first action type selected
 	_index_actions = 0
+	# Showing the correct input at start
+	_set_inputs()
 
 func _on_create_button_pressed():
 	var res = load(_RESOURCE_PATH + "/" + _data_folders[_index_category] + "/" 
@@ -82,10 +88,22 @@ func _on_category_options_item_selected(index):
 	# Setting the current category selected
 	_index_category = index
 	_set_option_button(_action_options, _data_files[index], true, true)
+	_set_inputs()
 
 func _on_action_options_item_selected(index):
 	# Setting the current action type selected
 	_index_actions = index
+	_set_inputs()
+	_set_input_txt_colour()
+
+func _on_input_txt_text_changed():
+	_set_input_txt_colour()
+
+func _on_input_vec_2_x_text_changed():
+	_set_input_vec2_x_colour()
+
+func _on_input_vec_2_y_text_changed():
+	_set_input_vec2_y_colour()
 
 ## This method validates if to show the create button.
 func _is_validate() -> bool:
@@ -128,8 +146,33 @@ func _set_file_data() -> void:
 
 ## This method sets the proper input.
 func _set_inputs() -> void:
+	if _is_fixed_vars():
+		if _is_fixed_bool():
+			_set_inputs_visible(_input_bool, true)
+		if _is_fixed_float() || _is_fixed_int() || _is_fixed_string():
+			_set_inputs_visible(_input_txt, true)
+		if _is_fixed_vector2():
+			_set_inputs_visible(_vector2_input_holder, true)
+		if _is_fixed_vector3():
+			_set_inputs_visible(_vector3_input_holder, true)
+	elif _input_container.visible:
+		_input_container.hide()
+
+## This method shows the given canvas item and the input container.
+func _set_inputs_visible(item: CanvasItem, is_show: bool) -> void:
+	# Condition for showing the correct item.
+	if is_show:
+		# Loop for hidding all the items.
+		for _index_actions in _data_inputs:
+				_index_actions.visible = false
 	
-	pass
+	# Checking if the item is NOT null.
+	if item:
+		item.visible = is_show
+	
+	# Condition for showing the input container
+	if !_input_container.visible:
+		_input_container.show()
 
 ## This method checks if the current category is fixed vars.
 func _is_fixed_vars() -> bool:
@@ -158,3 +201,44 @@ func _is_fixed_vector2() -> bool:
 ## This method checks if the current action type is fixed vector3.
 func _is_fixed_vector3() -> bool:
 	return _data_files[_index_category][_index_actions].contains(_FIXED_VECTOR3)
+
+## This method shows the correct colour when the input is valid or invalid.
+func _set_input_txt_colour() -> void:
+	_set_font_colour(_input_txt, _is_input_txt())
+
+## This method checks if the input_txt's text is correct or NOT.
+func _is_input_txt() -> bool:
+	return (((_is_fixed_float() && _input_txt.text.is_valid_float()) 
+		|| (_is_fixed_int() && _input_txt.text.is_valid_int()) 
+		|| _is_fixed_string()) && !_input_txt.text.is_empty())
+
+## This method sets the correct font colour for input vec2 x.
+func _set_input_vec2_x_colour() -> void:
+	_set_font_colour(_input_vec2_x, _is_input_vec2_x())
+
+## This method checks if the input_vec2_x's text is correct or NOT.
+func _is_input_vec2_x() -> bool:
+	return _input_vec2_x.text.is_valid_float() && !_input_vec2_x.text.is_empty()
+
+## This method sets the correct font colour for input vec2 y.
+func _set_input_vec2_y_colour() -> void:
+	_set_font_colour(_input_vec2_y, _is_input_vec2_y())
+
+## This method checks if the input_vec2_y's text is correct or NOT.
+func _is_input_vec2_y() -> bool:
+	return _input_vec2_y.text.is_valid_float() && !_input_vec2_y.text.is_empty()
+
+## This method sets the text colour of the given TextEdit.
+func _set_font_colour(text_editor: TextEdit, is_white: bool) -> void:
+	if is_white:
+			text_editor.add_theme_color_override("font_color", Color.WHITE)
+	else:
+		text_editor.add_theme_color_override("font_color", Color.RED)
+
+## This method adds all the inputs and input holders in an array. Any new
+## input or input holder MUST be added here.
+func _set_data_inputs() -> void:
+	_data_inputs.append(_input_bool)
+	_data_inputs.append(_input_txt)
+	_data_inputs.append(_vector2_input_holder)
+	_data_inputs.append(_vector3_input_holder)

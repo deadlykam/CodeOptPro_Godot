@@ -117,9 +117,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Input_Txt" type="TextEdit" parent="MainContainer/InputContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 30
 
 [node name="Vector2_Input_Holder" type="HBoxContainer" parent="MainContainer/InputContainer"]
@@ -135,6 +135,7 @@ text = "x"
 [node name="Input_Vec2_X" type="TextEdit" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 30
 
 [node name="Label_Vec2_Y" type="Label" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
@@ -145,6 +146,7 @@ text = "        y"
 [node name="Input_Vec2_Y" type="TextEdit" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 30
 
 [node name="Vector3_Input_Holder" type="HBoxContainer" parent="MainContainer/InputContainer"]
@@ -160,6 +162,7 @@ text = "x"
 [node name="Input_Vec3_X" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 30
 
 [node name="Label_Vec3_Y" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
@@ -170,6 +173,7 @@ text = "        y"
 [node name="Input_Vec3_Y" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 30
 
 [node name="Label_Vec3_Z" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
@@ -180,6 +184,7 @@ text = "        z"
 [node name="Input_Vec3_Z" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 30
 
 [node name="CreateButton" type="Button" parent="MainContainer"]
@@ -190,4 +195,7 @@ text = "Create _Var Type_"
 [connection signal="text_changed" from="MainContainer/NameContainer/Name_Txt" to="." method="_on_name_txt_text_changed"]
 [connection signal="item_selected" from="MainContainer/CategoryContainer/Category_Options" to="." method="_on_category_options_item_selected"]
 [connection signal="item_selected" from="MainContainer/ActionContainer/Action_Options" to="." method="_on_action_options_item_selected"]
+[connection signal="text_changed" from="MainContainer/InputContainer/Input_Txt" to="." method="_on_input_txt_text_changed"]
+[connection signal="text_changed" from="MainContainer/InputContainer/Vector2_Input_Holder/Input_Vec2_X" to="." method="_on_input_vec_2_x_text_changed"]
+[connection signal="text_changed" from="MainContainer/InputContainer/Vector2_Input_Holder/Input_Vec2_Y" to="." method="_on_input_vec_2_y_text_changed"]
 [connection signal="pressed" from="MainContainer/CreateButton" to="." method="_on_create_button_pressed"]
