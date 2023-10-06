@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="COP_VariablePaths" load_steps=2 format=3 uid="uid://dumjkjrg5x36n"]
+
+[ext_resource type="Script" path="res://kamran_wali/codeoptpro_godot/scripts/resources/settings/cop_variable_paths.gd" id="1_55n6h"]
+
+[resource]
+script = ExtResource("1_55n6h")
+_paths = Array[String](["v_1a", "v_2b", "v_3", "v_4", "v_5", "v_6asdfasdf"])

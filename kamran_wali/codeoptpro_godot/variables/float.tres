@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="COP_FixedFloatVar" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://kamran_wali/codeoptpro_godot/scripts/resources/fixed_vars/cop_fixed_float_var.gd" id="1_dd2sh"]
+
+[resource]
+script = ExtResource("1_dd2sh")
+_value = 3.33

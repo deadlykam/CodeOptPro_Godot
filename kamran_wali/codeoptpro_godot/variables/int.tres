@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="COP_FixedIntVar" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://kamran_wali/codeoptpro_godot/scripts/resources/fixed_vars/cop_fixed_int_var.gd" id="1_s8q53"]
+
+[resource]
+script = ExtResource("1_s8q53")
+_value = 333
