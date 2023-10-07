@@ -14,6 +14,10 @@ config/name="CodeOptPro_Godot"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/stretch/aspect="ignore"
+
 [dotnet]
 
 project/assembly_name="CodeOptPro_Godot"

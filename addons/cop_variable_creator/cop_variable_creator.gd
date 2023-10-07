@@ -14,6 +14,7 @@ const _SETTINGS = "settings"
 # Global Properties
 var _path_fixed_vars : COP_VariablePaths
 var _path_vars : COP_VariablePaths
+var _version: COP_FixedStringVar
 
 # Properties from the scene.
 var _name_txt: LineEdit
@@ -31,6 +32,7 @@ var _vector3_input_holder: HBoxContainer
 var _input_vec3_x: TextEdit
 var _input_vec3_y: TextEdit
 var _input_vec3_z: TextEdit
+var _version_lbl: Label
 
 # Properties needed internally.
 var _data_folders: Array[String]
@@ -50,6 +52,7 @@ func _enter_tree():
 	# Setting up global properties
 	_path_fixed_vars = load("res://kamran_wali/codeoptpro_godot/variables/default_settings/paths_fixed_vars.tres")
 	_path_vars = load("res://kamran_wali/codeoptpro_godot/variables/default_settings/path_vars.tres")
+	_version = load("res://kamran_wali/codeoptpro_godot/variables/default_settings/version.tres")
 	
 	# Setting up the scene variables
 	_name_txt = $MainContainer/NameContainer/Name_Txt
@@ -67,6 +70,7 @@ func _enter_tree():
 	_input_vec3_x = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_X
 	_input_vec3_y = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Y
 	_input_vec3_z = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Z
+	_version_lbl = $Version
 	
 	# Setting up the scene at start #
 	_set_data_inputs() # Setting the data inputs
@@ -80,6 +84,8 @@ func _enter_tree():
 	_index_actions = 0 # Storing the first action type selected
 	_set_inputs() # Showing the correct input at start
 	_update_path_txt() # Showing the correct path at start
+	_update_create_button_name() # Updating the button name at start
+	_version_lbl.text = _version.get_value() # Setting the version of the plugin
 
 func _process(delta):
 	if _create_button.visible != _is_show_create_button():
@@ -109,10 +115,13 @@ func _on_create_button_pressed():
 			_temp_vec3.z = _input_vec3_z.text.to_float()
 			_set_fixed_var_value(variable, _temp_vec3)
 	
-	ResourceSaver.save(variable, "res://kamran_wali/codeoptpro_godot/variables/" + _name_txt.text + ".tres", 0)
-	_input_txt.clear()
+	ResourceSaver.save(variable, _get_path_variable() + _name_txt.text + ".tres", 0)
+	_name_txt.clear()
 
 func _on_path_update_button_pressed():
+	_update_path()
+
+func _on_path_txt_text_submitted(new_text):
 	_update_path()
 
 func _on_category_options_item_selected(index):
@@ -123,6 +132,7 @@ func _on_category_options_item_selected(index):
 	_set_option_button(_action_options, _data_files[index], true, true)
 	_set_inputs()
 	_update_path_txt()
+	_update_create_button_name()
 
 func _on_action_options_item_selected(index):
 	# Setting the current action type selected.
@@ -130,6 +140,7 @@ func _on_action_options_item_selected(index):
 	_set_inputs()
 	_set_input_txt_colour()
 	_update_path_txt()
+	_update_create_button_name()
 
 func _on_input_txt_text_changed():
 	_set_input_txt_colour()
@@ -145,7 +156,6 @@ func _on_input_vec_3_x_text_changed():
 
 func _on_input_vec_3_y_text_changed():
 	_set_input_vec3_y_colour()
-
 
 func _on_input_vec_3_z_text_changed():
 	_set_input_vec3_z_colour()
@@ -336,6 +346,18 @@ func _update_path() -> void:
 		_path_fixed_vars.update_var_path(_index_actions, _path_txt.text)
 	elif _index_category == 1: # Var
 		_path_vars.update_var_path(_index_actions, _path_txt.text)
+
+## This method gets the variable path.
+func _get_path_variable() -> String:
+	if _index_category == 0: # Fixed Var
+		return _path_fixed_vars.get_var_path(_index_actions)
+	elif _index_category == 1: # Var
+		return _path_vars.get_var_path(_index_actions)
+	return ""
+
+## This method updates the button name.
+func _update_create_button_name() -> void:
+	_create_button.text = "Create " + _action_options.get_item_text(_index_actions)
 
 ## This method adds all the inputs and input holders in an array. Any new
 ## input or input holder MUST be added here.

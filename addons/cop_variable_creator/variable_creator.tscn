@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1sog8efg7lqq"]
+[gd_scene load_steps=3 format=3 uid="uid://b1sog8efg7lqq"]
 
 [ext_resource type="Script" path="res://addons/cop_variable_creator/cop_variable_creator.gd" id="1_gny3c"]
+[ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://kamran_wali/codeoptpro_godot/textures/CodeOptProLogo.png" id="2_mhqmq"]
 
 [node name="Variable Creator" type="Control"]
 layout_mode = 3
@@ -26,30 +27,31 @@ layout_mode = 2
 
 [node name="Label_Name" type="Label" parent="MainContainer/NameContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "Name         "
 
 [node name="Name_Txt" type="LineEdit" parent="MainContainer/NameContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 12
 
 [node name="PathContainer" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2
 
 [node name="Label_Path" type="Label" parent="MainContainer/PathContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "Path            "
 
 [node name="Path_Txt" type="LineEdit" parent="MainContainer/PathContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
+text = "res://kamran_wali/codeoptpro_godot/variables/"
 
 [node name="PathUpdateButton" type="Button" parent="MainContainer/PathContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "   Update Path   "
 
 [node name="CategoryContainer" type="HBoxContainer" parent="MainContainer"]
@@ -58,13 +60,13 @@ layout_mode = 2
 [node name="Label_Category" type="Label" parent="MainContainer/CategoryContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "Category"
 
 [node name="Category_Options" type="OptionButton" parent="MainContainer/CategoryContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 alignment = 1
 item_count = 2
 selected = 0
@@ -79,13 +81,13 @@ layout_mode = 2
 [node name="Label_Actions" type="Label" parent="MainContainer/ActionContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "Actions"
 
 [node name="Action_Options" type="OptionButton" parent="MainContainer/ActionContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 alignment = 1
 item_count = 6
 selected = 0
@@ -108,19 +110,20 @@ layout_mode = 2
 [node name="Label_Value" type="Label" parent="MainContainer/InputContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "Value"
 
 [node name="Input_Bool" type="CheckBox" parent="MainContainer/InputContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
 
 [node name="Input_Txt" type="TextEdit" parent="MainContainer/InputContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 
 [node name="Vector2_Input_Holder" type="HBoxContainer" parent="MainContainer/InputContainer"]
 visible = false
@@ -129,25 +132,25 @@ size_flags_horizontal = 3
 
 [node name="Label_Vec2_X" type="Label" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "x"
 
 [node name="Input_Vec2_X" type="TextEdit" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 
 [node name="Label_Vec2_Y" type="Label" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "        y"
 
 [node name="Input_Vec2_Y" type="TextEdit" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 
 [node name="Vector3_Input_Holder" type="HBoxContainer" parent="MainContainer/InputContainer"]
 visible = false
@@ -156,42 +159,69 @@ size_flags_horizontal = 3
 
 [node name="Label_Vec3_X" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "x"
 
 [node name="Input_Vec3_X" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 
 [node name="Label_Vec3_Y" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "        y"
 
 [node name="Input_Vec3_Y" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 
 [node name="Label_Vec3_Z" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 text = "        z"
 
 [node name="Input_Vec3_Z" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 12
 
 [node name="CreateButton" type="Button" parent="MainContainer"]
+visible = false
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "Create _Var Type_"
+theme_override_font_sizes/font_size = 20
+text = "Create FixedBoolVar"
 
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -213.57
+offset_bottom = -24.5709
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_mhqmq")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Version" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Version - vx.x.x"
+
+[connection signal="text_submitted" from="MainContainer/PathContainer/Path_Txt" to="." method="_on_path_txt_text_submitted"]
 [connection signal="pressed" from="MainContainer/PathContainer/PathUpdateButton" to="." method="_on_path_update_button_pressed"]
 [connection signal="item_selected" from="MainContainer/CategoryContainer/Category_Options" to="." method="_on_category_options_item_selected"]
 [connection signal="item_selected" from="MainContainer/ActionContainer/Action_Options" to="." method="_on_action_options_item_selected"]

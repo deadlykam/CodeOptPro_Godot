@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_dwqvi")
-_paths = Array[String](["fv_1a", "fv_2b", "fv_3", "fv_4", "fv_5", "fv_6"])
+_paths = Array[String](["res://kamran_wali/codeoptpro_godot/variables/", "res://kamran_wali/codeoptpro_godot/variables/", "fv_3", "fv_4", "fv_5", "fv_6"])
