@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b1sog8efg7lqq"]
 
-[ext_resource type="Script" path="res://addons/cop_variable_creator/cop_variable_creator.gd" id="1_gny3c"]
-[ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://kamran_wali/codeoptpro_godot/textures/CodeOptProLogo.png" id="2_mhqmq"]
+[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_variable_creator/cop_variable_creator.gd" id="1_uubsq"]
+[ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="2_gswbk"]
 
 [node name="Variable Creator" type="Control"]
 layout_mode = 3
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_gny3c")
+script = ExtResource("1_uubsq")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -47,7 +47,7 @@ text = "Path            "
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
-text = "res://kamran_wali/codeoptpro_godot/variables/"
+text = "res://addons/kamran_wali/code_opt_pro/variables/"
 
 [node name="PathUpdateButton" type="Button" parent="MainContainer/PathContainer"]
 layout_mode = 2
@@ -109,11 +109,11 @@ layout_mode = 2
 
 [node name="Label_Value" type="Label" parent="MainContainer/InputContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
-text = "Value"
+text = "Value       "
 
 [node name="Input_Bool" type="CheckBox" parent="MainContainer/InputContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
@@ -144,7 +144,7 @@ theme_override_font_sizes/font_size = 12
 [node name="Label_Vec2_Y" type="Label" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
-text = "        y"
+text = "    y"
 
 [node name="Input_Vec2_Y" type="TextEdit" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
 layout_mode = 2
@@ -153,7 +153,6 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 12
 
 [node name="Vector3_Input_Holder" type="HBoxContainer" parent="MainContainer/InputContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -171,7 +170,7 @@ theme_override_font_sizes/font_size = 12
 [node name="Label_Vec3_Y" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
-text = "        y"
+text = "    y"
 
 [node name="Input_Vec3_Y" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
@@ -182,7 +181,7 @@ theme_override_font_sizes/font_size = 12
 [node name="Label_Vec3_Z" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
-text = "        z"
+text = "    z"
 
 [node name="Input_Vec3_Z" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
 layout_mode = 2
@@ -206,7 +205,7 @@ offset_top = -213.57
 offset_bottom = -24.5709
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("2_mhqmq")
+texture = ExtResource("2_gswbk")
 expand_mode = 2
 stretch_mode = 5
 
@@ -219,7 +218,7 @@ anchor_bottom = 1.0
 offset_top = -23.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "Version - vx.x.x"
+text = "Version - v1.0.0"
 
 [connection signal="text_submitted" from="MainContainer/PathContainer/Path_Txt" to="." method="_on_path_txt_text_submitted"]
 [connection signal="pressed" from="MainContainer/PathContainer/PathUpdateButton" to="." method="_on_path_update_button_pressed"]
