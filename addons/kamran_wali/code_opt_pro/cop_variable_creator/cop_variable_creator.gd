@@ -1,7 +1,7 @@
 @tool
 extends Control
 
-const _RESOURCE_PATH = "res://kamran_wali/codeoptpro_godot/scripts/resources/"
+const _RESOURCE_PATH = "res://addons/kamran_wali/code_opt_pro/scripts/resources/"
 const _FIXED_VARS = "fixed_vars"
 const _FIXED_BOOL = "fixed_bool"
 const _FIXED_FLOAT = "fixed_float"
@@ -50,9 +50,9 @@ var _temp_vec3: Vector3
 
 func _enter_tree():
 	# Setting up global properties
-	_path_fixed_vars = load("res://kamran_wali/codeoptpro_godot/variables/default_settings/paths_fixed_vars.tres")
-	_path_vars = load("res://kamran_wali/codeoptpro_godot/variables/default_settings/path_vars.tres")
-	_version = load("res://kamran_wali/codeoptpro_godot/variables/default_settings/version.tres")
+	_path_fixed_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/paths_fixed_vars.tres")
+	_path_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_vars.tres")
+	_version = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/version.tres")
 	
 	# Setting up the scene variables
 	_name_txt = $MainContainer/NameContainer/Name_Txt
@@ -125,18 +125,15 @@ func _on_path_txt_text_submitted(new_text):
 	_update_path()
 
 func _on_category_options_item_selected(index):
-	# Setting the current category selected.
-	_index_category = index
-	# Resetting the action index as its options gets resetted as well.
-	_index_actions = 0
+	_index_category = index # Setting the current category selected.
+	_index_actions = 0 # Resetting the action index as its options gets resetted as well.
 	_set_option_button(_action_options, _data_files[index], true, true)
 	_set_inputs()
 	_update_path_txt()
 	_update_create_button_name()
 
 func _on_action_options_item_selected(index):
-	# Setting the current action type selected.
-	_index_actions = index
+	_index_actions = index # Setting the current action type selected.
 	_set_inputs()
 	_set_input_txt_colour()
 	_update_path_txt()
@@ -320,7 +317,6 @@ func _set_font_colour(text_editor: TextEdit, is_white: bool) -> void:
 ## This method checks if the condition for showing the create button has been fulfilled.
 func _is_show_create_button() -> bool:
 	return (
-#		(((_is_input_txt() if _is_fixed_float() || _is_fixed_int() || _is_fixed_string() else false)
 		((_is_input_txt() || _is_fixed_bool()
 		|| (_is_input_vec2_x() && _is_input_vec2_y() if _is_fixed_vector2() else false)
 		|| (_is_input_vec3_x() && _is_input_vec3_y() && _is_input_vec3_z() if _is_fixed_vector3() else false)
