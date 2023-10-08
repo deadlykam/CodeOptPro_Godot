@@ -1,3 +1,4 @@
+@tool
 class_name COP_Vector3Var
 extends Resource
 

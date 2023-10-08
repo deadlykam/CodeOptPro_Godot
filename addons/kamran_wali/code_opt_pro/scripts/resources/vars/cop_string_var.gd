@@ -1,13 +1,14 @@
-class_name COP_BoolVar
+@tool
+class_name COP_StringVar
 extends Resource
 
-var _value: bool
+var _value: String
 
 ## This method gets the value.
-func get_value() -> bool:
+func get_value() -> String:
 	return _value
 	
 ## This method sets the value.
-func set_value(value: bool):
+func set_value(value: String):
 	_value = value
 
