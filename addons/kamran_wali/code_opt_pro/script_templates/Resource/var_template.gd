@@ -1,3 +1,4 @@
+@tool
 #class_name COP_SomeVar
 extends Resource
 
