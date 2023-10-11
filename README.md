@@ -81,7 +81,6 @@ I have also added performant Vector calculations that may save some performance 
 32. _Vector2 Vec.set_vec2(Vector2, float, float, float)_ - This method sets the target Vector2 axis values with the provided float values. It then returns the Vector2 without needing any extra _var_ variables.
 
 #### Variable Creator
-There are 2 ways to create a variable from any category. Below are the two ways.
-1. The first way is to right click any folder where you want to create a variable and then go to _Create New_ -> _Resource_
+For now the only way to create a new variable is to use the _Variable Creator_ plugin. You can open the _Variable Creator_ window by going to the
 
 ***
