@@ -149,25 +149,12 @@ static func multiply_fixed_vec2_var(vector: COP_FixedVector2Var, value: float) -
 static func multiply_vec2_var(vector: COP_Vector2Var, value: float) -> Vector2:
 	return multiply_vec2(vector.get_value(), value)
 
-## This method sets the Vector3 values with the given value Vector3 and then returns it.
-static func set_vec3(target: Vector3, value: Vector3) -> Vector3:
-	target.x = value.x
-	target.y = value.y
-	target.z = value.z
-	return target
-
 ## This method sets the Vector3 values with the given floats and then returns it.
 static func set_vec3_f(vector: Vector3, x: float, y: float, z: float) -> Vector3:
 	vector.x = x
 	vector.y = y
 	vector.z = z
 	return vector
-
-## This method sets the Vector2 values with the given value Vector2 and then returns it.
-static func set_vec2(target: Vector2, value: Vector2) -> Vector2:
-	target.x = value.x
-	target.y = value.y
-	return target
 
 ## This method sets the Vector2 values with the given floats and then returns it.
 static func set_vec2_f(vector: Vector2, x: float, y: float, z: float) -> Vector2:
