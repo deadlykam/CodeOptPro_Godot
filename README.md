@@ -80,4 +80,8 @@ I have also added performant Vector calculations that may save some performance 
 31. _Vector3 Vec.set_vec3(Vector3, float, float, float)_ - This method sets the target Vector3 axis values with the provided float values. It then returns the Vector3 without needing any extra _var_ variables.
 32. _Vector2 Vec.set_vec2(Vector2, float, float, float)_ - This method sets the target Vector2 axis values with the provided float values. It then returns the Vector2 without needing any extra _var_ variables.
 
+#### Variable Creator
+There are 2 ways to create a variable from any category. Below are the two ways.
+1. The first way is to right click any folder where you want to create a variable and then go to _Create New_ -> _Resource_
+
 ***
