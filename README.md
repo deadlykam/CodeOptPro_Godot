@@ -108,10 +108,7 @@ I have also added performant Vector calculations that may save some performance 
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
-1. Created _FixedVar_ type for sharing fixed values.
-2. Created _Var_ type for sharing values that changes.
-3. Add script template to create new variable types.
-4. Created _Variable Creator_ plugin for allowing to create the variables.
+1. Storing the provided manager in the _manager_helper_template_ by default. Before it was just a stub function.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
