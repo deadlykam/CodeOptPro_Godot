@@ -1,0 +1,233 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1sog8efg7lqq"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_variable_creator/cop_variable_creator.gd" id="1_uubsq"]
+[ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="2_gswbk"]
+
+[node name="Variable Creator" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_uubsq")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="Label_Name" type="Label" parent="MainContainer/NameContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Name         "
+
+[node name="Name_Txt" type="LineEdit" parent="MainContainer/NameContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+
+[node name="PathContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="Label_Path" type="Label" parent="MainContainer/PathContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Path            "
+
+[node name="Path_Txt" type="LineEdit" parent="MainContainer/PathContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "res://addons/kamran_wali/code_opt_pro/variables/"
+
+[node name="PathUpdateButton" type="Button" parent="MainContainer/PathContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "   Update Path   "
+
+[node name="CategoryContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="Label_Category" type="Label" parent="MainContainer/CategoryContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "Category"
+
+[node name="Category_Options" type="OptionButton" parent="MainContainer/CategoryContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+alignment = 1
+item_count = 2
+selected = 0
+popup/item_0/text = "FixedVars"
+popup/item_0/id = 0
+popup/item_1/text = "Vars"
+popup/item_1/id = 1
+
+[node name="ActionContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="Label_Actions" type="Label" parent="MainContainer/ActionContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "Variable Type"
+
+[node name="Action_Options" type="OptionButton" parent="MainContainer/ActionContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+alignment = 1
+item_count = 6
+selected = 0
+popup/item_0/text = "FixedBoolVar"
+popup/item_0/id = 0
+popup/item_1/text = "FixedFloatVar"
+popup/item_1/id = 1
+popup/item_2/text = "FixedIntVar"
+popup/item_2/id = 2
+popup/item_3/text = "FixedStringVar"
+popup/item_3/id = 3
+popup/item_4/text = "FixedVector2Var"
+popup/item_4/id = 4
+popup/item_5/text = "FixedVector3Var"
+popup/item_5/id = 5
+
+[node name="InputContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="Label_Value" type="Label" parent="MainContainer/InputContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Value       "
+
+[node name="Input_Bool" type="CheckBox" parent="MainContainer/InputContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+
+[node name="Input_Txt" type="TextEdit" parent="MainContainer/InputContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="Vector2_Input_Holder" type="HBoxContainer" parent="MainContainer/InputContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label_Vec2_X" type="Label" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "x"
+
+[node name="Input_Vec2_X" type="TextEdit" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="Label_Vec2_Y" type="Label" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "    y"
+
+[node name="Input_Vec2_Y" type="TextEdit" parent="MainContainer/InputContainer/Vector2_Input_Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="Vector3_Input_Holder" type="HBoxContainer" parent="MainContainer/InputContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label_Vec3_X" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "x"
+
+[node name="Input_Vec3_X" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="Label_Vec3_Y" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "    y"
+
+[node name="Input_Vec3_Y" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="Label_Vec3_Z" type="Label" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "    z"
+
+[node name="Input_Vec3_Z" type="TextEdit" parent="MainContainer/InputContainer/Vector3_Input_Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="CreateButton" type="Button" parent="MainContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Create FixedBoolVar"
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -213.57
+offset_bottom = -24.5709
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_gswbk")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Version" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Version - v1.0.0"
+
+[connection signal="text_submitted" from="MainContainer/PathContainer/Path_Txt" to="." method="_on_path_txt_text_submitted"]
+[connection signal="pressed" from="MainContainer/PathContainer/PathUpdateButton" to="." method="_on_path_update_button_pressed"]
+[connection signal="item_selected" from="MainContainer/CategoryContainer/Category_Options" to="." method="_on_category_options_item_selected"]
+[connection signal="item_selected" from="MainContainer/ActionContainer/Action_Options" to="." method="_on_action_options_item_selected"]
+[connection signal="text_changed" from="MainContainer/InputContainer/Input_Txt" to="." method="_on_input_txt_text_changed"]
+[connection signal="text_changed" from="MainContainer/InputContainer/Vector2_Input_Holder/Input_Vec2_X" to="." method="_on_input_vec_2_x_text_changed"]
+[connection signal="text_changed" from="MainContainer/InputContainer/Vector2_Input_Holder/Input_Vec2_Y" to="." method="_on_input_vec_2_y_text_changed"]
+[connection signal="text_changed" from="MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_X" to="." method="_on_input_vec_3_x_text_changed"]
+[connection signal="text_changed" from="MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Y" to="." method="_on_input_vec_3_y_text_changed"]
+[connection signal="text_changed" from="MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Z" to="." method="_on_input_vec_3_z_text_changed"]
+[connection signal="pressed" from="MainContainer/CreateButton" to="." method="_on_create_button_pressed"]
