@@ -24,10 +24,10 @@ This is a simple Godot system that helps with performance.
 Godot version **v4.1.1.stable.mono.official [bd6af8e0e]** and above should work. Previous version of Godot have not been tested and may give errors.
 ***
 ## Stable Build
-[Stable-v1.0.0]() is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.0.0](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.0.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [CodeOptPro-v1.0.0.zip]() from the latest Stable build.
+1. First download the latest [CodeOptPro-v1.0.0.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.0.0) from the latest Stable build.
 2. Once downloaded extract/unzip the file.
 3. Enter the folder and copy the folder named **kamran_wali**.
 4. Now paste the folder in the **addons** folder of your Godot project. If your Godot project does not have the **addons** folder then just create it in the root folder, **res://**, and paste the copied folder there.
@@ -107,7 +107,7 @@ I have also added performant Vector calculations that may save some performance 
 32. _Vector2 Vec.set_vec2(Vector2, float, float, float)_ - This method sets the target Vector2 axis values with the provided float values. It then returns the Vector2 without needing any extra _var_ variables.
 ***
 ## Versioning
-The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
+The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
 ***
 ## Authors
 - Syed Shaiyan Kamran Waliullah 
