@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_55n6h")
-_paths = Array[String](["v_1a", "v_2b", "res://kamran_wali/codeoptpro_godot/variables/", "v_4", "v_5", "v_6asdfasdf"])
+_paths = Array[String](["res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/"])

@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_dwqvi")
-_paths = Array[String](["res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "fv_4", "fv_5", "fv_6"])
+_paths = Array[String](["res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/"])
