@@ -60,7 +60,7 @@ Just like FixedVars this category shares different type of data types as well, e
 #### Variable Creator
 For now the only way to create a new variable is to use the _Variable Creator_ plugin. You can open the _Variable Creator_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Variable Creator_. This will open the _Variable Creator_ by docking it at the left side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Variable Creator_.
 
-| ![Variable-Creator1.png](https://imgur.com/TMMqIu1.png) | 
+| ![Variable-Creator1.png](https://imgur.com/yQQdTDU.png) | 
 |:--:| 
 | *Variable Creator* |
 
