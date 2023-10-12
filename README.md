@@ -106,6 +106,13 @@ I have also added performant Vector calculations that may save some performance 
 31. _Vector3 Vec.set_vec3(Vector3, float, float, float)_ - This method sets the target Vector3 axis values with the provided float values. It then returns the Vector3 without needing any extra _var_ variables.
 32. _Vector2 Vec.set_vec2(Vector2, float, float, float)_ - This method sets the target Vector2 axis values with the provided float values. It then returns the Vector2 without needing any extra _var_ variables.
 ***
+## Updates
+Here I will share all the updates done to the current versions. Below are the updates.
+1. Created _FixedVar_ type for sharing fixed values.
+2. Created _Var_ type for sharing values that changes.
+3. Add script template to create new variable types.
+4. Created _Variable Creator_ plugin for allowing to create the variables.
+***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
 ***
