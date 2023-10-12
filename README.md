@@ -6,6 +6,18 @@
 This is a simple Godot system that helps with performance.
 
 ## Table of Contents:
+- [Prerequisites](#prerequisites)
+- [Stable Build](#stable-build)
+- [Installation](#installation)
+- [Features](#features)
+  - [Performant Data Share/Use](#performant-data-shareuse)
+    - [Fixed Vars](fixed-vars)
+    - [Vars](#vars)
+    - [Variable Creator](#variable-creator)
+  - [Vector Performant Calculation](#vector-performant-calculation)
+- [Versioning](#versioning)
+- [Authors](#authors)
+- [License](#license)
 
 ## Prerequisites
 #### Godot Game Engine
@@ -45,6 +57,20 @@ Just like FixedVars this category shres different type of data types as well, ex
 - **COP_Vector3Var** - This Var type shares _Vector3_ data types. To set the value simply call _void COP_Vector3Var.set_value(Vector3 value)_. To get the value just call _Vector3 COP_Vector3Var.get_value()_. To use COP_Vector3Var simply change the type of a var to COP_Vector3Var.
 - **COP_Var Template** - Fir creating a new COP_Var type you can simply use the script templates that are already present in the addon. Go to the folder _addons_ -> _kamran_wali_ -> _code_opt_pro_ and then copy the folder **script_templates**. Paste the copied folder to the root folder **res://**. Now you can use the script template to create a new COP_Var. Just create a new script and make sure to _Inherit_ from _Resource_. Then in the _Template_ section select **Resource: Var Template**. Give the script any name you want and finally create it. Now in the script make sure to give it a class name if you want to which has been commented out. For the value change it to any type you want. For the **get_value()** method make sure to give it a return type as well which may help with performance a bit. Finally for the **set_value(value)** give the parameter a type as well for helping with performance.
 
+#### Variable Creator
+For now the only way to create a new variable is to use the _Variable Creator_ plugin. You can open the _Variable Creator_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Variable Creator_. This will open the _Variable Creator_ by docking it at the left side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Variable Creator_.
+
+| ![Variable-Creator1.png](https://imgur.com/TMMqIu1.png) | 
+|:--:| 
+| *Variable Creator* |
+
+- **a.** _Name_ - This is where you give the name of the variable you want to create. If name given already exists in the path then the newly created variable will replace the old one and it does not matter what type it was.
+- **b.** _Path_ - This is the path or folder location where the new variable will be created. You can update this path as well. Foll the instructions in _c._ to see how to update the path.
+- **c.** _Update Path_ - If you want to update the path where the new variable will be created then right click the folder where the variable should be created and select _Copy Path_. Paste the copied path in the path field, _b._. Finally press the _Update Path_ button and the path will be updated. This will only update the path for 1 variable type, in this case _FixedBoolVar_ types. This way the _Variable Creator_ will allow you to have different paths for different variable types. The default path is _res://addons/kamran_wali/code_opt_pro/variables/_.
+- **d.** _Category_ - This is where you get to select from which category the variable will be created. For now there are 2 categories which are _FixedVars_ and _Vars_.
+- **e.** _Variable Type_ - This is where you get to select which type of variable to create. Each category have different type of variable types.
+- **f.** _Create Variable_ - This button will create the new variable type. Remember to give a name to the variable otherwise this button will **NOT** be visible. Also the name of the button _Create Variable_ will change with the variable type selected so that you will know what type you are creating.
+
 #### Vector Performant Calculation:
 I have also added performant Vector calculations that may save some performance issue in the long runespecially when it comes to Vector distance calculation. The class is called _Vec_ and it contains static functions. I will give just brief explanation of the functions.
 1. _float Vec.distance_vec3(Vector3, Vector3)_ - This method calculates the distance between two Vector3s and the returned value is a squared value. This means that if you want to check if the distance of the two vector point is greater/less than 5 units then you must make 5 squared which is simply 5x5 = 25. Meaning you are comparing against 25. This will save lot of performance issue later down the line when too many objects needs distance check.
@@ -79,8 +105,17 @@ I have also added performant Vector calculations that may save some performance 
 30. _Vector2 Vec.multiply_vec2_var(COP_Vector2Var, float)_ - This method is similar to 28. so please read that discription for explanation. The only difference is that it takes COP_Vector2Var.
 31. _Vector3 Vec.set_vec3(Vector3, float, float, float)_ - This method sets the target Vector3 axis values with the provided float values. It then returns the Vector3 without needing any extra _var_ variables.
 32. _Vector2 Vec.set_vec2(Vector2, float, float, float)_ - This method sets the target Vector2 axis values with the provided float values. It then returns the Vector2 without needing any extra _var_ variables.
-
-#### Variable Creator
-For now the only way to create a new variable is to use the _Variable Creator_ plugin. You can open the _Variable Creator_ window by going to the
-
+***
+## Versioning
+The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro/tags).
+***
+## Authors
+- Syed Shaiyan Kamran Waliullah 
+  - [Kamran Wali Github](https://github.com/deadlykam)
+  - [Kamran Wali Twitter](https://twitter.com/KamranWaliDev)
+  - [Kamran Wali Youtube](https://www.youtube.com/channel/UCkm-BgvswLViigPWrMo8pjg)
+  - [Kamran Wali Website](https://deadlykam.github.io/)
+***
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.
 ***
