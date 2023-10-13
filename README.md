@@ -105,6 +105,18 @@ I have also added performant Vector calculations that may save some performance 
 30. _Vector2 Vec.multiply_vec2_var(COP_Vector2Var, float)_ - This method is similar to 28. so please read that discription for explanation. The only difference is that it takes COP_Vector2Var.
 31. _Vector3 Vec.set_vec3(Vector3, float, float, float)_ - This method sets the target Vector3 axis values with the provided float values. It then returns the Vector3 without needing any extra _var_ variables.
 32. _Vector2 Vec.set_vec2(Vector2, float, float, float)_ - This method sets the target Vector2 axis values with the provided float values. It then returns the Vector2 without needing any extra _var_ variables.
+
+#### Timer Countdown:
+Even though Godot has a [Countdown Timer](https://docs.godotengine.org/en/stable/classes/class_timer.html) there are certain functionality that are missing which would help a lot. So I added a Timer Countdown feature. The script does as the name suggests which is it count downs to 0. This timer also calculates the normal value for the count down which may help later to sync up some other logic or features of yours.
+
+To use the Timer Countdown feature you must first add a Node and then add the script called **timer_countdown.gd**. You can either drag and drop the scrip from _addons -> kamran_wali -> code_opt_pro -> scripts -> timers -> timer_countdown.gd_ or click the drop down button under the Script tab and select Quick Load and then just type **timer_countdown** to get it. Once you have added the Timer Countdown then you must provide a **COP_FixedFloatVar** resource to the field _Time Seconds_ which must have a value greater than 0.0. The value provided here are seconds. Now in your main script create an export var with type COP_BaseTimer.
+```
+SomeScript.gd
+extends Node
+@export var timer: COP_BaseTimer
+```
+Finally you must call the **timer_countdown.update_timer(float)** function to start the timer countdown. This function can be called in either 
+
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
