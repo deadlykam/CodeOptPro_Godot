@@ -2,6 +2,7 @@
 extends COP_BaseTimer
 
 @export_category("Timer Countdown")
+## Any float value given is considered to be in seconds.
 @export var _time_seconds: COP_FixedFloatVar:
 	set(p_time_seconds):
 		if _time_seconds != p_time_seconds:
