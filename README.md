@@ -110,7 +110,7 @@ I have also added performant Vector calculations that may save some performance 
 #### Timer Countdown:
 Even though Godot has a [Countdown Timer](https://docs.godotengine.org/en/stable/classes/class_timer.html) there are certain functionality that are missing which would help a lot. So I added a Timer Countdown feature. The script does as the name suggests which is it count downs to 0. This timer also calculates the normal value for the count down which may help later to sync up some other logic or features of yours.
 
-To use the Timer Countdown feature you must first add a Node and then add the script called **timer_countdown.gd**. You can either drag and drop the scrip from _addons -> kamran_wali -> code_opt_pro -> scripts -> timers -> timer_countdown.gd_ or click the drop down button under the Script tab and select Quick Load and then just type **timer_countdown** to get it. Once you have added the Timer Countdown then you must provide a **COP_FixedFloatVar** resource to the field _Time Seconds_ which must have a value greater than 0.0. The value provided here are seconds. Now in your main script create an export var with type COP_BaseTimer.
+To use the Timer Countdown feature you must first add a Node and then add the script called **timer_countdown.gd**. You can either drag and drop the script from _addons -> kamran_wali -> code_opt_pro -> scripts -> timers -> timer_countdown.gd_ or click the drop down button under the Script tab and select Quick Load and then just type **timer_countdown** to get it. Once you have added the Timer Countdown then you must provide a **COP_FixedFloatVar** resource to the field _Time Seconds_ which must have a value greater than 0.0. The value provided here are in seconds. Now in your main script create an export var with type COP_BaseTimer.
 ```
 SomeScript.gd
 extends Node
@@ -127,7 +127,7 @@ func _ready() -> void:
   timer.reset_timer() # Resetting the timer at start
 
 func _process(delta) -> void:
-  if !timer.is_timer_done:
+  if !timer.is_timer_done: # Checking if timer is NOT done only then will update the timer
     timer.update_timer(delta) # If only delta is passed then the countdown will be every 1 second. Any value else will be multiple of it.
 ```
 
@@ -141,13 +141,13 @@ func _ready() -> void:
   timer.reset_timer() # Resetting the timer at start
 
 func _physics_process(delta) -> void:
-  if !timer.is_timer_done:
+  if !timer.is_timer_done: # Checking if timer is NOT done only then will update the timer
     timer.update_timer(delta) # If only delta is passed then the countdown will be every 1 second. Any value else will be multiple of it.
 ```
 I will briefly explain what each of the method does int **timer_countdown.gd**:
 1. **void set_time(float)** - This method sets a new time second for the timer and overrides the provided time in the export.
 2. **bool is_timer_done()** - This method checks if the timer is done counting down.
-3. **float normalized()** - This method gets the normalized value of the timer which is with the range 0.0 to 1.0.
+3. **float normalized()** - This method gets the normalized value of the timer which is within the range of 0.0 to 1.0.
 4. **float get_current_time_seconds()** - This method gets the current countdown time of the timer.
 5. **void reset_timer()** - This method resets the timer for countdown.
 6. **void stop_timer()** - This method stops the timer countdown.
