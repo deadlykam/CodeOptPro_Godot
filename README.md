@@ -15,6 +15,7 @@ This is a simple Godot system that helps with performance.
     - [Vars](#vars)
     - [Variable Creator](#variable-creator)
   - [Vector Performant Calculation](#vector-performant-calculation)
+  - [Timer Countdown](#timer-countdown)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -115,12 +116,48 @@ SomeScript.gd
 extends Node
 @export var timer: COP_BaseTimer
 ```
-Finally you must call the **timer_countdown.update_timer(float)** function to start the timer countdown. This function can be called in either 
+Finally you must call the **timer_countdown.update_timer(float)** function to start the timer countdown. This function can be called in either **_process(delta)** or **_physics_process(delta)**. Also the delta value must be provided. If you multiply the delta value with more than 1 then the countdown will happen faster than 1 second and if you multiply the delta value with less than 1 then the countdown will happen slower than 1 second. Example:
+For _process(delta)
+```
+SomeScript.gd
+extends Node
+@export var timer: COP_BaseTimer
 
+func _ready() -> void:
+  timer.reset_timer() # Resetting the timer at start
+
+func _process(delta) -> void:
+  if !timer.is_timer_done:
+    timer.update_timer(delta) # If only delta is passed then the countdown will be every 1 second. Any value else will be multiple of it.
+```
+
+For _physics_process(delta)
+```
+SomeScript.gd
+extends Node
+@export var timer: COP_BaseTimer
+
+func _ready() -> void:
+  timer.reset_timer() # Resetting the timer at start
+
+func _physics_process(delta) -> void:
+  if !timer.is_timer_done:
+    timer.update_timer(delta) # If only delta is passed then the countdown will be every 1 second. Any value else will be multiple of it.
+```
+I will briefly explain what each of the method does int **timer_countdown.gd**:
+1. **void set_time(float)** - This method sets a new time second for the timer and overrides the provided time in the export.
+2. **bool is_timer_done()** - This method checks if the timer is done counting down.
+3. **float normalized()** - This method gets the normalized value of the timer which is with the range 0.0 to 1.0.
+4. **float get_current_time_seconds()** - This method gets the current countdown time of the timer.
+5. **void reset_timer()** - This method resets the timer for countdown.
+6. **void stop_timer()** - This method stops the timer countdown.
+7. **float get_time_seconds()** - This method gets the max time or the set time for the timer.
+8. **void update_timer(float)** - This method updates the timer countdown.
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
 1. Storing the provided manager in the _manager_helper_template_ by default. Before it was just a stub function.
+2. Added timer countdown feature.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
