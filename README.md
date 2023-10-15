@@ -162,6 +162,7 @@ Here I will share all the updates done to the current versions. Below are the up
 1. Storing the provided manager in the _manager_helper_template_ by default. Before it was just a stub function.
 2. Added timer countdown feature.
 3. Added new Var types which are _Node_, _Node2D_ and _Node3D_.
+4. Dynamic Path Default Setting - This means that if ever a new variable type is added then the Variable Creator will update the variable creation path location. It will change the path location to the default location for all certain variable type which is the _res://addons/kamran_wali/code_opt_pro/variables/_ folder. The reason for adding this feature is to avoid any errors while creating new variable type which is forgetting to add a new element in the path's array. So when a new variable type is added expect your saved path locations to change and you have to change and save them all back.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
