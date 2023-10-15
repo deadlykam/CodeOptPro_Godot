@@ -2,6 +2,7 @@
 extends Control
 
 const _RESOURCE_PATH = "res://addons/kamran_wali/code_opt_pro/scripts/resources/"
+const _DEFAULT_VAR_TYPE_PATH = "res://addons/kamran_wali/code_opt_pro/variables/"
 const _FIXED_VARS = "fixed_vars"
 const _FIXED_BOOL = "fixed_bool"
 const _FIXED_FLOAT = "fixed_float"
@@ -43,6 +44,7 @@ var _file_name: String
 var _temp_array: Array[String]
 var _index_category: int
 var _index_actions: int
+var _index_path: int
 var _index
 var _index_input
 var _temp_vec2: Vector2
@@ -78,6 +80,7 @@ func _enter_tree():
 	_data_folders = _get_file_names(_RESOURCE_PATH)
 	_data_folders.erase(_SETTINGS) # Removing the settings folder
 	_set_file_data()
+	_check_paths() # Checking path size and updating to correct paths
 	_set_option_button(_category_options, _data_folders, true, false)
 	_set_option_button(_action_options, _data_files[0], true, true) # Setting the first files in the action options
 	_index_category = 0 # Storing the first category selected
@@ -191,6 +194,25 @@ func _set_option_button(optionButton: OptionButton,
 func _set_file_data() -> void:
 	for _index in range(0, _data_folders.size()):
 		_data_files[_index] = _get_file_names(_RESOURCE_PATH + _data_folders[_index] + "/")
+
+## This method checks if the number of paths and variables are same. If NOT then will update the 
+## paths to hold more paths.
+func _check_paths() -> void:
+	for _index in range(0, _data_folders.size()):
+		# Checking and setting fixed var path.
+		if _index == 0 && _data_files[_index].size() != _path_fixed_vars.get_size():
+			_set_path_to_default(_path_fixed_vars, _data_files[_index].size())
+		# Checking and setting var path.
+		if _index == 1 && _data_files[_index].size() != _path_vars.get_size():
+			_set_path_to_default(_path_vars, _data_files[_index].size())
+
+
+## This method updates the size of the given path and changes all the path
+## location to default.
+func _set_path_to_default(path: COP_VariablePaths, size: int) -> void:
+	path.set_new_path_size(size) # Updating the size of the path.
+	for _index_path in range(0, size): # Loop for changing location to default.
+		path.update_var_path(_index_path, _DEFAULT_VAR_TYPE_PATH)
 
 ## This method sets the proper input.
 func _set_inputs() -> void:
