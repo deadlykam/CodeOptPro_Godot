@@ -53,6 +53,9 @@ Just like FixedVars this category shares different type of data types as well, e
 - **COP_BoolVar** - This Var type shares _bool_ data types. To set the value simply call _void COP_BoolVar.set_value(bool value)_. To get the value just call _bool COP_BoolVar.get_value()_. To use COP_BoolVar simply change the type of a var to COP_BoolVar.
 - **COP_FloatVar** - This Var type shares _float_ data types. To set the value simply call _void COP_FloatVar.set_value(float value)_. To get the value just call _float COP_FloatVar.get_value()_. To use COP_FloatVar simply change the type of a var to COP_FloatVar.
 - **COP_IntVar** - This Var type shares _int_ data types. To set the value simply call _void COP_IntVar.set_value(int value)_. To get the value just call _int COP_IntVar.get_value()_. To use COP_IntVar simply change the type of a var to COP_IntVar.
+- **COP_NodeVar** - This Var type shares _Node_ data types. To set the value simply call _void COP_NodeVar.set_value(Node value)_. To get the value just call _Node COP_NodeVar.get_value()_. To use COP_NodeVar simply change the type of a var to COP_NodeVar.
+- **COP_Node2DVar** - This Var type shares _Node2D_ data types. To set the value simply call _void COP_Node2DVar.set_value(Node2D value)_. To get the value just call _Node2D COP_Node2DVar.get_value()_. To use COP_Node2DVar simply change the type of a var to COP_Node2DVar.
+- **COP_Node3DVar** - This Var type shares _Node3D_ data types. To set the value simply call _void COP_Node3DVar.set_value(Node3D value)_. To get the value just call _Node3D COP_Node3DVar.get_value()_. To use COP_Node3DVar simply change the type of a var to COP_Node3DVar.
 - **COP_StringVar** - This Var type shares _string_ data types. To set the value simply call _void COP_StringVar.set_value(string value)_. To get the value just call _string COP_StringVar.get_value()_. To use COP_StringVar simply change the type of a var to COP_StringVar.
 - **COP_Vector2Var** - This Var type shares _Vector2_ data types. To set the value simply call _void COP_Vector2Var.set_value(Vector2 value)_. To get the value just call _Vector2 COP_Vector2Var.get_value()_. To use COP_Vector2Var simply change the type of a var to COP_Vector2Var.
 - **COP_Vector3Var** - This Var type shares _Vector3_ data types. To set the value simply call _void COP_Vector3Var.set_value(Vector3 value)_. To get the value just call _Vector3 COP_Vector3Var.get_value()_. To use COP_Vector3Var simply change the type of a var to COP_Vector3Var.
@@ -158,6 +161,7 @@ I will briefly explain what each of the method does int **timer_countdown.gd**:
 Here I will share all the updates done to the current versions. Below are the updates.
 1. Storing the provided manager in the _manager_helper_template_ by default. Before it was just a stub function.
 2. Added timer countdown feature.
+3. Added new Var types which are Node, Node2D and Node3D.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
