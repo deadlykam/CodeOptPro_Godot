@@ -9,6 +9,6 @@ func get_value() -> Vector2:
 	return _value
 	
 ## This method sets the value.
-func set_value(value: Vector2):
+func set_value(value: Vector2) -> void:
 	_value = value
 
