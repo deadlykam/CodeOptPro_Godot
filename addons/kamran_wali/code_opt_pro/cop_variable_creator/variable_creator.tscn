@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1sog8efg7lqq"]
+[gd_scene load_steps=5 format=3 uid="uid://b1sog8efg7lqq"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_variable_creator/cop_variable_creator.gd" id="1_uubsq"]
 [ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="2_gswbk"]
+[ext_resource type="Script" path="res://delete_me.gd" id="3_5hrtk"]
+[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/scripts/timers/timer_countdown.gd" id="4_yaqu5"]
 
 [node name="Variable Creator" type="Control"]
 layout_mode = 3
@@ -218,7 +220,18 @@ anchor_bottom = 1.0
 offset_top = -23.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "Version - v1.3.0a"
+text = "Version - v1.4.0a"
+
+[node name="DELETE ME" type="Node" parent="." node_paths=PackedStringArray("_timer", "_timer_time")]
+script = ExtResource("3_5hrtk")
+_timer = NodePath("Timer")
+_timer_time = NodePath("Timer_Time")
+_time = 1.0
+
+[node name="Timer" type="Node" parent="DELETE ME"]
+script = ExtResource("4_yaqu5")
+
+[node name="Timer_Time" type="Node" parent="DELETE ME"]
 
 [connection signal="text_submitted" from="MainContainer/PathContainer/Path_Txt" to="." method="_on_path_txt_text_submitted"]
 [connection signal="pressed" from="MainContainer/PathContainer/PathUpdateButton" to="." method="_on_path_update_button_pressed"]
