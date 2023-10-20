@@ -18,8 +18,8 @@ script = ExtResource("1_uubsq")
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 0.652
-offset_bottom = 225.504
+anchor_bottom = 0.5
+offset_bottom = 324.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -199,11 +199,11 @@ text = "Create FixedBoolVar"
 [node name="Logo" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.67
+anchor_top = 0.681
 anchor_right = 1.0
 anchor_bottom = 0.962
-offset_top = 0.269989
-offset_bottom = 0.0530396
+offset_top = -0.288025
+offset_bottom = -0.376038
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
