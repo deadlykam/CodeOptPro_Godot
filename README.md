@@ -115,13 +115,13 @@ I have also added performant Vector calculations that may save some performance 
 #### [Timer Countdown](https://github.com/deadlykam/CodeOptPro_Godot/blob/b79a2330ca62ab07de849c523add2b76f91374fe/addons/kamran_wali/code_opt_pro/scripts/timers/timer_countdown.gd):
 Even though Godot has a [Countdown Timer](https://docs.godotengine.org/en/stable/classes/class_timer.html) there are certain functionality that are missing which would help a lot. So I added a Timer Countdown feature. The script does as the name suggests which is it count downs to 0. This timer also calculates the normal value for the count down which may help later to sync up some other logic or features of yours.
 
-To use the Timer Countdown feature you must first add a Node and then add the script called **timer_countdown.gd**. You can either drag and drop the script from _addons -> kamran_wali -> code_opt_pro -> scripts -> timers -> timer_countdown.gd_ or click the drop down button under the Script tab and select Quick Load and then just type **timer_countdown** to get it. Once you have added the Timer Countdown then you must provide a **COP_FixedFloatVar** resource to the field _Time Seconds_ which must have a value greater than 0.0. The value provided here are in seconds. Now in your main script create an export var with type COP_BaseTimer.
+To use the Timer Countdown feature you must first add a Node and then add the script called **timer_countdown.gd** or **timer_countdown_time.gd**. Both are same but the only difference is that for **timer_countdown.gd** you need to provide the time through script where as for **timer_countdown_time.gd** you can provide the time as _COP_FixedFloatVar_ in the inspector. For the example below we will be using **timer_countdown_time.gd**. You can either drag and drop the script from _addons -> kamran_wali -> code_opt_pro -> scripts -> timers -> timer_countdown_time.gd_ or click the drop down button under the Script tab and select Quick Load and then just type **timer_countdown_time** to get it. Once you have added the Timer Countdown then you must provide a **COP_FixedFloatVar** resource to the field _Time Seconds_ which must have a value greater than 0.0. The value provided here are in seconds. Now in your main script create an export var with type COP_BaseTimer.
 ```
 SomeScript.gd
 extends Node
 @export var timer: COP_BaseTimer
 ```
-Finally you must call the **timer_countdown.update_timer(float)** function to start the timer countdown. This function can be called in either **_process(delta)** or **_physics_process(delta)**. Also the delta value must be provided. If you multiply the delta value with more than 1 then the countdown will happen faster than 1 second and if you multiply the delta value with less than 1 then the countdown will happen slower than 1 second. Example:
+Finally you must call the **timer_countdown_time.update_timer(float)** function to start the timer countdown. This function can be called in either **_process(delta)** or **_physics_process(delta)**. Also the delta value must be provided. If you multiply the delta value with more than 1 then the countdown will happen faster than 1 second and if you multiply the delta value with less than 1 then the countdown will happen slower than 1 second. Example:
 For _process(delta)
 ```
 SomeScript.gd
@@ -149,7 +149,7 @@ func _physics_process(delta) -> void:
   if !timer.is_timer_done: # Checking if timer is NOT done only then will update the timer
     timer.update_timer(delta) # If only delta is passed then the countdown will be every 1 second. Any value else will be multiple of it.
 ```
-I will briefly explain what each of the method does int **timer_countdown.gd**:
+I will briefly explain what each of the method does in **base_timer.gd** which is the blue-print for all timer scritps:
 1. **void set_time(float)** - This method sets a new time second for the timer and overrides the provided time in the export.
 2. **bool is_timer_done()** - This method checks if the timer is done counting down.
 3. **float normalized()** - This method gets the normalized value of the timer which is within the range of 0.0 to 1.0.
