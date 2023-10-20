@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr1tvl1q0k4y1"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_duplicate_object/cop_duplicate_object.gd" id="1_7no60"]
+
+[node name="Duplicate Object" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7no60")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ObjectContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="ObjectPathLabel" type="Label" parent="MainContainer/ObjectContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Object Path"
+
+[node name="ObjectPath_Txt" type="LineEdit" parent="MainContainer/ObjectContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+
+[node name="ObjectStatus" type="Label" parent="MainContainer/ObjectContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Object Not Found"
+
+[node name="TargetContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="TargetPathLabel" type="Label" parent="MainContainer/TargetContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Target Path"
+
+[node name="TargetPath_Txt" type="LineEdit" parent="MainContainer/TargetContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+
+[node name="TargetStatus" type="Label" parent="MainContainer/TargetContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Target Not Found"
+
+[node name="NumberContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="NumberLabel" type="Label" parent="MainContainer/NumberContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Number of Duplication"
+
+[node name="Input_Number" type="LineEdit" parent="MainContainer/NumberContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+
+[node name="DuplicateButton" type="Button" parent="MainContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Duplicate Object"
+
+[connection signal="text_changed" from="MainContainer/ObjectContainer/ObjectPath_Txt" to="." method="_on_object_path_txt_text_changed"]
+[connection signal="pressed" from="MainContainer/DuplicateButton" to="." method="_on_duplicate_button_pressed"]
