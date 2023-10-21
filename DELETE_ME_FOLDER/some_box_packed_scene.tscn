@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://st7ioge1qq31"]
+
+[ext_resource type="Script" path="res://DELETE_ME_FOLDER/parent_script.gd" id="1_tq56n"]
+[ext_resource type="Script" path="res://DELETE_ME_FOLDER/child_script.gd" id="2_e24p4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_my2ph"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mglf3"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="SomeBox_PackedScene" type="MeshInstance3D" node_paths=PackedStringArray("_child")]
+mesh = SubResource("BoxMesh_my2ph")
+script = ExtResource("1_tq56n")
+_child = NodePath("MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.697777, 0)
+mesh = SubResource("BoxMesh_mglf3")
+script = ExtResource("2_e24p4")
