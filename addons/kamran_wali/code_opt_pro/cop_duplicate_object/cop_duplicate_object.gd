@@ -50,6 +50,10 @@ func update(delta: float) -> void:
 		_duplicate_button.show()
 	else: # Hiding the button.
 		_duplicate_button.hide()
+	
+	if Input.is_action_just_pressed("ui_page_up"):
+		if !EDITOR_PLUGIN.get_editor_interface().get_selected_paths().is_empty():
+			print("Path: " , EDITOR_PLUGIN.get_editor_interface().get_selected_paths()[0])
 
 func _on_object_path_txt_text_changed(path: String):
 	if _is_object_exist(path): # Checking if the object exists.
@@ -107,4 +111,5 @@ func _is_packedscene_object() -> bool:
 	if _object_path_txt.get_text().length() >= _FROM_FILES.length():
 		if _object_path_txt.get_text().substr(0, _FROM_FILES.length()).contains(_FROM_FILES):
 			return true
+	
 	return false

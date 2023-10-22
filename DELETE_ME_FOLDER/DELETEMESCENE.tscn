@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cpvo3gwqr4roj"]
+[gd_scene load_steps=7 format=3 uid="uid://cpvo3gwqr4roj"]
 
 [ext_resource type="PackedScene" uid="uid://st7ioge1qq31" path="res://DELETE_ME_FOLDER/some_box_packed_scene.tscn" id="1_f4quj"]
 [ext_resource type="Script" path="res://DELETE_ME_FOLDER/parent_script.gd" id="2_3q3be"]
@@ -9,6 +9,8 @@
 [sub_resource type="SphereMesh" id="SphereMesh_dsi5q"]
 radius = 0.25
 height = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_my2ph"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -37,3 +39,8 @@ script = ExtResource("2_o2ea1")
 [node name="Parent" type="Node3D" parent="."]
 
 [node name="SomeBox_PackedScene" parent="Parent" instance=ExtResource("1_f4quj")]
+
+[node name="SomeBox_PackedScene2" parent="Parent" node_paths=PackedStringArray("_child") instance=ExtResource("1_f4quj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.66495, 0, 2.03836)
+mesh = SubResource("BoxMesh_my2ph")
+_child = NodePath("../SomeBox_PackedScene/MeshInstance3D")
