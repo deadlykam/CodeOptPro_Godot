@@ -38,6 +38,24 @@ theme_override_colors/font_color = Color(0.803922, 0.360784, 0.360784, 1)
 theme_override_font_sizes/font_size = 12
 text = "Object Not Found!"
 
+[node name="SceneContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="SceneLabel" type="Label" parent="MainContainer/SceneContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Scene: "
+
+[node name="SceneStatusLabel" type="Label" parent="MainContainer/SceneContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Please select scene object."
+
+[node name="SceneLockButton" type="CheckButton" parent="MainContainer/SceneContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Lock"
+
 [node name="ParentContainer" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2
 
@@ -50,7 +68,7 @@ text = "Parent:   "
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_font_sizes/font_size = 12
-text = "Duplicate Object"
+text = "SceneLockButton"
 
 [node name="LockButton" type="CheckButton" parent="MainContainer/ParentContainer"]
 layout_mode = 2
@@ -75,13 +93,6 @@ visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Duplicate Object"
-
-[node name="Tree" type="Tree" parent="."]
-layout_mode = 0
-offset_left = 361.0
-offset_top = 114.0
-offset_right = 401.0
-offset_bottom = 154.0
 
 [connection signal="text_changed" from="MainContainer/ObjectContainer/ObjectPath_Txt" to="." method="_on_object_path_txt_text_changed"]
 [connection signal="text_changed" from="MainContainer/NumberContainer/Input_Number" to="." method="_on_input_number_text_changed"]
