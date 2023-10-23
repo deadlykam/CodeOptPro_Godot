@@ -24,4 +24,4 @@ project/assembly_name="CodeOptPro_Godot"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/kamran_wali/code_opt_pro/cop_duplicate_object/plugin.cfg")
+enabled=PackedStringArray("res://addons/kamran_wali/code_opt_pro/cop_instantiate_object/plugin.cfg")
