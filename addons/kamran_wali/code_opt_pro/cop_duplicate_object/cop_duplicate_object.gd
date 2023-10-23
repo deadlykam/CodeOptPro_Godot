@@ -25,6 +25,8 @@ var _is_scene: bool
 var _is_number: bool
 
 func _enter_tree() -> void:
+	super._enter_tree()
+	
 	# Setting up the scene variables
 	_parent_status_lbl = $MainContainer/ParentContainer/ParentStatus
 	_scene_status_lbl = $MainContainer/SceneContainer/SceneStatusLabel
@@ -80,6 +82,9 @@ func update(delta: float) -> void:
 		else: # Hiding the button.
 			_instantiate_button.hide()
 
+func get_version_lbl_path() -> String:
+	return "Version"
+
 func _on_input_number_text_changed(value: String):
 	if is_int(value) && value.to_int() > 0:
 		set_control_font_colour(_num_instantiate, Color.WHITE)
@@ -89,19 +94,6 @@ func _on_input_number_text_changed(value: String):
 		_is_number = false
 
 func _on_duplicate_button_pressed():
-#	_counter = _num_duplicate.get_text().to_int() # Getting the counter value.
-#
-#	for _index in range(0, _counter): # Loop for creating objects.
-#		if _is_packedscene_object(): # Condition for duplicating PackedScenes.
-#			_object = load(_object_path_txt.get_text())
-#			_object_dup = _object.instantiate()
-#		else: # Condition for duplicating Scene Nodes.
-#			_object = get_scene_root_node().get_node(_object_path_txt.get_text())
-#			_object_dup = _object.duplicate()
-#
-#		_parent_node.add_child(_object_dup, true) # Adding object and making name readable.
-#		_object_dup.set_owner(get_scene_root_node()) # Setting the ownership to the correct scene.
-
 	_counter = _num_instantiate.get_text().to_int() if _is_number else 1 # Getting the counter value
 
 	for _index in range(0, _counter): # Loop for creating objects.
