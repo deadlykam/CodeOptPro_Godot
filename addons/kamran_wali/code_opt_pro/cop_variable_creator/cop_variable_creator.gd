@@ -277,8 +277,8 @@ func _set_input_txt_colour() -> void:
 
 ## This method checks if the input_txt's text is correct or NOT.
 func _is_input_txt() -> bool:
-	return (((_is_fixed_float() && _input_txt.text.is_valid_float()) 
-		|| (_is_fixed_int() && _input_txt.text.is_valid_int()) 
+	return (((_is_fixed_float() && is_float(_input_txt.text)) 
+		|| (_is_fixed_int() && is_int(_input_txt.text)) 
 		|| _is_fixed_string()) && !_input_txt.text.is_empty())
 
 ## This method sets the correct font colour for input vec2 x.
@@ -287,7 +287,7 @@ func _set_input_vec2_x_colour() -> void:
 
 ## This method checks if the input_vec2_x's text is correct or NOT.
 func _is_input_vec2_x() -> bool:
-	return _input_vec2_x.text.is_valid_float() && !_input_vec2_x.text.is_empty()
+	return is_float(_input_vec2_x.text)
 
 ## This method sets the correct font colour for input vec2 y.
 func _set_input_vec2_y_colour() -> void:
@@ -295,7 +295,7 @@ func _set_input_vec2_y_colour() -> void:
 
 ## This method checks if the input_vec2_y's text is correct or NOT.
 func _is_input_vec2_y() -> bool:
-	return _input_vec2_y.text.is_valid_float() && !_input_vec2_y.text.is_empty()
+	return is_float(_input_vec2_y.text)
 
 ## This method sets the correct font colour for input vec3 x.
 func _set_input_vec3_x_colour() -> void:
@@ -303,7 +303,7 @@ func _set_input_vec3_x_colour() -> void:
 
 ## This method checks if the input_vec3_x's text is correct or NOT.
 func _is_input_vec3_x() -> bool:
-	return _input_vec3_x.text.is_valid_float() && !_input_vec3_x.text.is_empty()
+	return is_float(_input_vec3_x.text)
 
 ## This method sets the correct font colour for input vec3 y.
 func _set_input_vec3_y_colour() -> void:
@@ -311,7 +311,7 @@ func _set_input_vec3_y_colour() -> void:
 
 ## This method checks if the input_vec3_y's text is correct or NOT.
 func _is_input_vec3_y() -> bool:
-	return _input_vec3_y.text.is_valid_float() && !_input_vec3_y.text.is_empty()
+	return is_float(_input_vec3_y.text)
 
 ## This method sets the correct font colour for input vec3 z.
 func _set_input_vec3_z_colour() -> void:
@@ -319,7 +319,7 @@ func _set_input_vec3_z_colour() -> void:
 
 ## This method checks if the input_vec3_z's text is correct or NOT.
 func _is_input_vec3_z() -> bool:
-	return _input_vec3_z.text.is_valid_float() && !_input_vec3_z.text.is_empty()
+	return is_float(_input_vec3_z.text)
 
 ## This method checks if the input txt is correct or NOT.
 func _is_input_name_txt() -> bool:
