@@ -16,6 +16,7 @@ This is a simple Godot system that helps with performance.
     - [Variable Creator](#variable-creator)
   - [Vector Performant Calculation](#vector-performant-calculation)
   - [Timer Countdown](#timer-countdown)
+  - [Instantiate Object](#instantiate-object)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -63,7 +64,7 @@ Just like FixedVars this category shares different type of data types as well, e
 - **COP_Vector3Var** - This Var type shares _Vector3_ data types. To set the value simply call _void COP_Vector3Var.set_value(Vector3 value)_. To get the value just call _Vector3 COP_Vector3Var.get_value()_. To use COP_Vector3Var simply change the type of a var to COP_Vector3Var.
 - **COP_Var Template** - Fir creating a new COP_Var type you can simply use the script templates that are already present in the addon. Go to the folder _addons_ -> _kamran_wali_ -> _code_opt_pro_ and then copy the folder **script_templates**. Paste the copied folder to the root folder **res://**. Now you can use the script template to create a new COP_Var. Just create a new script and make sure to _Inherit_ from _Resource_. Then in the _Template_ section select **Resource: Var Template**. Give the script any name you want and finally create it. Now in the script make sure to give it a class name if you want to which has been commented out. For the value change it to any type you want. For the **get_value()** method make sure to give it a return type as well which may help with performance a bit. Finally for the **set_value(value)** give the parameter a type as well for helping with performance.
 
-#### Variable Creator
+##### Variable Creator
 For now the only way to create a new variable is to use the _Variable Creator_ plugin. You can open the _Variable Creator_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Variable Creator_. This will open the _Variable Creator_ by docking it at the left side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Variable Creator_.
 
 | ![Variable-Creator1.png](https://imgur.com/yQQdTDU.png) | 
@@ -158,6 +159,12 @@ I will briefly explain what each of the method does in **base_timer.gd** which i
 6. **void stop_timer()** - This method stops the timer countdown.
 7. **float get_time_seconds()** - This method gets the max time or the set time for the timer.
 8. **void update_timer(float)** - This method updates the timer countdown.
+
+#### Instantiate Object:
+| ![Instantiate-Object1.png](https://imgur.com/UYcB48h.png) | 
+|:--:| 
+| *Variable Creator* |
+
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
