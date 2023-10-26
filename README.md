@@ -162,7 +162,7 @@ I will briefly explain what each of the method does in **base_timer.gd** which i
 
 #### Instantiate Object:
 I have added a new feature that allows to quickly add instantiation of packed scenes objects from the filesystem to the scene editor. No need to drag and drop or add an insantiated object 1 by 1 from the default Godot system. In future will try to make this system even faster. You can open the _Instantiate Object_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Instantiate Object_. This will open the _Instantiate Object_ by docking it at the bottom right side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Instantiate Object_.
-| ![Instantiate-Object1.png](https://imgur.com/UYcB48h.png) | 
+| ![Instantiate-Object1.png](https://imgur.com/cJ5jIAA.png) | 
 |:--:| 
 | *Instantiate Object* |
 
@@ -181,6 +181,7 @@ Here I will share all the updates done to the current versions. Below are the up
 2. Added timer countdown feature.
 3. Added new Var types which are _Camera2D_, _Camera3D_, _Node_, _Node2D_ and _Node3D_.
 4. Dynamic Path Default Setting - This means that if ever a new variable type is added then the Variable Creator will update the variable creation path location. It will change the path location to the default location for all certain variable type which is the _res://addons/kamran_wali/code_opt_pro/variables/_ folder. The reason for adding this feature is to avoid any errors while creating new variable type which is forgetting to add a new element in the path's array. So when a new variable type is added expect your saved path locations to change and you have to change and save them all back.
+5. Added a new feature called _Instantiate Object_ feature. This feature helps to add instantiated packed scene object from the filesystem into the scene editor. Godot already has a system in place for adding instantiated packed scene objects into the scene editor but unfortunately you have to do it 1 by 1 and the process can get tedious. This is new feature makes the process very fast for adding instantiated packed objects into the scene. Please checkout [Instantiate Object](#instantiate-object) for more details.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
