@@ -68,7 +68,7 @@ layout_mode = 2
 [node name="NumberLabel" type="Label" parent="MainContainer/NumberContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
-text = "Number of Duplication"
+text = "Number of Instantiation"
 
 [node name="Input_Number" type="LineEdit" parent="MainContainer/NumberContainer"]
 layout_mode = 2
