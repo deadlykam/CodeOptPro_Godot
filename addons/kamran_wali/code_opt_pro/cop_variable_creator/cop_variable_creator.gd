@@ -1,5 +1,5 @@
 @tool
-extends Control
+extends "res://addons/kamran_wali/code_opt_pro/scripts/code_opt_pros/base_plugin.gd"
 
 const _RESOURCE_PATH = "res://addons/kamran_wali/code_opt_pro/scripts/resources/"
 const _DEFAULT_VAR_TYPE_PATH = "res://addons/kamran_wali/code_opt_pro/variables/"
@@ -15,7 +15,6 @@ const _SETTINGS = "settings"
 # Global Properties
 var _path_fixed_vars : COP_VariablePaths
 var _path_vars : COP_VariablePaths
-var _version: COP_FixedStringVar
 
 # Properties from the scene.
 var _name_txt: LineEdit
@@ -33,7 +32,6 @@ var _vector3_input_holder: HBoxContainer
 var _input_vec3_x: TextEdit
 var _input_vec3_y: TextEdit
 var _input_vec3_z: TextEdit
-var _version_lbl: Label
 
 # Properties needed internally.
 var _data_folders: Array[String]
@@ -51,10 +49,11 @@ var _temp_vec2: Vector2
 var _temp_vec3: Vector3
 
 func _enter_tree():
+	super._enter_tree()
+	
 	# Setting up global properties
 	_path_fixed_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/paths_fixed_vars.tres")
 	_path_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_vars.tres")
-	_version = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/version.tres")
 	
 	# Setting up the scene variables
 	_name_txt = $MainContainer/NameContainer/Name_Txt
@@ -72,7 +71,6 @@ func _enter_tree():
 	_input_vec3_x = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_X
 	_input_vec3_y = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Y
 	_input_vec3_z = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Z
-	_version_lbl = $Version
 	
 	# Setting up the scene at start #
 	_set_data_inputs() # Setting the data inputs
@@ -88,11 +86,13 @@ func _enter_tree():
 	_set_inputs() # Showing the correct input at start
 	_update_path_txt() # Showing the correct path at start
 	_update_create_button_name() # Updating the button name at start
-	_version_lbl.text = _version.get_value() # Setting the version of the plugin
 
-func _process(delta):
+func update(delta):
 	if _create_button.visible != _is_show_create_button():
 		_create_button.visible = _is_show_create_button()
+
+func get_version_lbl_path() -> String:
+	return "Version"
 
 func _on_create_button_pressed():
 	var variable = load(_RESOURCE_PATH + "/" + _data_folders[_index_category] + "/" 
@@ -166,8 +166,7 @@ func _get_file_names(path: String) -> Array[String]:
 	_file_name = ""
 	_temp_array = []
 	
-	# Condition to start to retrieve the file names and storing
-	# in the temp array.
+	# Condition to start to retrieve the file names and storing in the temp array.
 	if _dir:
 		_dir.list_dir_begin()
 		_file_name = _dir.get_next()
@@ -278,8 +277,8 @@ func _set_input_txt_colour() -> void:
 
 ## This method checks if the input_txt's text is correct or NOT.
 func _is_input_txt() -> bool:
-	return (((_is_fixed_float() && _input_txt.text.is_valid_float()) 
-		|| (_is_fixed_int() && _input_txt.text.is_valid_int()) 
+	return (((_is_fixed_float() && is_float(_input_txt.text)) 
+		|| (_is_fixed_int() && is_int(_input_txt.text)) 
 		|| _is_fixed_string()) && !_input_txt.text.is_empty())
 
 ## This method sets the correct font colour for input vec2 x.
@@ -288,7 +287,7 @@ func _set_input_vec2_x_colour() -> void:
 
 ## This method checks if the input_vec2_x's text is correct or NOT.
 func _is_input_vec2_x() -> bool:
-	return _input_vec2_x.text.is_valid_float() && !_input_vec2_x.text.is_empty()
+	return is_float(_input_vec2_x.text)
 
 ## This method sets the correct font colour for input vec2 y.
 func _set_input_vec2_y_colour() -> void:
@@ -296,7 +295,7 @@ func _set_input_vec2_y_colour() -> void:
 
 ## This method checks if the input_vec2_y's text is correct or NOT.
 func _is_input_vec2_y() -> bool:
-	return _input_vec2_y.text.is_valid_float() && !_input_vec2_y.text.is_empty()
+	return is_float(_input_vec2_y.text)
 
 ## This method sets the correct font colour for input vec3 x.
 func _set_input_vec3_x_colour() -> void:
@@ -304,7 +303,7 @@ func _set_input_vec3_x_colour() -> void:
 
 ## This method checks if the input_vec3_x's text is correct or NOT.
 func _is_input_vec3_x() -> bool:
-	return _input_vec3_x.text.is_valid_float() && !_input_vec3_x.text.is_empty()
+	return is_float(_input_vec3_x.text)
 
 ## This method sets the correct font colour for input vec3 y.
 func _set_input_vec3_y_colour() -> void:
@@ -312,7 +311,7 @@ func _set_input_vec3_y_colour() -> void:
 
 ## This method checks if the input_vec3_y's text is correct or NOT.
 func _is_input_vec3_y() -> bool:
-	return _input_vec3_y.text.is_valid_float() && !_input_vec3_y.text.is_empty()
+	return is_float(_input_vec3_y.text)
 
 ## This method sets the correct font colour for input vec3 z.
 func _set_input_vec3_z_colour() -> void:
@@ -320,7 +319,7 @@ func _set_input_vec3_z_colour() -> void:
 
 ## This method checks if the input_vec3_z's text is correct or NOT.
 func _is_input_vec3_z() -> bool:
-	return _input_vec3_z.text.is_valid_float() && !_input_vec3_z.text.is_empty()
+	return is_float(_input_vec3_z.text)
 
 ## This method checks if the input txt is correct or NOT.
 func _is_input_name_txt() -> bool:
@@ -332,9 +331,9 @@ func _is_input_path_txt() -> bool:
 ## This method sets the text colour of the given TextEdit.
 func _set_font_colour(text_editor: TextEdit, is_white: bool) -> void:
 	if is_white:
-			text_editor.add_theme_color_override("font_color", Color.WHITE)
+		set_control_font_colour(text_editor, Color.WHITE)
 	else:
-		text_editor.add_theme_color_override("font_color", Color.RED)
+		set_control_font_colour(text_editor, Color.RED)
 
 ## This method checks if the condition for showing the create button has been fulfilled.
 func _is_show_create_button() -> bool:

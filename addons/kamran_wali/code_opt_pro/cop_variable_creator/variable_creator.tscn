@@ -220,7 +220,8 @@ anchor_bottom = 1.0
 offset_top = -0.0800171
 grow_horizontal = 2
 grow_vertical = 0
-text = "Version - v1.4.0a"
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Version - v1.5.0a"
 
 [connection signal="text_submitted" from="MainContainer/PathContainer/Path_Txt" to="." method="_on_path_txt_text_submitted"]
 [connection signal="pressed" from="MainContainer/PathContainer/PathUpdateButton" to="." method="_on_path_update_button_pressed"]

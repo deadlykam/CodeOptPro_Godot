@@ -16,6 +16,7 @@ This is a simple Godot system that helps with performance.
     - [Variable Creator](#variable-creator)
   - [Vector Performant Calculation](#vector-performant-calculation)
   - [Timer Countdown](#timer-countdown)
+  - [Instantiate Object](#instantiate-object)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -63,8 +64,8 @@ Just like FixedVars this category shares different type of data types as well, e
 - **COP_Vector3Var** - This Var type shares _Vector3_ data types. To set the value simply call _void COP_Vector3Var.set_value(Vector3 value)_. To get the value just call _Vector3 COP_Vector3Var.get_value()_. To use COP_Vector3Var simply change the type of a var to COP_Vector3Var.
 - **COP_Var Template** - Fir creating a new COP_Var type you can simply use the script templates that are already present in the addon. Go to the folder _addons_ -> _kamran_wali_ -> _code_opt_pro_ and then copy the folder **script_templates**. Paste the copied folder to the root folder **res://**. Now you can use the script template to create a new COP_Var. Just create a new script and make sure to _Inherit_ from _Resource_. Then in the _Template_ section select **Resource: Var Template**. Give the script any name you want and finally create it. Now in the script make sure to give it a class name if you want to which has been commented out. For the value change it to any type you want. For the **get_value()** method make sure to give it a return type as well which may help with performance a bit. Finally for the **set_value(value)** give the parameter a type as well for helping with performance.
 
-#### Variable Creator
-For now the only way to create a new variable is to use the _Variable Creator_ plugin. You can open the _Variable Creator_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Variable Creator_. This will open the _Variable Creator_ by docking it at the left side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Variable Creator_.
+##### Variable Creator
+For now the only way to create a new variable is to use the _Variable Creator_ plugin. You can open the _Variable Creator_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Variable Creator_. This will open the _Variable Creator_ by docking it at the bottom right side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Variable Creator_.
 
 | ![Variable-Creator1.png](https://imgur.com/yQQdTDU.png) | 
 |:--:| 
@@ -158,6 +159,21 @@ I will briefly explain what each of the method does in **base_timer.gd** which i
 6. **void stop_timer()** - This method stops the timer countdown.
 7. **float get_time_seconds()** - This method gets the max time or the set time for the timer.
 8. **void update_timer(float)** - This method updates the timer countdown.
+
+#### Instantiate Object:
+I have added a new feature that allows to quickly add instantiation of packed scenes objects from the filesystem to the scene editor. No need to drag and drop or add an insantiated object 1 by 1 from the default Godot system. In future will try to make this system even faster. You can open the _Instantiate Object_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Instantiate Object_. This will open the _Instantiate Object_ by docking it at the bottom right side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Instantiate Object_.
+| ![Instantiate-Object1.png](https://imgur.com/cJ5jIAA.png) | 
+|:--:| 
+| *Instantiate Object* |
+
+- **a.** _Scene_ - This is the scene or packed scene you need to select from the FileSystem. This is also the object that will be instantiated into the Scene Editor.
+- **b.** _Scene Status_ - This is the status of the selected scene object. It will tell you if you have selected a scene or packed scene object from the filesystem or not. When selecting a correct scene or packed scene from the filesystem then the status' font will turn green and show the name of the object indicating that a correct object has been selected.
+- **c.** _Lock Scene_ - If enabled this will make sure that the current selected scene does not get overriden when any other filesystem objects are selected. This helps to navigate through the filesystem without worrying about getting the selected filesystem object overriden.
+- **d.** _Parent_ - This is the node object where the selected scene or packed scene will be instantiated into as a child. This node object must be selected in the Scene Editor.
+- **e.** _Parent Status_ - This is the status of the selected parent node object. It will tell you if you have selected a parent node from the Scene Editor or not. When selecting a correct node object from the Scene Editor then the status' font will turn green and show the name of the object indicating that a correct object has been selected.
+- **f.** _Lock Parent_ - If enabled this will make sure that the current selected node does not get overriden when any other Scene Editor objects are selected. This helps to navigate through the Scene Editor without worrying about getting the selected parent object overriden.
+- **g.** _Number of Instantiation_ - This will instantiate _n_ number of objects. _n_ being greater than 1. This feature is optional and does NOT need to be populated to work.
+- **h.** _Instantiate Object_ - This button will instantiate an object. If a value is given in _Number of Instantiation_ then it will instantiate that amount of objects. This button will ONLY appear if a correct _Scene_ and _Parent_ objects are selected.
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
@@ -165,6 +181,7 @@ Here I will share all the updates done to the current versions. Below are the up
 2. Added timer countdown feature.
 3. Added new Var types which are _Camera2D_, _Camera3D_, _Node_, _Node2D_ and _Node3D_.
 4. Dynamic Path Default Setting - This means that if ever a new variable type is added then the Variable Creator will update the variable creation path location. It will change the path location to the default location for all certain variable type which is the _res://addons/kamran_wali/code_opt_pro/variables/_ folder. The reason for adding this feature is to avoid any errors while creating new variable type which is forgetting to add a new element in the path's array. So when a new variable type is added expect your saved path locations to change and you have to change and save them all back.
+5. Added a new feature called _Instantiate Object_ feature. This feature helps to add instantiated packed scene object from the filesystem into the scene editor. Godot already has a system in place for adding instantiated packed scene objects into the scene editor but unfortunately you have to do it 1 by 1 and the process can get tedious. This is new feature makes the process very fast for adding instantiated packed objects into the scene. Please checkout [Instantiate Object](#instantiate-object) for more details.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
