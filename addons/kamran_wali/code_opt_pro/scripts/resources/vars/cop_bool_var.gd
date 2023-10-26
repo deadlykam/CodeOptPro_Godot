@@ -11,4 +11,3 @@ func get_value() -> bool:
 ## This method sets the value.
 func set_value(value: bool):
 	_value = value
-

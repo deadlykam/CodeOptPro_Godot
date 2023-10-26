@@ -1,0 +1,112 @@
+[gd_scene load_steps=3 format=3 uid="uid://cr1tvl1q0k4y1"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_instantiate_object/cop_instantiate_object.gd" id="1_ixc8a"]
+[ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="2_406mk"]
+
+[node name="Instantiate Object" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ixc8a")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SceneContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="SceneLockButton" type="CheckButton" parent="MainContainer/SceneContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Lock"
+
+[node name="SceneLabel" type="Label" parent="MainContainer/SceneContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Scene: "
+
+[node name="SceneStatusLabel" type="Label" parent="MainContainer/SceneContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.803922, 0.360784, 0.360784, 1)
+theme_override_font_sizes/font_size = 12
+text = "Please select a scene object from FileSystem."
+autowrap_mode = 3
+
+[node name="ParentContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="LockButton" type="CheckButton" parent="MainContainer/ParentContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Lock"
+
+[node name="ParentPathLabel" type="Label" parent="MainContainer/ParentContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Parent:   "
+
+[node name="ParentStatus" type="Label" parent="MainContainer/ParentContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.803922, 0.360784, 0.360784, 1)
+theme_override_font_sizes/font_size = 12
+text = "Please select a parent Node object."
+autowrap_mode = 3
+
+[node name="NumberContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="NumberLabel" type="Label" parent="MainContainer/NumberContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Number of Instantiation"
+
+[node name="Input_Number" type="LineEdit" parent="MainContainer/NumberContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+
+[node name="InstantiateButton" type="Button" parent="MainContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Instantiate Object"
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.633
+anchor_right = 1.0
+anchor_bottom = 0.952
+offset_top = -0.184021
+offset_bottom = 0.104004
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_406mk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Version" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.96
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.0800171
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Version - v1.6.0a"
+
+[connection signal="text_changed" from="MainContainer/NumberContainer/Input_Number" to="." method="_on_input_number_text_changed"]
+[connection signal="pressed" from="MainContainer/InstantiateButton" to="." method="_on_duplicate_button_pressed"]
