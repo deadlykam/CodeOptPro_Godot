@@ -11,4 +11,4 @@ var _manager
 # set the method type to void.
 ## This method sets the manager
 func set_manager(manager) -> void:
-	pass
+	_manager = manager

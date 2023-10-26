@@ -11,10 +11,12 @@ This is a simple Godot system that helps with performance.
 - [Installation](#installation)
 - [Features](#features)
   - [Performant Data Share/Use](#performant-data-shareuse)
-    - [Fixed Vars](fixed-vars)
-    - [Vars](#vars)
+    - [Fixed Vars](#1-fixed-vars)
+    - [Vars](#2-vars)
     - [Variable Creator](#variable-creator)
   - [Vector Performant Calculation](#vector-performant-calculation)
+  - [Timer Countdown](#timer-countdown)
+  - [Instantiate Object](#instantiate-object)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -24,15 +26,15 @@ This is a simple Godot system that helps with performance.
 Godot version **v4.1.1.stable.mono.official [bd6af8e0e]** and above should work. Previous version of Godot have not been tested and may give errors.
 ***
 ## Stable Build
-[Stable-v1.0.0](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.0.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.6.0](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.6.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [CodeOptPro-v1.0.0.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.0.0) from the latest Stable build.
+1. First download the latest [CodeOptPro-v1.6.0.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.6.0) from the latest Stable build.
 2. Once downloaded extract/unzip the file.
 3. Enter the folder and copy the folder named **kamran_wali**.
 4. Now paste the folder in the **addons** folder of your Godot project. If your Godot project does not have the **addons** folder then just create it in the root folder, **res://**, and paste the copied folder there.
-5. (Optional) To open the interface for CodeOptPro simply go to the menu _Project_ -> _Projct Settings_. Click the _Plugins_ tab and enable the **Variable Creator**. This should open and dock the **Variable Creator**.
-6. (Optional) If you want access to the CodeOptPro's script templates then go to the folder _addons_ -> _kamran_wali_ -> _code_opt_pro_ and copy then copy the folder named **script_templates**. Paste the copied folder in the root folder, res://. Now the script_templates should be available while inherting from Resource.
+5. (Optional) To open the interface for CodeOptPro simply go to the menu _Project_ -> _Projct Settings_. Click the _Plugins_ tab and enable the **Variable Creator** or **Instantiate Object**. This should open and dock the **Variable Creator** or **Instantiate Object**.
+7. (Optional) If you want access to the CodeOptPro's script templates then go to the folder _addons_ -> _kamran_wali_ -> _code_opt_pro_ and copy then copy the folder named **script_templates**. Paste the copied folder in the root folder, res://. Now the script_templates should be available while inherting from Resource.
 ***
 ## Features
 #### Performant Data Share/Use:
@@ -50,15 +52,20 @@ In this category different type of data types are shared, example bool, float, i
 ##### 2. Vars
 Just like FixedVars this category shares different type of data types as well, example bool, float, int, string etc. The only difference is that you can **NOT** set any values here like FixedVars and the values may change through custom scripts. Vars basically share values that are constantly changing. For example - You have 5 objects that wants to know the player's position. Then just create a COP_Vector3Var and make the player script constantly update the newly created Vector3Var. Then add the newly created Vector3Var to the other 5 objects. Now all of those 5 objects have access to the player's position without the need of player script reference. Also use the functions _get_value()_ and _set_value(type)_ for getting and setting the value. Do **NOT** get or set the property **_value** directly through script as this may result in error later on. Below are all the types.
 - **COP_BoolVar** - This Var type shares _bool_ data types. To set the value simply call _void COP_BoolVar.set_value(bool value)_. To get the value just call _bool COP_BoolVar.get_value()_. To use COP_BoolVar simply change the type of a var to COP_BoolVar.
+- **COP_Camera2DVar** - This Var type shares _Camera2D_ data types. To set the value simply call _void COP_Camera2DVar.set_value(Camera2D value)_. To get the value just call _Camera2D COP_Camera2DVar.get_value()_. To use COP_Camera2DVar simply change the type of a var to COP_Camera2DVar.
+- **COP_Camera3DVar** - This Var type shares _Camera3D_ data types. To set the value simply call _void COP_Camera3DVar.set_value(Camera3D value)_. To get the value just call _Camera3D COP_Camera3DVar.get_value()_. To use COP_Camera3DVar simply change the type of a var to COP_Camera3DVar.
 - **COP_FloatVar** - This Var type shares _float_ data types. To set the value simply call _void COP_FloatVar.set_value(float value)_. To get the value just call _float COP_FloatVar.get_value()_. To use COP_FloatVar simply change the type of a var to COP_FloatVar.
 - **COP_IntVar** - This Var type shares _int_ data types. To set the value simply call _void COP_IntVar.set_value(int value)_. To get the value just call _int COP_IntVar.get_value()_. To use COP_IntVar simply change the type of a var to COP_IntVar.
+- **COP_NodeVar** - This Var type shares _Node_ data types. To set the value simply call _void COP_NodeVar.set_value(Node value)_. To get the value just call _Node COP_NodeVar.get_value()_. To use COP_NodeVar simply change the type of a var to COP_NodeVar.
+- **COP_Node2DVar** - This Var type shares _Node2D_ data types. To set the value simply call _void COP_Node2DVar.set_value(Node2D value)_. To get the value just call _Node2D COP_Node2DVar.get_value()_. To use COP_Node2DVar simply change the type of a var to COP_Node2DVar.
+- **COP_Node3DVar** - This Var type shares _Node3D_ data types. To set the value simply call _void COP_Node3DVar.set_value(Node3D value)_. To get the value just call _Node3D COP_Node3DVar.get_value()_. To use COP_Node3DVar simply change the type of a var to COP_Node3DVar.
 - **COP_StringVar** - This Var type shares _string_ data types. To set the value simply call _void COP_StringVar.set_value(string value)_. To get the value just call _string COP_StringVar.get_value()_. To use COP_StringVar simply change the type of a var to COP_StringVar.
 - **COP_Vector2Var** - This Var type shares _Vector2_ data types. To set the value simply call _void COP_Vector2Var.set_value(Vector2 value)_. To get the value just call _Vector2 COP_Vector2Var.get_value()_. To use COP_Vector2Var simply change the type of a var to COP_Vector2Var.
 - **COP_Vector3Var** - This Var type shares _Vector3_ data types. To set the value simply call _void COP_Vector3Var.set_value(Vector3 value)_. To get the value just call _Vector3 COP_Vector3Var.get_value()_. To use COP_Vector3Var simply change the type of a var to COP_Vector3Var.
 - **COP_Var Template** - Fir creating a new COP_Var type you can simply use the script templates that are already present in the addon. Go to the folder _addons_ -> _kamran_wali_ -> _code_opt_pro_ and then copy the folder **script_templates**. Paste the copied folder to the root folder **res://**. Now you can use the script template to create a new COP_Var. Just create a new script and make sure to _Inherit_ from _Resource_. Then in the _Template_ section select **Resource: Var Template**. Give the script any name you want and finally create it. Now in the script make sure to give it a class name if you want to which has been commented out. For the value change it to any type you want. For the **get_value()** method make sure to give it a return type as well which may help with performance a bit. Finally for the **set_value(value)** give the parameter a type as well for helping with performance.
 
-#### Variable Creator
-For now the only way to create a new variable is to use the _Variable Creator_ plugin. You can open the _Variable Creator_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Variable Creator_. This will open the _Variable Creator_ by docking it at the left side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Variable Creator_.
+##### Variable Creator
+For now the only way to create a new variable is to use the _Variable Creator_ plugin. You can open the _Variable Creator_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Variable Creator_. This will open the _Variable Creator_ by docking it at the bottom right side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Variable Creator_.
 
 | ![Variable-Creator1.png](https://imgur.com/yQQdTDU.png) | 
 |:--:| 
@@ -105,13 +112,76 @@ I have also added performant Vector calculations that may save some performance 
 30. _Vector2 Vec.multiply_vec2_var(COP_Vector2Var, float)_ - This method is similar to 28. so please read that discription for explanation. The only difference is that it takes COP_Vector2Var.
 31. _Vector3 Vec.set_vec3(Vector3, float, float, float)_ - This method sets the target Vector3 axis values with the provided float values. It then returns the Vector3 without needing any extra _var_ variables.
 32. _Vector2 Vec.set_vec2(Vector2, float, float, float)_ - This method sets the target Vector2 axis values with the provided float values. It then returns the Vector2 without needing any extra _var_ variables.
+
+#### [Timer Countdown](https://github.com/deadlykam/CodeOptPro_Godot/blob/b79a2330ca62ab07de849c523add2b76f91374fe/addons/kamran_wali/code_opt_pro/scripts/timers/timer_countdown.gd):
+Even though Godot has a [Countdown Timer](https://docs.godotengine.org/en/stable/classes/class_timer.html) there are certain functionality that are missing which would help a lot. So I added a Timer Countdown feature. The script does as the name suggests which is it count downs to 0. This timer also calculates the normal value for the count down which may help later to sync up some other logic or features of yours.
+
+To use the Timer Countdown feature you must first add a Node and then add the script called **timer_countdown.gd** or **timer_countdown_time.gd**. Both are same but the only difference is that for **timer_countdown.gd** you need to provide the time through script where as for **timer_countdown_time.gd** you can provide the time as _COP_FixedFloatVar_ in the inspector. For the example below we will be using **timer_countdown_time.gd**. You can either drag and drop the script from _addons -> kamran_wali -> code_opt_pro -> scripts -> timers -> timer_countdown_time.gd_ or click the drop down button under the Script tab and select Quick Load and then just type **timer_countdown_time** to get it. Once you have added the Timer Countdown then you must provide a **COP_FixedFloatVar** resource to the field _Time Seconds_ which must have a value greater than 0.0. The value provided here are in seconds. Now in your main script create an export var with type COP_BaseTimer.
+```
+SomeScript.gd
+extends Node
+@export var timer: COP_BaseTimer
+```
+Finally you must call the **timer_countdown_time.update_timer(float)** function to start the timer countdown. This function can be called in either **_process(delta)** or **_physics_process(delta)**. Also the delta value must be provided. If you multiply the delta value with more than 1 then the countdown will happen faster than 1 second and if you multiply the delta value with less than 1 then the countdown will happen slower than 1 second. Example:
+For _process(delta)
+```
+SomeScript.gd
+extends Node
+@export var timer: COP_BaseTimer
+
+func _ready() -> void:
+  timer.reset_timer() # Resetting the timer at start
+
+func _process(delta) -> void:
+  if !timer.is_timer_done: # Checking if timer is NOT done only then will update the timer
+    timer.update_timer(delta) # If only delta is passed then the countdown will be every 1 second. Any value else will be multiple of it.
+```
+
+For _physics_process(delta)
+```
+SomeScript.gd
+extends Node
+@export var timer: COP_BaseTimer
+
+func _ready() -> void:
+  timer.reset_timer() # Resetting the timer at start
+
+func _physics_process(delta) -> void:
+  if !timer.is_timer_done: # Checking if timer is NOT done only then will update the timer
+    timer.update_timer(delta) # If only delta is passed then the countdown will be every 1 second. Any value else will be multiple of it.
+```
+I will briefly explain what each of the method does in **base_timer.gd** which is the blue-print for all timer scritps:
+1. **void set_time(float)** - This method sets a new time second for the timer and overrides the provided time in the export.
+2. **bool is_timer_done()** - This method checks if the timer is done counting down.
+3. **float normalized()** - This method gets the normalized value of the timer which is within the range of 0.0 to 1.0.
+4. **float get_current_time_seconds()** - This method gets the current countdown time of the timer.
+5. **void reset_timer()** - This method resets the timer for countdown.
+6. **void stop_timer()** - This method stops the timer countdown.
+7. **float get_time_seconds()** - This method gets the max time or the set time for the timer.
+8. **void update_timer(float)** - This method updates the timer countdown.
+
+#### Instantiate Object:
+I have added a new feature that allows to quickly add instantiation of packed scenes objects from the filesystem to the scene editor. No need to drag and drop or add an insantiated object 1 by 1 from the default Godot system. In future will try to make this system even faster. You can open the _Instantiate Object_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Instantiate Object_. This will open the _Instantiate Object_ by docking it at the bottom right side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Instantiate Object_.
+| ![Instantiate-Object1.png](https://imgur.com/cJ5jIAA.png) | 
+|:--:| 
+| *Instantiate Object* |
+
+- **a.** _Scene_ - This is the scene or packed scene you need to select from the FileSystem. This is also the object that will be instantiated into the Scene Editor.
+- **b.** _Scene Status_ - This is the status of the selected scene object. It will tell you if you have selected a scene or packed scene object from the filesystem or not. When selecting a correct scene or packed scene from the filesystem then the status' font will turn green and show the name of the object indicating that a correct object has been selected.
+- **c.** _Lock Scene_ - If enabled this will make sure that the current selected scene does not get overriden when any other filesystem objects are selected. This helps to navigate through the filesystem without worrying about getting the selected filesystem object overriden.
+- **d.** _Parent_ - This is the node object where the selected scene or packed scene will be instantiated into as a child. This node object must be selected in the Scene Editor.
+- **e.** _Parent Status_ - This is the status of the selected parent node object. It will tell you if you have selected a parent node from the Scene Editor or not. When selecting a correct node object from the Scene Editor then the status' font will turn green and show the name of the object indicating that a correct object has been selected.
+- **f.** _Lock Parent_ - If enabled this will make sure that the current selected node does not get overriden when any other Scene Editor objects are selected. This helps to navigate through the Scene Editor without worrying about getting the selected parent object overriden.
+- **g.** _Number of Instantiation_ - This will instantiate _n_ number of objects. _n_ being greater than 1. This feature is optional and does NOT need to be populated to work.
+- **h.** _Instantiate Object_ - This button will instantiate an object. If a value is given in _Number of Instantiation_ then it will instantiate that amount of objects. This button will ONLY appear if a correct _Scene_ and _Parent_ objects are selected.
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
-1. Created _FixedVar_ type for sharing fixed values.
-2. Created _Var_ type for sharing values that changes.
-3. Add script template to create new variable types.
-4. Created _Variable Creator_ plugin for allowing to create the variables.
+1. Storing the provided manager in the _manager_helper_template_ by default. Before it was just a stub function.
+2. Added timer countdown feature.
+3. Added new Var types which are _Camera2D_, _Camera3D_, _Node_, _Node2D_ and _Node3D_.
+4. Dynamic Path Default Setting - This means that if ever a new variable type is added then the Variable Creator will update the variable creation path location. It will change the path location to the default location for all certain variable type which is the _res://addons/kamran_wali/code_opt_pro/variables/_ folder. The reason for adding this feature is to avoid any errors while creating new variable type which is forgetting to add a new element in the path's array. So when a new variable type is added expect your saved path locations to change and you have to change and save them all back.
+5. Added a new feature called _Instantiate Object_ feature. This feature helps to add instantiated packed scene object from the filesystem into the scene editor. Godot already has a system in place for adding instantiated packed scene objects into the scene editor but unfortunately you have to do it 1 by 1 and the process can get tedious. This is new feature makes the process very fast for adding instantiated packed objects into the scene. Please checkout [Instantiate Object](#instantiate-object) for more details.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).

@@ -9,6 +9,6 @@ func get_value() -> float:
 	return _value
 	
 ## This method sets the value.
-func set_value(value: float):
+func set_value(value: float) -> void:
 	_value = value
 
