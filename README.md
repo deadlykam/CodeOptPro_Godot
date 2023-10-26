@@ -161,7 +161,7 @@ I will briefly explain what each of the method does in **base_timer.gd** which i
 8. **void update_timer(float)** - This method updates the timer countdown.
 
 #### Instantiate Object:
-I have added a new feature that allows to quickly add instantiation of packed scenes objects from the filesystem to the scene editor. No need to drag and drop or add an insantiated object 1 by 1 from the default Godot system. In future will try to make this system even faster. You can open the _Instantiate Object_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Instantiate Object_. This will open the _Instantiate Object_ by docking it at the bottom right side. You dock it how ever you wish. Below I will explain the highlighted parts of the _Instantiate Object_.
+I have added a new feature that allows to quickly add instantiation of packed scenes objects from the filesystem to the scene editor. No need to drag and drop or add an insantiated object 1 by 1 from the default Godot system. In future will try to make this system even faster. You can open the _Instantiate Object_ window by going to the menu _Project_ -> _Project Settings_ then select the _Plugins_ tab and finally enable the _Instantiate Object_. This will open the _Instantiate Object_ by docking it at the bottom right side. You can dock it how ever you wish. Below I will explain the highlighted parts of the _Instantiate Object_.
 | ![Instantiate-Object1.png](https://imgur.com/UYcB48h.png) | 
 |:--:| 
 | *Instantiate Object* |
