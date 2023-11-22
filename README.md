@@ -17,6 +17,7 @@ This is a simple Godot system that helps with performance.
   - [Vector Performant Calculation](#vector-performant-calculation)
   - [Timer Countdown](#timer-countdown)
   - [Instantiate Object](#instantiate-object)
+  - [Bars](#bars)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -174,14 +175,54 @@ I have added a new feature that allows to quickly add instantiation of packed sc
 - **f.** _Lock Parent_ - If enabled this will make sure that the current selected node does not get overriden when any other Scene Editor objects are selected. This helps to navigate through the Scene Editor without worrying about getting the selected parent object overriden.
 - **g.** _Number of Instantiation_ - This will instantiate _n_ number of objects. _n_ being greater than 1. This feature is optional and does NOT need to be populated to work.
 - **h.** _Instantiate Object_ - This button will instantiate an object. If a value is given in _Number of Instantiation_ then it will instantiate that amount of objects. This button will ONLY appear if a correct _Scene_ and _Parent_ objects are selected.
+
+#### Bars:
+Added bar feature which acts like any normal bar. This can, for example, be used for character health. The _get_normal()_ method in the bar is a powerful function that allows you to sync the bar with any other features. Below I will briefly explain what each method does.
+1. **void set_max(int)** - This method sets the maximum limit for the bar. The max limit can NOT be less than 1. If a value of less than 1 is given the bar will make the max limit to 1. If this method needs to be called then calling it once when the scene is ready is recommended. This will make sure to avoid any wrong results. _Also make sure that this method is called before set_current(int) method. Otherwise setup might give wrong results._
+2. **void set_current(int)** - This method sets the current value of the bar. The current value can NOT be less than 0 or more than max value. If a value of less than 0 is given then the current value will be set to 0. If a value of more than max is given then the current value will be set to max value. If this method needs to be called then calling it once when the scene is ready is recommended. This will make sure to avoid any wrong results. _Also make sure that this method is called after set_max(int) method. Otherwise setup might give wrong results._
+3. **float get_normal()** - This method gets the normal value for the bar which is in the range of 0 to 1. You can use this value to sync other features with the bar.
+4. **void add(int)** - This method adds value to the bar's current value. The current value of the bar will never go above maximum value.
+5. **int get_value_max()** - This method gets the maximum value of the bar.
+6. **int get_value_current()** - This method gets the current value of the bar.
+7. **bool is_full()** - This method checks if the bar is full that is current value equals to max value.
+8. **bool is_depleted()** - This method checks if the bar is empty that is current value equals to 0.
+9. **void restore()** - This method makes the bar full again that is current value equals to max value.
+10. **void subtract(int)** - This method removes value from the bar's current value. The current value of the bar will never go below 0.
+
+I have added different type of bars with different functionalities. I will explain how to use them briefly below.
+1. **normal_bar** - This bar acts like a normal bar which means that adding a value will just add the value and subtracting a value will just subtract it. To use this bar make sure to set the maximum value at the scene start otherwise the default value will be used as maximum which is 1. Optionally you can set the current value as well if you want to at the scene start otherwise its value will be 0.
+```
+SomeScript.gd
+
+extends Node
+@export var bar: COP_BaseBar
+
+func _ready() -> void:
+  bar.set_max(10)
+  bar.set_current(10) # Optional: If you also want to set the current value at the start but it is NOT necessary if NOT needed
+
+## This method hurts the character with the given value.
+func hurt(value: int) -> void:
+  bar.subtract(value) # Removing health by subtracting bar's current value
+
+## This method heals the character with the given value.
+func heal(value: int) -> void:
+  bar.add(value) # Adding health by adding to bar's current value
+
+## This method checks if the character is dead or NOT.
+func is_dead() -> bool:
+  return is_depleted()
+
+## This method returns the health's normal value so that the UI bar can be synced.
+func get_health_normal() -> float:
+  return bar.get_normal() # The health's normal value which is the bar's normal value
+```
+
+2. **normal_bar_values** - This bar is same as the **normal_bar** in functionalities. The only difference is that you must provide the max and current value in the script itself. It has two properties which are **_max: COP_FixedFloatVar** and **_is_set_cur_value: COP_FixedBoolVar**. The **_max** property takes in a _COP_FixedFloatVar_ value which is the maximum limit for the bar and the value MUST be greater than 1. The **_is_set_cur_value** property takes in a _COP_FixedBoolVar_ value which is the flag that decides if to set the current value of the bar as max value or NOT. True means the current value at the start will be same as the max value. False means current value will be 0 at the start. You don't need to call the _set_max(int)_ and _set_current(int)_ methods at the start but you do have the option to do so if you want to. You can use the code example in **1. normal_bar** and just remove **func _ready()** method from it.
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
-1. Storing the provided manager in the _manager_helper_template_ by default. Before it was just a stub function.
-2. Added timer countdown feature.
-3. Added new Var types which are _Camera2D_, _Camera3D_, _Node_, _Node2D_ and _Node3D_.
-4. Dynamic Path Default Setting - This means that if ever a new variable type is added then the Variable Creator will update the variable creation path location. It will change the path location to the default location for all certain variable type which is the _res://addons/kamran_wali/code_opt_pro/variables/_ folder. The reason for adding this feature is to avoid any errors while creating new variable type which is forgetting to add a new element in the path's array. So when a new variable type is added expect your saved path locations to change and you have to change and save them all back.
-5. Added a new feature called _Instantiate Object_ feature. This feature helps to add instantiated packed scene object from the filesystem into the scene editor. Godot already has a system in place for adding instantiated packed scene objects into the scene editor but unfortunately you have to do it 1 by 1 and the process can get tedious. This new feature makes the process very fast for adding instantiated packed objects into the scene. Please checkout [Instantiate Object](#instantiate-object) for more details.
+1. Added Bar feature. For now added two types of bars which are **normal_bar** and **normal_bar_values**.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
