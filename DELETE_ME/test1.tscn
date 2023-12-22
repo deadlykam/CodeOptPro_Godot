@@ -1,9 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://b0o2oo0e6acao"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/scripts/managers/updates/base_update_manager.gd" id="1_05fuj"]
+[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/scripts/managers/updates/process_manager_local.gd" id="1_6wp5d"]
 
 [node name="World" type="Node3D"]
 
-[node name="Node" type="Node" parent="."]
-script = ExtResource("1_05fuj")
-_num_update = 3
+[node name="Managers" type="Node" parent="."]
+
+[node name="ProcessManagerLocal" type="Node" parent="Managers"]
+script = ExtResource("1_6wp5d")
