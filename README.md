@@ -24,7 +24,7 @@ This is a simple Godot system that helps with performance.
 
 ## Prerequisites
 #### Godot Game Engine
-Godot version **v4.1.1.stable.mono.official [bd6af8e0e]** and above should work. Previous version of Godot have not been tested and may give errors.
+Godot version **v4.1.3.stable.mono.official [f06b6836a]** and above should work. Previous Godot version of **v4.1.1.stable.mono.official [bd6af8e0e]** should work but any version before that have not been tested and may give errors.
 ***
 ## Stable Build
 [Stable-v1.6.0](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.6.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
@@ -223,6 +223,7 @@ func get_health_normal() -> float:
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
 1. Added Bar feature. For now added two types of bars which are **normal_bar** and **normal_bar_values**.
+2. Updated Godot version from **v4.1.1.stable.mono.official [bd6af8e0e]** to v4.1.3.stable.mono.official [f06b6836a]. Hopefully this will NOT give any errors.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
