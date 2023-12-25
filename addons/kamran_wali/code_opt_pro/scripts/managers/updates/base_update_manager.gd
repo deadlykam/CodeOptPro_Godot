@@ -1,5 +1,5 @@
 @tool
-class_name COP_BaseUpdateManager
+class_name COP_UpdateManager
 extends Node
 
 # TODO: Add the methods for automation inside the region if automation is implemented. Check COP.
