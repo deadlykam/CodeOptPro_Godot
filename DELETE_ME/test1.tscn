@@ -10,9 +10,8 @@
 
 [node name="Managers" type="Node" parent="."]
 
-[node name="ProcessManagerLocal" type="Node" parent="Managers" node_paths=PackedStringArray("_objects")]
+[node name="ProcessManagerLocal" type="Node" parent="Managers"]
 script = ExtResource("1_6wp5d")
-_objects = [NodePath("../../Objects/UO_1"), NodePath("../../Objects/UO_2")]
 _num_update = 2
 
 [node name="ProcessManagerGlobal" type="Node" parent="Managers"]

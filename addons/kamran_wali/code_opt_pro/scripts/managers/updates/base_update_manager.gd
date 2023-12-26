@@ -25,6 +25,7 @@ func _ready() -> void:
     _calculate_time_delta() # Calculating the delta time for the update manager
     _validate_num_update() # Validting the actual number of objects to update
 
+#region These methods SHOULD NOT BE CALLED BY OTHER SCRIPTS.
 ## This method updates the update manager and MUST only be called by 
 ## its children and NO other scripts.
 func update(delta: float) -> void:
@@ -36,6 +37,18 @@ func update(delta: float) -> void:
             while _index_update < _actual_num_update:
                 _update_object(delta)
                 _index_update += 1
+
+## This method adds an object to the manager. THIS SHOULD ONLY BE CALLED BY
+## THE AUTOMATION LOGIC AND NO OTHER SCRIPTS!
+func add_object(object) -> void:
+    if object.has_method("is_update_object"): # Checking if object is update object
+        _objects.append(object)
+#endregion
+
+## This method checks if the an object has already been added.
+## True means added, false otherwise, of type bool.
+func has_object(object) -> bool:
+    return _objects.has(object)
 
 ## This method gets the time delta value for the manager.
 func get_time_delta() -> float:
