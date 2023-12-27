@@ -1,4 +1,6 @@
-extends COP_BaseUpdateManager
+@tool
+extends COP_UpdateManager
 
 func _physics_process(delta: float) -> void:
-    update(delta * get_time_delta())
+    if !Engine.is_editor_hint():
+        update(delta * get_time_delta())

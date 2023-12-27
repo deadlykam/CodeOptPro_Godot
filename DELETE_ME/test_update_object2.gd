@@ -1,6 +1,6 @@
 extends Node
 
-@export var update_manager: COP_UpdateManager
+@export var update_manager: COP_UpdateManagerGlobalHelper
 @export var timer: COP_BaseTimer
 @export var time: float
 @export var _is_active:= true
@@ -32,3 +32,4 @@ func is_active():
 func is_update_object():
 	return true
 #endregion
+

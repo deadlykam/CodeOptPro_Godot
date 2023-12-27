@@ -14,6 +14,7 @@ const _SETTINGS = "settings"
 
 # Global Properties
 var _path_fixed_vars : COP_VariablePaths
+var _path_managers: COP_VariablePaths
 var _path_vars : COP_VariablePaths
 
 # Properties from the scene.
@@ -52,7 +53,8 @@ func _enter_tree():
 	super._enter_tree()
 	
 	# Setting up global properties
-	_path_fixed_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/paths_fixed_vars.tres")
+	_path_fixed_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_fixed_vars.tres")
+	_path_managers = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_managers.tres")
 	_path_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_vars.tres")
 	
 	# Setting up the scene variables
@@ -87,7 +89,7 @@ func _enter_tree():
 	_update_path_txt() # Showing the correct path at start
 	_update_create_button_name() # Updating the button name at start
 
-func update(delta):
+func update(delta: float) -> void:
 	if _create_button.visible != _is_show_create_button():
 		_create_button.visible = _is_show_create_button()
 
@@ -201,8 +203,11 @@ func _check_paths() -> void:
 		# Checking and setting fixed var path.
 		if _index == 0 && _data_files[_index].size() != _path_fixed_vars.get_size():
 			_set_path_to_default(_path_fixed_vars, _data_files[_index].size())
+		# Checking and setting managers path.
+		if _index == 1 && _data_files[_index].size() != _path_managers.get_size():
+			_set_path_to_default(_path_managers, _data_files[_index].size())
 		# Checking and setting var path.
-		if _index == 1 && _data_files[_index].size() != _path_vars.get_size():
+		if _index == 2 && _data_files[_index].size() != _path_vars.get_size():
 			_set_path_to_default(_path_vars, _data_files[_index].size())
 
 
@@ -354,21 +359,27 @@ func _set_fixed_var_value(variable, value) -> void:
 func _update_path_txt() -> void:
 	if _index_category == 0: # Fixed Var path
 		_path_txt.text = _path_fixed_vars.get_var_path(_index_actions)
-	elif _index_category == 1: # Var path
+	elif _index_category == 1: # Manager path
+		_path_txt.text = _path_managers.get_var_path(_index_actions)
+	elif _index_category == 2: # Var path
 		_path_txt.text = _path_vars.get_var_path(_index_actions)
 
 ## This method updates the path.
 func _update_path() -> void:
 	if _index_category == 0: # Fixed Var
 		_path_fixed_vars.update_var_path(_index_actions, _path_txt.text)
-	elif _index_category == 1: # Var
+	elif _index_category == 1: # Manager
+		_path_managers.update_var_path(_index_actions, _path_txt.text)
+	elif _index_category == 2: # Var
 		_path_vars.update_var_path(_index_actions, _path_txt.text)
 
 ## This method gets the variable path.
 func _get_path_variable() -> String:
 	if _index_category == 0: # Fixed Var
 		return _path_fixed_vars.get_var_path(_index_actions)
-	elif _index_category == 1: # Var
+	elif _index_category == 1: # Manager
+		return _path_managers.get_var_path(_index_actions)
+	elif _index_category == 2: # Var
 		return _path_vars.get_var_path(_index_actions)
 	return ""
 
