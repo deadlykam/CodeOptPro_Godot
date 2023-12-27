@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://s44urdv253ey"]
+[gd_scene load_steps=3 format=3 uid="uid://s44urdv253ey"]
 
+[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_auto_setup/cop_auto_setup.gd" id="1_x6dts"]
 [ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="1_yv8bq"]
 
 [node name="Auto Setup" type="Control"]
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_x6dts")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -52,3 +54,5 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "Version - v1.7.0a"
+
+[connection signal="pressed" from="MainContainer/ManualSetupContainer/ManualSetupButton" to="." method="_on_manual_setup_button_pressed"]

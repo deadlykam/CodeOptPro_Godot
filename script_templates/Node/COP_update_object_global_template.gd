@@ -1,8 +1,22 @@
+@tool
 extends Node # You may change the extension as you wish but the methods
 #              here MUST remain for this object to become an update object
 
 ## The global update manager that will update this object.
-@export var update_manager: COP_UpdateManagerGlobalHelper
+@export var update_manager: COP_UpdateManagerGlobalHelper:
+	set(p_update_manager):
+		if update_manager != p_update_manager:
+			update_manager = p_update_manager
+			update_configuration_warnings()
+
+func _get_configuration_warnings():
+	var warnings: Array[String]
+
+	if !update_manager:
+		warnings.append("Update Manager: Please assign a COP_UpdateManagerGlobalHelper 
+			otherwise object will NOT be updated and auto setup will give error.")
+	
+	return warnings
 
 ## This method updates the update object.
 func update(delta: float) -> void:
@@ -23,15 +37,15 @@ func is_active() -> bool:
 #                        object is active or NOT.
 
 #region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
-func add_self_to_manager() -> void:
+func _add_self_to_manager() -> void:
 	if update_manager:
-		update_manager.add_object(self)
+		update_manager._add_object(self)
 	else:
-		push_error("Error!, ", name, " does not have update manager assigned")
+		push_error("Error: ", name, " does not have update manager assigned!")
 
 ## This method always sends true as the script is an update object.
 ## This method is needed for duck typing check and SHOULD NOT BE
 ## OVERRIDDEN OR CHANGED!
-func is_update_object() -> bool:
+func _is_update_object() -> bool:
 	return true
 #endregion

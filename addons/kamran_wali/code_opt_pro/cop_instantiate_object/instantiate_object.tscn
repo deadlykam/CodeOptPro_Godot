@@ -38,7 +38,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.803922, 0.360784, 0.360784, 1)
 theme_override_font_sizes/font_size = 12
-text = "Please select a scene object from FileSystem."
+text = "Scene object NOT selected."
 autowrap_mode = 3
 
 [node name="ParentContainer" type="HBoxContainer" parent="MainContainer"]
@@ -57,9 +57,9 @@ text = "Parent:   "
 [node name="ParentStatus" type="Label" parent="MainContainer/ParentContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.803922, 0.360784, 0.360784, 1)
+theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_font_sizes/font_size = 12
-text = "Please select a parent Node object."
+text = "InstantiateButton"
 autowrap_mode = 3
 
 [node name="NumberContainer" type="HBoxContainer" parent="MainContainer"]
