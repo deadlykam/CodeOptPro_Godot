@@ -10,6 +10,7 @@ var _update_objects: Array[Object]
 var _nodes_open: Array[Node]
 var _node_current: Node
 var _index: int
+var _is_setup:= false
 
 func _enter_tree():
 	super._enter_tree()
@@ -20,9 +21,14 @@ func get_version_lbl_path() -> String:
 	return "Version"
 #endregion
 
-# func update(delta: float) -> void:
-# 	if EDITOR_PLUGIN.get_editor_interface().is_playing_scene():
-# 		print("Scene is playing!")
+func update(delta: float) -> void:
+	if EDITOR_PLUGIN.get_editor_interface().is_playing_scene(): # Checking if scene is being played
+		if !_is_setup: # Condition to do auto setup
+			_auto_setup()
+			_is_setup = true
+	else:
+		if _is_setup:
+			_is_setup = false
 
 func _on_manual_setup_button_pressed():
 	_auto_setup()

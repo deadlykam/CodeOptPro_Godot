@@ -6,6 +6,12 @@ extends Resource
 ## Use the functions instead otherwise will give error.
 var _manager: COP_UpdateManager
 
+## This method adds an object to the manager. THIS SHOULD ONLY BE CALLED BY
+## THE AUTOMATION LOGIC AND NO OTHER SCRIPTS!
+func _add_object(object) -> void:
+	if _manager:
+		_manager._add_object(object)
+
 ## This method sets the manager.
 func set_manager(manager: COP_UpdateManager) -> void:
 	_manager = manager
@@ -14,12 +20,6 @@ func set_manager(manager: COP_UpdateManager) -> void:
 ## or not.
 func is_manager(manager: COP_UpdateManager) -> bool:
 	return _manager == manager
-
-## This method adds an object to the manager. THIS SHOULD ONLY BE CALLED BY
-## THE AUTOMATION LOGIC AND NO OTHER SCRIPTS!
-func add_object(object) -> void:
-	if _manager:
-		_manager.add_object(object)
 
 ## This method checks if the an object has already been added.
 ## True means added, false otherwise, of type bool.
@@ -41,5 +41,5 @@ func get_time_delta_physics_process() -> float:
 ## This method always sends true as the script is 
 ## update_manager. This method is needed for duck
 ## typing check and SHOULD NOT be OVERRIDDEN!
-func is_update_manager() -> bool:
+func _is_update_manager() -> bool:
 	return false if !_manager else _manager.is_update_manager()

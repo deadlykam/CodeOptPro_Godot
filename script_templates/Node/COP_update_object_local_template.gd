@@ -10,7 +10,7 @@ extends Node # You may change the extension as you wish but the methods
 			update_configuration_warnings()
 
 func _get_configuration_warnings():
-	var warnings: Array[String]
+	var warnings = []
 
 	if !update_manager:
 		warnings.append("Update Manager: Please assign a COP_UpdateManager 
@@ -25,7 +25,7 @@ func update(delta: float) -> void:
 	pass
 
 ## This method activates/deactivates the update object.
-func set_active(is_active: bool) -> void:
+func set_active(is_enable: bool) -> void:
 	# NOTE: Your logic for activating and deactivating the update
 	#       object MUST go here.
 	pass
@@ -37,6 +37,9 @@ func is_active() -> bool:
 #                        object is active or NOT.
 
 #region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
+## This method adds this object to the update manager._action_options
+## THIS METHOD SHOULD NOT BE CALLED OR OVERRIDDEN. IT IS ONLY USED
+## FOR AUTOMATION!
 func _add_self_to_manager() -> void:
 	if update_manager:
 		update_manager._add_object(self)

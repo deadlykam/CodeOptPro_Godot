@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://s44urdv253ey"]
+[gd_scene load_steps=12 format=3 uid="uid://s44urdv253ey"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_auto_setup/cop_auto_setup.gd" id="1_x6dts"]
 [ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="1_yv8bq"]
+[ext_resource type="Texture2D" uid="uid://qs7xed7x85l7" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Project_Normal.png" id="2_l2vmk"]
+[ext_resource type="Texture2D" uid="uid://cxtwuxgfusvni" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Project_Hover.png" id="3_5mqlc"]
+[ext_resource type="Texture2D" uid="uid://ds6m38m3u0beq" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Project_Pressesd.png" id="3_dscjx"]
+[ext_resource type="Texture2D" uid="uid://clvqhy0or6efm" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Current_Scene_Normal.png" id="4_s10h8"]
+[ext_resource type="Texture2D" uid="uid://brsgbi5sf0jix" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Current_Scene_Hover.png" id="5_ja6tn"]
+[ext_resource type="Texture2D" uid="uid://rnx235hj1ocu" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Current_Scene_Pressed.png" id="6_atn4q"]
+[ext_resource type="Texture2D" uid="uid://bwfy7kt5cnxdx" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Manual_Setup_Normal.png" id="6_noe28"]
+[ext_resource type="Texture2D" uid="uid://78eqxdlp7tjs" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Manual_Setup_Hover.png" id="7_g2per"]
+[ext_resource type="Texture2D" uid="uid://ch0fqn8cnab8f" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Manual_Setup_Pressed.png" id="9_gyutg"]
 
 [node name="Auto Setup" type="Control"]
 layout_mode = 3
@@ -22,11 +31,34 @@ grow_vertical = 2
 
 [node name="ManualSetupContainer" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2
+alignment = 1
 
-[node name="ManualSetupButton" type="Button" parent="MainContainer/ManualSetupContainer"]
+[node name="RunProjectButton" type="TextureButton" parent="MainContainer/ManualSetupContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
-text = "Manual Setup"
+size_flags_horizontal = 3
+tooltip_text = "Run Project.
+Will run auto setup and then play the project."
+texture_normal = ExtResource("2_l2vmk")
+texture_pressed = ExtResource("3_dscjx")
+texture_hover = ExtResource("3_5mqlc")
+
+[node name="RunCurrentSceneButton" type="TextureButton" parent="MainContainer/ManualSetupContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Run Current Scene.
+Will run auto setup and then play the edited scene."
+texture_normal = ExtResource("4_s10h8")
+texture_pressed = ExtResource("6_atn4q")
+texture_hover = ExtResource("5_ja6tn")
+
+[node name="ManualSetupButton" type="TextureButton" parent="MainContainer/ManualSetupContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Manual Setup.
+Will only run auto setup."
+texture_normal = ExtResource("6_noe28")
+texture_pressed = ExtResource("9_gyutg")
+texture_hover = ExtResource("7_g2per")
 
 [node name="Logo" type="TextureRect" parent="."]
 layout_mode = 1
@@ -54,5 +86,3 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "Version - v1.7.0a"
-
-[connection signal="pressed" from="MainContainer/ManualSetupContainer/ManualSetupButton" to="." method="_on_manual_setup_button_pressed"]

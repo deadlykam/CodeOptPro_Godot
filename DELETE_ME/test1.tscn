@@ -27,3 +27,4 @@ update_manager = NodePath("../../Managers/ProcessManagerLocal")
 
 [node name="Node2" type="Node" parent="Objects"]
 script = ExtResource("5_yfvx8")
+update_manager = ExtResource("3_i40ys")

@@ -12,27 +12,22 @@ extends Node # You may change the extension as you wish but the methods
 @export var _is_active:= true
 
 func _get_configuration_warnings():
-	# var warnings
+	var warnings = []
 
-	# if !update_manager:
-	# 	warnings.append("Update Manager: Please assign a COP_UpdateManagerGlobalHelper 
-	# 		otherwise object will NOT be updated and auto setup will give error.")
+	if !update_manager:
+		warnings.append("Update Manager: Please assign a COP_UpdateManagerGlobalHelper 
+			otherwise object will NOT be updated and auto setup will give error.")
 	
-	# return warnings
-
-	if update_manager == null:
-		return "Update Manager: Please assign a COP_UpdateManagerGlobalHelper 
-			otherwise object will NOT be updated and auto setup will give error."
+	return warnings
 
 ## This method updates the update object.
 func update(delta):
-	print(name, " has been added!")
+	print("Global automation worked!")
 	pass
 
 ## This method activates/deactivates the update object.
-func set_active(is_active: bool):
-	_is_active = is_active()
-	pass
+func set_active(is_enable: bool):
+	_is_active = is_enable
 
 ## This method checks if the update object is active or NOT.
 func is_active():
