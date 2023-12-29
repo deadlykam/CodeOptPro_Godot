@@ -14,7 +14,7 @@ var _is_setup:= false
 
 func _enter_tree():
 	super._enter_tree()
-	_manual_setup_button = $MainContainer/ManualSetupContainer/ManualSetupButton
+	# _manual_setup_button = $MainContainer/ManualSetupContainer/ManualSetupButton
 
 #region Parent class method override
 func get_version_lbl_path() -> String:
