@@ -15,9 +15,10 @@ script = ExtResource("1_6wp5d")
 _objects = [NodePath("../../Objects/Node")]
 _num_update = 2
 
-[node name="ProcessManagerGlobal" type="Node" parent="Managers"]
+[node name="ProcessManagerGlobal" type="Node" parent="Managers" node_paths=PackedStringArray("_objects")]
 script = ExtResource("2_l6cod")
 _helper = ExtResource("3_i40ys")
+_objects = [NodePath("../../Objects/Node2")]
 
 [node name="Objects" type="Node" parent="."]
 

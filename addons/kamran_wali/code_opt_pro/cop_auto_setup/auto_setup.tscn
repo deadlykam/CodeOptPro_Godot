@@ -28,6 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="RunProjectButton" type="TextureButton" parent="PlayTestButtonHolder"]
 clip_contents = true
@@ -80,15 +81,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="AutoSaveCurrentSceneButton" type="CheckButton" parent="SettingHolder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.216
-anchor_bottom = 0.113
+anchor_right = 1.0
 offset_top = 42.0
-offset_right = 0.167999
-offset_bottom = -0.224007
+offset_right = -903.0
+offset_bottom = 73.0
 tooltip_text = "If enabled then the current scene will be saved after each auto setup call."
 button_pressed = true
 text = "Auto Save (Current Scene)"
@@ -96,13 +97,34 @@ text = "Auto Save (Current Scene)"
 [node name="AutoSaveAllScenesButton" type="CheckButton" parent="SettingHolder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.216
-anchor_bottom = 0.16
+anchor_right = 1.0
 offset_top = 73.0
-offset_right = 0.167999
-offset_bottom = 0.319992
+offset_right = -936.0
+offset_bottom = 104.0
 tooltip_text = "If enabled then all scenes will be saved after each auto setup call."
 text = "Auto Save (All Scenes)"
+
+[node name="LogHolder" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Log" type="Label" parent="LogHolder"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 249.0
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.905882, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "Log: Some process adfsae"
+autowrap_mode = 3
 
 [node name="Logo" type="TextureRect" parent="."]
 layout_mode = 1
@@ -130,3 +152,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "Version - v1.7.0a"
+
+[connection signal="pressed" from="PlayTestButtonHolder/RunProjectButton" to="." method="_on_run_project_button_pressed"]
+[connection signal="pressed" from="PlayTestButtonHolder/RunCurrentSceneButton" to="." method="_on_run_current_scene_button_pressed"]
+[connection signal="pressed" from="PlayTestButtonHolder/ManualSetupButton" to="." method="_on_manual_setup_button_pressed"]

@@ -2,7 +2,7 @@
 extends "res://addons/kamran_wali/code_opt_pro/scripts/code_opt_pros/base_plugin.gd"
 
 # Properties from the scene.
-var _manual_setup_button: Button
+var _auto_save_current_scene_button: CheckButton
 
 # Properties needed internally.
 var _update_managers: Array[COP_UpdateManager]
@@ -14,24 +14,12 @@ var _is_setup:= false
 
 func _enter_tree():
 	super._enter_tree()
-	# _manual_setup_button = $MainContainer/ManualSetupContainer/ManualSetupButton
+	_auto_save_current_scene_button = $SettingHolder/AutoSaveCurrentSceneButton
 
 #region Parent class method override
 func get_version_lbl_path() -> String:
 	return "Version"
 #endregion
-
-func update(delta: float) -> void:
-	if EDITOR_PLUGIN.get_editor_interface().is_playing_scene(): # Checking if scene is being played
-		if !_is_setup: # Condition to do auto setup
-			_auto_setup()
-			_is_setup = true
-	else:
-		if _is_setup:
-			_is_setup = false
-
-func _on_manual_setup_button_pressed():
-	_auto_setup()
 
 ## This method does the automation setup.
 func _auto_setup() -> void:
@@ -64,4 +52,19 @@ func _auto_setup() -> void:
 			_update_objects[_index]._add_self_to_manager() # Adding update object to correct update manager
 		_index += 1
 	
-	EDITOR_PLUGIN.get_editor_interface().save_scene() # Saving the currently active scene
+	if _auto_save_current_scene_button.button_pressed: # Condition for saving current active scene
+		EDITOR_PLUGIN.get_editor_interface().save_scene() # Saving the currently active scene
+
+## This method does the auto setup and then plays the main scene.
+func _on_run_project_button_pressed():
+	_auto_setup()
+	EDITOR_PLUGIN.get_editor_interface().play_main_scene()
+
+## This method does the auto setup and then plys the current scene.
+func _on_run_current_scene_button_pressed():
+	_auto_setup()
+	EDITOR_PLUGIN.get_editor_interface().play_current_scene()
+
+## This method does the auto setup only.
+func _on_manual_setup_button_pressed():
+	_auto_setup()
