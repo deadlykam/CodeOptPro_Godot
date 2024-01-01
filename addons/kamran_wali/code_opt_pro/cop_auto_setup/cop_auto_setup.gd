@@ -3,6 +3,7 @@ extends "res://addons/kamran_wali/code_opt_pro/scripts/code_opt_pros/base_plugin
 
 # Properties from the scene.
 var _auto_save_current_scene_button: CheckButton
+var _log_label: Label
 
 # Properties needed internally.
 var _update_managers: Array[COP_UpdateManager]
@@ -11,10 +12,12 @@ var _nodes_open: Array[Node]
 var _node_current: Node
 var _index: int
 var _is_setup:= false
+var _log_counter:= 0
 
 func _enter_tree():
 	super._enter_tree()
 	_auto_save_current_scene_button = $SettingHolder/AutoSaveCurrentSceneButton
+	_log_label = $LogHolder/LogLabel
 
 #region Parent class method override
 func get_version_lbl_path() -> String:
@@ -23,6 +26,9 @@ func get_version_lbl_path() -> String:
 
 ## This method does the automation setup.
 func _auto_setup() -> void:
+	_log_counter = 0
+	_log_label.text = "Log:"
+	_write_to_log("Initializing Auto Setup...")
 	_update_managers.clear() # Clearing any previously stored data
 	_update_objects.clear() # Clearing any previously stored data
 	_nodes_open.push_back(EDITOR_PLUGIN.get_editor_interface().get_edited_scene_root())
@@ -52,19 +58,29 @@ func _auto_setup() -> void:
 			_update_objects[_index]._add_self_to_manager() # Adding update object to correct update manager
 		_index += 1
 	
+	_write_to_log("Auto Setup Done!")
+
 	if _auto_save_current_scene_button.button_pressed: # Condition for saving current active scene
 		EDITOR_PLUGIN.get_editor_interface().save_scene() # Saving the currently active scene
+		_write_to_log("Saved Current Scene.")
 
 ## This method does the auto setup and then plays the main scene.
 func _on_run_project_button_pressed():
 	_auto_setup()
+	_write_to_log("Starting Main Scene.")
 	EDITOR_PLUGIN.get_editor_interface().play_main_scene()
 
 ## This method does the auto setup and then plys the current scene.
 func _on_run_current_scene_button_pressed():
 	_auto_setup()
+	_write_to_log("Starting Current Scene")
 	EDITOR_PLUGIN.get_editor_interface().play_current_scene()
 
 ## This method does the auto setup only.
 func _on_manual_setup_button_pressed():
 	_auto_setup()
+
+## This method appends a new log message.
+func _write_to_log(log: String) -> void:
+	_log_counter += 1
+	_log_label.text = _log_label.text + "\n" + str(_log_counter) + ". " + log
