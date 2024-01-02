@@ -141,7 +141,7 @@ offset_top = -0.0800171
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-text = "Version - v1.7.0a"
+text = "Version - v1.8.0"
 
 [connection signal="pressed" from="PlayTestButtonHolder/RunProjectButton" to="." method="_on_run_project_button_pressed"]
 [connection signal="pressed" from="PlayTestButtonHolder/RunCurrentSceneButton" to="." method="_on_run_current_scene_button_pressed"]
