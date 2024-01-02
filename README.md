@@ -18,6 +18,8 @@ This is a simple Godot system that helps with performance.
   - [Timer Countdown](#timer-countdown)
   - [Instantiate Object](#instantiate-object)
   - [Bars](#bars)
+  - [Performant Update](#performant-update)
+- [Updates](#updates)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -219,6 +221,76 @@ func get_health_normal() -> float:
 ```
 
 2. **normal_bar_values** - This bar is same as the **normal_bar** in functionalities. The only difference is that you must provide the max and current value in the script itself. It has two properties which are **_max: COP_FixedFloatVar** and **_is_set_cur_value: COP_FixedBoolVar**. The **_max** property takes in a _COP_FixedFloatVar_ value which is the maximum limit for the bar and the value MUST be greater than 1. The **_is_set_cur_value** property takes in a _COP_FixedBoolVar_ value which is the flag that decides if to set the current value of the bar as max value or NOT. True means the current value at the start will be same as the max value. False means current value will be 0 at the start. You don't need to call the _set_max(int)_ and _set_current(int)_ methods at the start but you do have the option to do so if you want to. You can use the code example in **1. normal_bar** and just remove **func _ready()** method from it.
+
+#### Performant Update:
+In CodeOptPro you can use another powerful feature that allows you to use custom update to update your script, that is the __process(delta)_ and __physics_process(delta)_. This custom update allows you to share one __process(delta)_ or __physics_process(delta)_ method with many scripts. This in turn saves lot of performance issues as one script is handling the call for processes. There are two types of custom update classes in CodeOptPro they are _COP_UpdateManager_ and _COP_UpdateManagerGlobalHelper_. Each of these custom update classes have 2 more types which are _process_manager_local_ and _physics_process_manager_local_ for the _COP_UpdateManager_. And _process_manager_global_ and _physics_process_manager_global_ for the _COP_UpdateManagerGlobalHelper_. The main logic between all of them are same but the only difference is that the local ones needs to be referenced in coupled way while the global ones are referenced in a decoupled way. Below I will explain how to use the custom update manager.
+
+1. **Adding The Update Manager** - The first task you need to do is to add at least one update manager in the scene. This could be added any where but it is best to add all update managers under one Node called _UpdateManagers_ so that it remains organized and easy to debug. So create a new Node called _UpdateManager1_ and add any of the update manager scripts called _physics_process_manager_global_, _process_manager_global_, _physics_process_manager_local_ or _process_manager_local_. Now let me explain the properties of the update manager.
+  - a. **Helper (Only available in the global types)** - This the _cop_update_manager_global_helper_ resource that helps to keep the code decoupled. The update objects will use this reference to interact with the update manager. This property is only available for the global types. There is already a _cop_update_manager_global_helper_ resource created called _default_update_manager_. You can use this as well for your project if you want to.
+  - b. **Objects** - This is an array which will contain all the update objects related to this update manager. These objects will share one __physics_process_ or __process_ method from the update manager. You can manually add the update objects here but that is NOT recommended. Instead we shall use the _Auto Setup_ plugin to add update objects to update managers automatically. Will talk about how to create an update object and using _Auto Setup_ plugin later below.
+  - c. **Num Update** - This value handles how many objects should be updated per frame. For example if this value is set to 5 then 5 objects will be update in one frame cycle. It there are too many update objects that needs to be updated then increasing thsi value should make the update process much better but that depends on your scripts and their logic.
+2. **Creating And Adding Update Object** - The second step is to create an update object. It is very easy to create an update object. If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as we will needed the update object template to create our scripts. Once that is done then create a new script. In the _Inherits:_ field select _Node_. Then in the _Template:_ field either select _Cop Update Object Global Tepmlate_, if you have added the global update manager, or select _Cop Update Object Local Template_, if you have added the local update manager. Name the script anything you want and then press _Create_ button. I have commented the script with much details but I will explain what each of these properties and functions does.
+    - a. **update_manager (COP_UpdateManagerGlobalHelper or COP_UpdateManager)** - This property keeps the reference of the update manager. Depending on what type you used it could be either _COP_UpdateManagerGlobalHeler_, for global update objects, or _COP_UpdateManager_, for local update objects. This reference is mainly used by the _Auto Setup_ plugin to add the update object automatically to the update managers but can also be used for using any data from the update manager.
+    - b. **update(float) void** - This is the method that will update the update object every frame. So any update logic that you were going to put in either __physics_process_ or __process_ should be put in here.
+    - c. **set_active(bool) void** - This method enables/disables the update object. So if any flags that are going to be used for activation check must be able to be updated by this function.
+    - d. **is_active() bool** - This method checks if the update object is active or NOT. If it is NOT active then the update manager will NOT call it's _update(float)_ method. Again use a separate flag that will be used to check for activation.
+
+The last two methods can be ignored and NEVER be called by any script or overridden. These are used by the _Auto Setup_ plugin for automation. I have commented extensively here to avoid any errors. Also you can change the extension of the script to anything else you want but as long as the object is a child of Node then it will be fine. Below is an example script of a global update object called _update_object1.gd_.
+```
+@tool
+extends Node
+
+## The global update manager that will update this object.
+@export var update_manager: COP_UpdateManagerGlobalHelper:
+	set(p_update_manager):
+		if update_manager != p_update_manager:
+			update_manager = p_update_manager
+			update_configuration_warnings()
+
+@export var _counter:= 0
+@export var _is_active:= true
+
+func _get_configuration_warnings():
+	var warnings = []
+
+	if !update_manager:
+		warnings.append("Update Manager: Please assign a COP_UpdateManagerGlobalHelper 
+			otherwise object will NOT be updated and auto setup will give error.")
+	
+	return warnings
+
+## This method updates the update object.
+func update(delta: float) -> void:
+	_counter += 1
+	print("Counter: ", _counter)
+	pass
+
+## This method activates/deactivates the update object.
+func set_active(is_enable: bool) -> void:
+	_is_active = is_enable
+
+## This method checks if the update object is active or NOT.
+func is_active() -> bool:
+	return _is_active
+
+#region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
+## This method adds this object to the update manager._action_options
+## THIS METHOD SHOULD NOT BE CALLED OR OVERRIDDEN. IT IS ONLY USED
+## FOR AUTOMATION!
+func _add_self_to_manager():
+	if update_manager:
+		update_manager._add_object(self)
+	else:
+		push_error("Error: ", name, " does not have update manager assigned!")
+
+## This method always sends true as the script is an update object.
+## This method is needed for duck typing check and SHOULD NOT BE
+## OVERRIDDEN OR CHANGED!
+func _is_update_object():
+	return true
+#endregion
+```
+
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
