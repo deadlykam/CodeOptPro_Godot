@@ -2,11 +2,6 @@
 class_name COP_UpdateManager
 extends Node
 
-# TODO: Add the methods for automation inside the region if automation is implemented. Check COP.
-#       Also when adding an object make sure to check it has the method is_update_object(). That
-#       way no extra checks are required when updating the object. Maybe also check if the object
-#       has void update(float), void set_active(bool) and bool is_active methods as well(optional).
-
 @export_category("Update Manager Local")
 @export var _objects: Array[Node]
 

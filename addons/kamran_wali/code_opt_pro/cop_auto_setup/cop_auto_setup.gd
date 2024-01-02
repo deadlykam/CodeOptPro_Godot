@@ -61,8 +61,10 @@ func _auto_setup() -> void:
 	_write_to_log("Auto Setup Done!")
 
 	if _auto_save_current_scene_button.button_pressed: # Condition for saving current active scene
-		EDITOR_PLUGIN.get_editor_interface().save_scene() # Saving the currently active scene
-		_write_to_log("Saved Current Scene.")
+		if !EDITOR_PLUGIN.get_editor_interface().save_scene(): # Saving the currently active scene
+			_write_to_log("Saved Current Scene.")
+		else:
+			_write_to_log("Error: Failed To Save Current Scene!") # Showing failed save message
 
 ## This method does the auto setup and then plays the main scene.
 func _on_run_project_button_pressed():

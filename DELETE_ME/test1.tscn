@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0o2oo0e6acao"]
+[gd_scene load_steps=8 format=3 uid="uid://b0o2oo0e6acao"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/scripts/managers/updates/process_manager_local.gd" id="1_6wp5d"]
 [ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/scripts/managers/updates/process_manager_global.gd" id="2_l6cod"]
 [ext_resource type="Resource" uid="uid://c8wglxmg7l8r6" path="res://addons/kamran_wali/code_opt_pro/variables/default_update_manager.tres" id="3_i40ys"]
 [ext_resource type="Script" path="res://DELETE_ME/test_update_object3.gd" id="4_qqwl4"]
 [ext_resource type="Script" path="res://DELETE_ME/test_update_object4.gd" id="5_yfvx8"]
+[ext_resource type="Script" path="res://DELETE_ME/test_update_object5.gd" id="6_eo17l"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5ea6e"]
 
 [node name="World" type="Node3D"]
 
@@ -18,7 +21,8 @@ _num_update = 2
 [node name="ProcessManagerGlobal" type="Node" parent="Managers" node_paths=PackedStringArray("_objects")]
 script = ExtResource("2_l6cod")
 _helper = ExtResource("3_i40ys")
-_objects = [NodePath("../../Objects/Node2")]
+_objects = [NodePath("../../Objects/Node2"), NodePath("../../Objects/Object")]
+_num_update = 2
 
 [node name="Objects" type="Node" parent="."]
 
@@ -29,3 +33,13 @@ update_manager = NodePath("../../Managers/ProcessManagerLocal")
 [node name="Node2" type="Node" parent="Objects"]
 script = ExtResource("5_yfvx8")
 update_manager = ExtResource("3_i40ys")
+
+[node name="Object" type="Node3D" parent="Objects"]
+script = ExtResource("6_eo17l")
+update_manager = ExtResource("3_i40ys")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Object"]
+mesh = SubResource("BoxMesh_5ea6e")
+
+[node name="Camera3D" type="Camera3D" parent="Objects"]
+transform = Transform3D(-0.620765, 0.420504, -0.661686, -0.213426, 0.721475, 0.658728, 0.754387, 0.550136, -0.35812, -5.45711, 5.15625, -2.47644)
