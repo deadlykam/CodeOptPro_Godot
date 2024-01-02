@@ -290,6 +290,11 @@ func _is_update_object():
 	return true
 #endregion
 ```
+When this script runs it will just show the value of the counter going up.
+3. **Auto Setup** - **TODO: Give details first and then add the image. Below the hyperlink is setup just needs the setup**.
+| ![Variable-Creator1.png](https://imgur.com/kT1co7u.png) | 
+|:--:| 
+| *Auto Setup* |
 
 ***
 ## Updates
