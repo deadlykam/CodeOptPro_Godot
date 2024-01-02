@@ -2,7 +2,7 @@
 class_name COP_UpdateManager
 extends Node
 
-@export_category("Update Manager Local")
+@export_category("Update Manager")
 @export var _objects: Array[Node]
 
 ## Number of objects to update per frame. Min value is 1
