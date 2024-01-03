@@ -52,7 +52,10 @@ In this category different type of data types are shared, example bool, float, i
 - **COP_FixedVector3Var** - This FixedVar type shares _Vector3_ data types. When creating the COP_FixedVector3Var set the value to any Vector3 type value. To get the value simply call the method _Vector3 COP_FixedVector3Var.get_value()_. To use COP_FixedVector3Var simply change the type of a var to COP_FixedVector3Var.
 - **COP_FixedVar Template** - For creating a new COP_FixedVar type you can simply use the script templates that are already present in the addon. Go to the folder _addons_ -> _kamran_wali_ -> _code_opt_pro_ and then copy the folder **script_templates**. Paste the copied folder to the root folder **res://**. Now you can use the script template to create a new COP_FixedVar. Just create a new script and make sure to _Inherit_ from _Resource_. Then in the _Template_ section select **Resource: Fixed Var Template**. Give the script any name you want and finally create it. Now in the script make sure to give it a class name if you want to which has been commented out. For the value change it to any type you want. Finally for the **get_value()** method make sure to give it a return type as well which may help with performance a bit.
 
-##### 2. Vars
+##### 2. Managers
+This category shares different type of managers instead of data types. Managers are scripts that have a bit of complex logic to it and these manager resources helps to share the references to those managers in a decoupled way. In this case unfortunately _Variable Creator_ will only create managers that are created in _CodeOptPro_ but if you want to create your own custom manager then you can use the _manager_helper_template_ which is under the Resources while creating a script. The manager that is going to be referenced MUST be the only one that calls the method _set_manager(manager) void_. **TODO: explain the new manager script**
+
+##### 3. Vars
 Just like FixedVars this category shares different type of data types as well, example bool, float, int, string etc. The only difference is that you can **NOT** set any values here like FixedVars and the values may change through custom scripts. Vars basically share values that are constantly changing. For example - You have 5 objects that wants to know the player's position. Then just create a COP_Vector3Var and make the player script constantly update the newly created Vector3Var. Then add the newly created Vector3Var to the other 5 objects. Now all of those 5 objects have access to the player's position without the need of player script reference. Also use the functions _get_value()_ and _set_value(type)_ for getting and setting the value. Do **NOT** get or set the property **_value** directly through script as this may result in error later on. Below are all the types.
 - **COP_BoolVar** - This Var type shares _bool_ data types. To set the value simply call _void COP_BoolVar.set_value(bool value)_. To get the value just call _bool COP_BoolVar.get_value()_. To use COP_BoolVar simply change the type of a var to COP_BoolVar.
 - **COP_Camera2DVar** - This Var type shares _Camera2D_ data types. To set the value simply call _void COP_Camera2DVar.set_value(Camera2D value)_. To get the value just call _Camera2D COP_Camera2DVar.get_value()_. To use COP_Camera2DVar simply change the type of a var to COP_Camera2DVar.
@@ -235,7 +238,7 @@ In CodeOptPro you can use another powerful feature that allows you to use custom
     - c. **set_active(bool) void** - This method enables/disables the update object. So if any flags that are going to be used for activation check must be able to be updated by this function.
     - d. **is_active() bool** - This method checks if the update object is active or NOT. If it is NOT active then the update manager will NOT call it's _update(float)_ method. Again use a separate flag that will be used to check for activation.
 
-The last two methods can be ignored and NEVER be called by any script or overridden. These are used by the _Auto Setup_ plugin for automation. I have commented extensively here to avoid any errors. Also you can change the extension of the script to anything else you want but as long as the object is a child of Node then it will be fine. Below is an example script of a global update object called _update_object1.gd_.
+The last two methods can be ignored and should NEVER be called by any script or overridden. These are used by the _Auto Setup_ plugin for automation. I have commented extensively here to avoid any errors. Also you can change the extension of the script to anything else you want but as long as the object is a child of Node then it will be fine. Below is an example script of a global update object called _update_object1.gd_.
 ```
 @tool
 extends Node
@@ -290,11 +293,21 @@ func _is_update_object():
 	return true
 #endregion
 ```
-When this script runs it will just show the value of the counter going up.
-3. **Auto Setup** - **TODO: Give details first and then add the image. Below the hyperlink is setup just needs the setup**.
+When this script runs it will just show the value of the counter going up. Create a new Node in the example scene and attach this script to it.
+3. **Auto Setup** - The final step is to use the _Auto Setup_ plugin to setup the update managers and update objects. Enable the _Auto Setup_ plugin from the _Plugins_ tabs in the _Project Settings_.
 | ![Variable-Creator1.png](https://imgur.com/kT1co7u.png) | 
 |:--:| 
 | *Auto Setup* |
+
+- a. **Run Project** - This will run the auto setup and then play the project which is the main scene.
+- b. **Run Current Scene** - This will run the auto setup and then play the edited scene which is the currently active scene.
+- c. **Manual Setup** - This will only run auto setup.
+- d. **Log** - Here the logs will be shown for the auto setup process.
+- e. **Auto Save (Current Scene)** - If enabled then the current scene will be automatically saved once the auto setup process is done. It is recommended to keep it enabled so that if you forget to save the scene then this will do the saving for you.
+
+Before using the _Auto Setup_ plugin we must first setup the update managers and the update objects. If you have used local update manager then there is nothing needed to setup the update manager but if you have used global update manager then you must set the _Helper_. You can either select or drag and drop the _default_update_manager_, which is found in this path _res://addons/kamran_wali/code_opt_pro/variables/_, or you can create a new _cop_update_manager_global_ through the [Variable Creator](#variable-creator). In this example we will use the default one if global update manager is used. Now we need to setup the update object. Select the update object. If local update object is used then drag and drop the update manager into the _Update Manager_ field in the update object. If global update object is used then either select the _defaul_update_manager_ or the one you created. Finally make sure the _Is Active_ flag is true.
+
+Alright. We done setting up the update manager and update objects. Now in the _Auto Setup_ plugin press the _Run Current Scene_ button. If everything is alright then this should start the auto setup process and then run the scene. Once the scene runs you will see the _Counter_ value going up in the _Output_. You will also notice in the _Auto Setup_ plugin that the _Log_ has been updated showing all the process of the auto setup.
 
 ***
 ## Updates
