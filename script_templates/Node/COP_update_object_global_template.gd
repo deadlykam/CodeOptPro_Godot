@@ -42,7 +42,7 @@ func is_active() -> bool:
 ## FOR AUTOMATION!
 func _add_self_to_manager() -> void:
 	if update_manager:
-		update_manager._add_object(self)
+		update_manager.get_manager()._add_object(self)
 	else:
 		push_error("Error: ", name, " does not have update manager assigned!")
 
