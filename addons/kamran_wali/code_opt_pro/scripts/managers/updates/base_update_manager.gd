@@ -2,12 +2,7 @@
 class_name COP_UpdateManager
 extends Node
 
-# TODO: Add the methods for automation inside the region if automation is implemented. Check COP.
-#       Also when adding an object make sure to check it has the method is_update_object(). That
-#       way no extra checks are required when updating the object. Maybe also check if the object
-#       has void update(float), void set_active(bool) and bool is_active methods as well(optional).
-
-@export_category("Update Manager Local")
+@export_category("Update Manager")
 @export var _objects: Array[Node]
 
 ## Number of objects to update per frame. Min value is 1
@@ -28,7 +23,7 @@ func _ready() -> void:
 #region These methods SHOULD NOT BE CALLED BY OTHER SCRIPTS.
 ## This method updates the update manager and MUST only be called by 
 ## its children and NO other scripts.
-func update(delta: float) -> void:
+func _update(delta: float) -> void:
     if  _objects.size() != 0:
         if _num_update == 1: # Condition for updating 1 object per frame
             _update_object(delta)
@@ -40,9 +35,19 @@ func update(delta: float) -> void:
 
 ## This method adds an object to the manager. THIS SHOULD ONLY BE CALLED BY
 ## THE AUTOMATION LOGIC AND NO OTHER SCRIPTS!
-func add_object(object) -> void:
-    if object.has_method("is_update_object"): # Checking if object is update object
+func _add_object(object) -> void: # TODO: Rename method to _add(object)
+    if object.has_method("_is_update_object"): # Checking if object is update object
         _objects.append(object)
+
+## This method does all the setup for the update manager. THIS SHOULD ONLY BE CALLED
+## BY THE AUTOMATION LOGIC AND NO OTHER SCRIPTS!
+func _setup() -> void:
+    pass
+
+## This method removes all the data from the manager. THIS SHOULD ONLY BE CALLED BY
+## THE AUTOMATION LOGIC AND NO OTHER SCRITPS!
+func _reset_data() -> void:
+    _objects.clear()
 #endregion
 
 ## This method checks if the an object has already been added.
@@ -81,5 +86,5 @@ func _validate_num_update() -> void:
 ## This method always sends true as the script is 
 ## update_manager. This method is needed for duck
 ## typing check and SHOULD NOT be OVERRIDDEN!
-func is_update_manager() -> bool:
+func _is_update_manager() -> bool:
     return true
