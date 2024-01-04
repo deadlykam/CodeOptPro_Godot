@@ -20,7 +20,7 @@ func _enter_tree() -> void:
 		_version_lbl = get_node(get_version_lbl_path()) # Setting the version label.
 		_version_lbl.text = _version.get_value()
 
-func _process(delta):
+func _process(delta: float) -> void:
 	if EDITOR_PLUGIN: # Condition to call the update() method.
 		update(delta)
 

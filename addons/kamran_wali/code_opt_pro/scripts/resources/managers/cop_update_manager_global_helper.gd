@@ -1,21 +1,17 @@
 @tool
-#class_name SomeManagerHelper
+class_name COP_UpdateManagerGlobalHelper
 extends Resource
 
-# Please provide a type for the _manager var for better performance.
 ## Storing the manager reference. Do NOT set/get this variable directly.
 ## Use the functions instead otherwise will give error.
-var _manager
+var _manager: COP_UpdateManager
 
-# Please provide a type for the manager parameter for better performance and
-# set the method type to void.
 ## This method sets the manager.
-func set_manager(manager) -> void:
+func set_manager(manager: COP_UpdateManager) -> void:
 	_manager = manager
 
-# Please provide a type for the manager return type for better performance.
 ## This method gets the manager.
-func get_manager():
+func get_manager() -> COP_UpdateManager:
 	return _manager
 
 ## This method checks if the manager has been set or NOT.

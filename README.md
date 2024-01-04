@@ -17,19 +17,22 @@ This is a simple Godot system that helps with performance.
   - [Vector Performant Calculation](#vector-performant-calculation)
   - [Timer Countdown](#timer-countdown)
   - [Instantiate Object](#instantiate-object)
+  - [Bars](#bars)
+  - [Performant Update](#performant-update)
+- [Updates](#updates)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
 
 ## Prerequisites
 #### Godot Game Engine
-Godot version **v4.1.1.stable.mono.official [bd6af8e0e]** and above should work. Previous version of Godot have not been tested and may give errors.
+Godot version **v4.1.3.stable.mono.official [f06b6836a]** and above should work. Previous Godot version of **v4.1.1.stable.mono.official [bd6af8e0e]** should work but any version before that have not been tested and may give errors.
 ***
 ## Stable Build
-[Stable-v1.6.0](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.6.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.8.0](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.8.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [CodeOptPro-v1.6.0.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.6.0) from the latest Stable build.
+1. First download the latest [CodeOptPro-v1.8.0.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.8.0) from the latest Stable build.
 2. Once downloaded extract/unzip the file.
 3. Enter the folder and copy the folder named **kamran_wali**.
 4. Now paste the folder in the **addons** folder of your Godot project. If your Godot project does not have the **addons** folder then just create it in the root folder, **res://**, and paste the copied folder there.
@@ -49,7 +52,11 @@ In this category different type of data types are shared, example bool, float, i
 - **COP_FixedVector3Var** - This FixedVar type shares _Vector3_ data types. When creating the COP_FixedVector3Var set the value to any Vector3 type value. To get the value simply call the method _Vector3 COP_FixedVector3Var.get_value()_. To use COP_FixedVector3Var simply change the type of a var to COP_FixedVector3Var.
 - **COP_FixedVar Template** - For creating a new COP_FixedVar type you can simply use the script templates that are already present in the addon. Go to the folder _addons_ -> _kamran_wali_ -> _code_opt_pro_ and then copy the folder **script_templates**. Paste the copied folder to the root folder **res://**. Now you can use the script template to create a new COP_FixedVar. Just create a new script and make sure to _Inherit_ from _Resource_. Then in the _Template_ section select **Resource: Fixed Var Template**. Give the script any name you want and finally create it. Now in the script make sure to give it a class name if you want to which has been commented out. For the value change it to any type you want. Finally for the **get_value()** method make sure to give it a return type as well which may help with performance a bit.
 
-##### 2. Vars
+##### 2. Managers
+This category shares different type of managers instead of data types. Managers are scripts that have a bit of complex logic to it and these manager resources helps to share the references to those managers in a decoupled way. In this case unfortunately _Variable Creator_ will only create managers that are created in _CodeOptPro_ but if you want to create your own custom manager then you can use the _manager_helper_template_ which is under the Resources while creating a script. The manager that is going to be referenced MUST be the only one that calls the method _set_manager(manager) void_ and provides _self_ as reference. Other scripts using this manager helper resource reference MUST only call the method _get_manager()_ and then use the manager's methods from there. You can check out the script [cop_update_manager_global_helper](https://github.com/deadlykam/CodeOptPro_Godot/blob/98f9f276ef7cc5a25555bc95e77be0b654b5e081/addons/kamran_wali/code_opt_pro/scripts/resources/managers/cop_update_manager_global_helper.gd) to see how the manager resource script is created.
+- **COP_UpdateManagerGlobalHelper** - This manager reference type stores and uses the reference for global update managers and global update objects.
+
+##### 3. Vars
 Just like FixedVars this category shares different type of data types as well, example bool, float, int, string etc. The only difference is that you can **NOT** set any values here like FixedVars and the values may change through custom scripts. Vars basically share values that are constantly changing. For example - You have 5 objects that wants to know the player's position. Then just create a COP_Vector3Var and make the player script constantly update the newly created Vector3Var. Then add the newly created Vector3Var to the other 5 objects. Now all of those 5 objects have access to the player's position without the need of player script reference. Also use the functions _get_value()_ and _set_value(type)_ for getting and setting the value. Do **NOT** get or set the property **_value** directly through script as this may result in error later on. Below are all the types.
 - **COP_BoolVar** - This Var type shares _bool_ data types. To set the value simply call _void COP_BoolVar.set_value(bool value)_. To get the value just call _bool COP_BoolVar.get_value()_. To use COP_BoolVar simply change the type of a var to COP_BoolVar.
 - **COP_Camera2DVar** - This Var type shares _Camera2D_ data types. To set the value simply call _void COP_Camera2DVar.set_value(Camera2D value)_. To get the value just call _Camera2D COP_Camera2DVar.get_value()_. To use COP_Camera2DVar simply change the type of a var to COP_Camera2DVar.
@@ -174,14 +181,143 @@ I have added a new feature that allows to quickly add instantiation of packed sc
 - **f.** _Lock Parent_ - If enabled this will make sure that the current selected node does not get overriden when any other Scene Editor objects are selected. This helps to navigate through the Scene Editor without worrying about getting the selected parent object overriden.
 - **g.** _Number of Instantiation_ - This will instantiate _n_ number of objects. _n_ being greater than 1. This feature is optional and does NOT need to be populated to work.
 - **h.** _Instantiate Object_ - This button will instantiate an object. If a value is given in _Number of Instantiation_ then it will instantiate that amount of objects. This button will ONLY appear if a correct _Scene_ and _Parent_ objects are selected.
+
+#### Bars:
+Added bar feature which acts like any normal bar. This can, for example, be used for character health. The _get_normal()_ method in the bar is a powerful function that allows you to sync the bar with any other features. Below I will briefly explain what each method does.
+1. **void set_max(int)** - This method sets the maximum limit for the bar. The max limit can NOT be less than 1. If a value of less than 1 is given the bar will make the max limit to 1. If this method needs to be called then calling it once when the scene is ready is recommended. This will make sure to avoid any wrong results. _Also make sure that this method is called before set_current(int) method. Otherwise setup might give wrong results._
+2. **void set_current(int)** - This method sets the current value of the bar. The current value can NOT be less than 0 or more than max value. If a value of less than 0 is given then the current value will be set to 0. If a value of more than max is given then the current value will be set to max value. If this method needs to be called then calling it once when the scene is ready is recommended. This will make sure to avoid any wrong results. _Also make sure that this method is called after set_max(int) method. Otherwise setup might give wrong results._
+3. **float get_normal()** - This method gets the normal value for the bar which is in the range of 0 to 1. You can use this value to sync other features with the bar.
+4. **void add(int)** - This method adds value to the bar's current value. The current value of the bar will never go above maximum value.
+5. **int get_value_max()** - This method gets the maximum value of the bar.
+6. **int get_value_current()** - This method gets the current value of the bar.
+7. **bool is_full()** - This method checks if the bar is full that is current value equals to max value.
+8. **bool is_depleted()** - This method checks if the bar is empty that is current value equals to 0.
+9. **void restore()** - This method makes the bar full again that is current value equals to max value.
+10. **void subtract(int)** - This method removes value from the bar's current value. The current value of the bar will never go below 0.
+
+I have added different type of bars with different functionalities. I will explain how to use them briefly below.
+1. **normal_bar** - This bar acts like a normal bar which means that adding a value will just add the value and subtracting a value will just subtract it. To use this bar make sure to set the maximum value at the scene start otherwise the default value will be used as maximum which is 1. Optionally you can set the current value as well if you want to at the scene start otherwise its value will be 0.
+```
+SomeScript.gd
+
+extends Node
+@export var bar: COP_BaseBar
+
+func _ready() -> void:
+  bar.set_max(10)
+  bar.set_current(10) # Optional: If you also want to set the current value at the start but it is NOT necessary if NOT needed
+
+## This method hurts the character with the given value.
+func hurt(value: int) -> void:
+  bar.subtract(value) # Removing health by subtracting bar's current value
+
+## This method heals the character with the given value.
+func heal(value: int) -> void:
+  bar.add(value) # Adding health by adding to bar's current value
+
+## This method checks if the character is dead or NOT.
+func is_dead() -> bool:
+  return is_depleted()
+
+## This method returns the health's normal value so that the UI bar can be synced.
+func get_health_normal() -> float:
+  return bar.get_normal() # The health's normal value which is the bar's normal value
+```
+
+2. **normal_bar_values** - This bar is same as the **normal_bar** in functionalities. The only difference is that you must provide the max and current value in the script itself. It has two properties which are **_max: COP_FixedFloatVar** and **_is_set_cur_value: COP_FixedBoolVar**. The **_max** property takes in a _COP_FixedFloatVar_ value which is the maximum limit for the bar and the value MUST be greater than 1. The **_is_set_cur_value** property takes in a _COP_FixedBoolVar_ value which is the flag that decides if to set the current value of the bar as max value or NOT. True means the current value at the start will be same as the max value. False means current value will be 0 at the start. You don't need to call the _set_max(int)_ and _set_current(int)_ methods at the start but you do have the option to do so if you want to. You can use the code example in **1. normal_bar** and just remove **func _ready()** method from it.
+
+#### Performant Update:
+In CodeOptPro you can use another powerful feature that allows you to use custom update to update your script, that is the __process(delta)_ and __physics_process(delta)_. This custom update allows you to share one __process(delta)_ or __physics_process(delta)_ method with many scripts. This in turn saves lot of performance issues as one script is handling the call for processes. There are two types of custom update classes in CodeOptPro they are _COP_UpdateManager_ and _COP_UpdateManagerGlobalHelper_. Each of these custom update classes have 2 more types which are _process_manager_local_ and _physics_process_manager_local_ for the _COP_UpdateManager_. And _process_manager_global_ and _physics_process_manager_global_ for the _COP_UpdateManagerGlobalHelper_. The main logic between all of them are same but the only difference is that the local ones needs to be referenced in coupled way while the global ones are referenced in a decoupled way. Below I will explain how to use the custom update manager.
+
+1. **Adding The Update Manager** - The first task you need to do is to add at least one update manager in the scene. This could be added any where but it is best to add all update managers under one Node called _UpdateManagers_ so that it remains organized and easy to debug. So create a new Node called _UpdateManager1_ and add any of the update manager scripts called _physics_process_manager_global_, _process_manager_global_, _physics_process_manager_local_ or _process_manager_local_. Now let me explain the properties of the update manager.
+  - a. **Helper (Only available in the global types)** - This the _cop_update_manager_global_helper_ resource that helps to keep the code decoupled. The update objects will use this reference to interact with the update manager. This property is only available for the global types. There is already a _cop_update_manager_global_helper_ resource created called _default_update_manager_. You can use this as well for your project if you want to.
+  - b. **Objects** - This is an array which will contain all the update objects related to this update manager. These objects will share one __physics_process_ or __process_ method from the update manager. You can manually add the update objects here but that is NOT recommended. Instead we shall use the _Auto Setup_ plugin to add update objects to update managers automatically. Will talk about how to create an update object and using _Auto Setup_ plugin later below.
+  - c. **Num Update** - This value handles how many objects should be updated per frame. For example if this value is set to 5 then 5 objects will be update in one frame cycle. It there are too many update objects that needs to be updated then increasing thsi value should make the update process much better but that depends on your scripts and their logic.
+2. **Creating And Adding Update Object** - The second step is to create an update object. It is very easy to create an update object. If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as we will needed the update object template to create our scripts. Once that is done then create a new script. In the _Inherits:_ field select _Node_. Then in the _Template:_ field either select _Cop Update Object Global Tepmlate_, if you have added the global update manager, or select _Cop Update Object Local Template_, if you have added the local update manager. Name the script anything you want and then press _Create_ button. I have commented the script with much details but I will explain what each of these properties and functions does.
+    - a. **update_manager (COP_UpdateManagerGlobalHelper or COP_UpdateManager)** - This property keeps the reference of the update manager. Depending on what type you used it could be either _COP_UpdateManagerGlobalHeler_, for global update objects, or _COP_UpdateManager_, for local update objects. This reference is mainly used by the _Auto Setup_ plugin to add the update object automatically to the update managers but can also be used for using any data from the update manager.
+    - b. **update(float) void** - This is the method that will update the update object every frame. So any update logic that you were going to put in either __physics_process_ or __process_ should be put in here.
+    - c. **set_active(bool) void** - This method enables/disables the update object. So if any flags that are going to be used for activation check must be able to be updated by this function.
+    - d. **is_active() bool** - This method checks if the update object is active or NOT. If it is NOT active then the update manager will NOT call it's _update(float)_ method. Again use a separate flag that will be used to check for activation.
+
+The last two methods can be ignored and should NEVER be called by any script or overridden. These are used by the _Auto Setup_ plugin for automation. I have commented extensively here to avoid any errors. Also you can change the extension of the script to anything else you want but as long as the object is a child of Node then it will be fine. Below is an example script of a global update object called _update_object1.gd_.
+```
+@tool
+extends Node
+
+## The global update manager that will update this object.
+@export var update_manager: COP_UpdateManagerGlobalHelper:
+	set(p_update_manager):
+		if update_manager != p_update_manager:
+			update_manager = p_update_manager
+			update_configuration_warnings()
+
+@export var _counter:= 0
+@export var _is_active:= true
+
+func _get_configuration_warnings():
+	var warnings = []
+
+	if !update_manager:
+		warnings.append("Update Manager: Please assign a COP_UpdateManagerGlobalHelper 
+			otherwise object will NOT be updated and auto setup will give error.")
+	
+	return warnings
+
+## This method updates the update object.
+func update(delta: float) -> void:
+	_counter += 1
+	print("Counter: ", _counter)
+	pass
+
+## This method activates/deactivates the update object.
+func set_active(is_enable: bool) -> void:
+	_is_active = is_enable
+
+## This method checks if the update object is active or NOT.
+func is_active() -> bool:
+	return _is_active
+
+#region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
+## This method adds this object to the update manager._action_options
+## THIS METHOD SHOULD NOT BE CALLED OR OVERRIDDEN. IT IS ONLY USED
+## FOR AUTOMATION!
+func _add_self_to_manager():
+	if update_manager:
+		update_manager._add_object(self)
+	else:
+		push_error("Error: ", name, " does not have update manager assigned!")
+
+## This method always sends true as the script is an update object.
+## This method is needed for duck typing check and SHOULD NOT BE
+## OVERRIDDEN OR CHANGED!
+func _is_update_object():
+	return true
+#endregion
+```
+When this script runs it will just show the value of the counter going up. Create a new Node in the example scene and attach this script to it.
+3. **Auto Setup** - The final step is to use the _Auto Setup_ plugin to setup the update managers and update objects. Enable the _Auto Setup_ plugin from the _Plugins_ tabs in the _Project Settings_.
+| ![Variable-Creator1.png](https://imgur.com/kT1co7u.png) | 
+|:--:| 
+| *Auto Setup* |
+
+- a. **Run Project** - This will run the auto setup and then play the project which is the main scene.
+- b. **Run Current Scene** - This will run the auto setup and then play the edited scene which is the currently active scene.
+- c. **Manual Setup** - This will only run auto setup.
+- d. **Log** - Here the logs will be shown for the auto setup process.
+- e. **Auto Save (Current Scene)** - If enabled then the current scene will be automatically saved once the auto setup process is done. It is recommended to keep it enabled so that if you forget to save the scene then this will do the saving for you.
+
+Before using the _Auto Setup_ plugin we must first setup the update managers and the update objects. If you have used local update manager then there is nothing needed to setup the update manager but if you have used global update manager then you must set the _Helper_. You can either select or drag and drop the _default_update_manager_, which is found in this path _res://addons/kamran_wali/code_opt_pro/variables/_, or you can create a new _cop_update_manager_global_ through the [Variable Creator](#variable-creator). In this example we will use the default one if global update manager is used. Now we need to setup the update object. Select the update object. If local update object is used then drag and drop the update manager into the _Update Manager_ field in the update object. If global update object is used then either select the _defaul_update_manager_ or the one you created. Finally make sure the _Is Active_ flag is true.
+
+Alright. We done setting up the update manager and update objects. Now in the _Auto Setup_ plugin press the _Run Current Scene_ button. If everything is alright then this should start the auto setup process and then run the scene. Once the scene runs you will see the _Counter_ value going up in the _Output_. You will also notice in the _Auto Setup_ plugin that the _Log_ has been updated showing all the process of the auto setup.
+
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
-1. Storing the provided manager in the _manager_helper_template_ by default. Before it was just a stub function.
-2. Added timer countdown feature.
-3. Added new Var types which are _Camera2D_, _Camera3D_, _Node_, _Node2D_ and _Node3D_.
-4. Dynamic Path Default Setting - This means that if ever a new variable type is added then the Variable Creator will update the variable creation path location. It will change the path location to the default location for all certain variable type which is the _res://addons/kamran_wali/code_opt_pro/variables/_ folder. The reason for adding this feature is to avoid any errors while creating new variable type which is forgetting to add a new element in the path's array. So when a new variable type is added expect your saved path locations to change and you have to change and save them all back.
-5. Added a new feature called _Instantiate Object_ feature. This feature helps to add instantiated packed scene object from the filesystem into the scene editor. Godot already has a system in place for adding instantiated packed scene objects into the scene editor but unfortunately you have to do it 1 by 1 and the process can get tedious. This new feature makes the process very fast for adding instantiated packed objects into the scene. Please checkout [Instantiate Object](#instantiate-object) for more details.
+1. Added Bar feature. For now added two types of bars which are **normal_bar** and **normal_bar_values**.
+2. Updated Godot version from **v4.1.1.stable.mono.official [bd6af8e0e]** to v4.1.3.stable.mono.official [f06b6836a]. Hopefully this will NOT give any errors.
+3. Added a new variable category called _Managers_. It only has one variable type called _COP_UpdateManagerGlobalHelper_ which is used for global update managers and global update objects.
+4. Created a shared update feature where only one __physics_process_ or one __process_ is being shared amongst multiple objects/update objects. This thus saves some performance.
+5. Created _Auto Setup_ plugin. This plugin handles setup that is going to be done automatically. For one this plugin sets up the update managers and update objects automatically. In future any new auto setup system will be added to this plugin.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
