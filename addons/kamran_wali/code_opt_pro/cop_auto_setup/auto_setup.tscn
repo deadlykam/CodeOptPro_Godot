@@ -1,0 +1,148 @@
+[gd_scene load_steps=12 format=3 uid="uid://s44urdv253ey"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_auto_setup/cop_auto_setup.gd" id="1_x6dts"]
+[ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="1_yv8bq"]
+[ext_resource type="Texture2D" uid="uid://qs7xed7x85l7" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Project_Normal.png" id="2_l2vmk"]
+[ext_resource type="Texture2D" uid="uid://cxtwuxgfusvni" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Project_Hover.png" id="3_5mqlc"]
+[ext_resource type="Texture2D" uid="uid://ds6m38m3u0beq" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Project_Pressesd.png" id="3_dscjx"]
+[ext_resource type="Texture2D" uid="uid://clvqhy0or6efm" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Current_Scene_Normal.png" id="4_s10h8"]
+[ext_resource type="Texture2D" uid="uid://brsgbi5sf0jix" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Current_Scene_Hover.png" id="5_ja6tn"]
+[ext_resource type="Texture2D" uid="uid://rnx235hj1ocu" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Current_Scene_Pressed.png" id="6_atn4q"]
+[ext_resource type="Texture2D" uid="uid://bwfy7kt5cnxdx" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Manual_Setup_Normal.png" id="6_noe28"]
+[ext_resource type="Texture2D" uid="uid://78eqxdlp7tjs" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Manual_Setup_Hover.png" id="7_g2per"]
+[ext_resource type="Texture2D" uid="uid://ch0fqn8cnab8f" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Manual_Setup_Pressed.png" id="9_gyutg"]
+
+[node name="Auto Setup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x6dts")
+
+[node name="PlayTestButtonHolder" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="RunProjectButton" type="TextureButton" parent="PlayTestButtonHolder"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.043
+offset_right = 50.464
+offset_bottom = 114.0
+scale = Vector2(0.25, 0.25)
+tooltip_text = "Run Project.
+Will run auto setup and then play the project."
+texture_normal = ExtResource("2_l2vmk")
+texture_pressed = ExtResource("3_dscjx")
+texture_hover = ExtResource("3_5mqlc")
+
+[node name="RunCurrentSceneButton" type="TextureButton" parent="PlayTestButtonHolder"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.106
+offset_left = 35.0
+offset_right = 16.888
+offset_bottom = 114.0
+scale = Vector2(0.25, 0.25)
+tooltip_text = "Run Current Scene.
+Will run auto setup and then play the edited scene."
+texture_normal = ExtResource("4_s10h8")
+texture_pressed = ExtResource("6_atn4q")
+texture_hover = ExtResource("5_ja6tn")
+
+[node name="ManualSetupButton" type="TextureButton" parent="PlayTestButtonHolder"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.167
+offset_left = 70.0
+offset_right = -18.384
+offset_bottom = 114.0
+scale = Vector2(0.25, 0.25)
+tooltip_text = "Manual Setup.
+Will only run auto setup."
+texture_normal = ExtResource("6_noe28")
+texture_pressed = ExtResource("9_gyutg")
+texture_hover = ExtResource("7_g2per")
+
+[node name="SettingHolder" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AutoSaveCurrentSceneButton" type="CheckButton" parent="SettingHolder"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 42.0
+offset_right = -903.0
+offset_bottom = 73.0
+tooltip_text = "If enabled then the current scene will be saved after each auto setup call."
+button_pressed = true
+text = "Auto Save (Current Scene)"
+
+[node name="LogHolder" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LogLabel" type="Label" parent="LogHolder"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 249.0
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.905882, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "Log:"
+autowrap_mode = 3
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.633
+anchor_right = 1.0
+anchor_bottom = 0.952
+offset_top = -0.184021
+offset_bottom = 0.104004
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_yv8bq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Version" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.96
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.0800171
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Version - v1.8.0"
+
+[connection signal="pressed" from="PlayTestButtonHolder/RunProjectButton" to="." method="_on_run_project_button_pressed"]
+[connection signal="pressed" from="PlayTestButtonHolder/RunCurrentSceneButton" to="." method="_on_run_current_scene_button_pressed"]
+[connection signal="pressed" from="PlayTestButtonHolder/ManualSetupButton" to="." method="_on_manual_setup_button_pressed"]
