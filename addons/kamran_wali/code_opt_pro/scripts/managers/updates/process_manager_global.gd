@@ -22,13 +22,6 @@ func _ready() -> void:
     _helper.set_manager(self)
 
 #region Automation methods. SHOULD NOT BE CALLED FROM OTHER SCRIPTS
-# func _process(delta: float) -> void:
-#     super._process(delta)
-#     if Engine.is_editor_hint(): # Logic for editor ONLY!
-#         if _helper: # Checking if helper ref given
-#             if !_helper.is_manager(self): # Check if self NOT set as manager
-#                 _helper.set_manager(self) # Setting self as manager
-
 func _setup() -> void:
     _helper.set_manager(self)
 #endregion
