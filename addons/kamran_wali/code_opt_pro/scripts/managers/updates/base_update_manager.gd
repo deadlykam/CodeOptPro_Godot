@@ -2,8 +2,13 @@
 class_name COP_UpdateManager
 extends Node
 
-@export_category("Update Manager")
+@export_category("Base Update Manager")
 @export var _objects: Array[Node]
+
+## This flag enables/disables auto num_update setup. If true
+## then num update will be set automatically. If null or false
+## then the user needs to give value to the num update.
+@export var _is_set_num_update: COP_FixedBoolVar
 
 ## Number of objects to update per frame. Min value is 1
 @export var _num_update := 1:
@@ -17,8 +22,8 @@ var _time_delta: float
 var _actual_num_update: int # This is the actual number of objects to update
 
 func _ready() -> void:
-    _calculate_time_delta() # Calculating the delta time for the update manager
     _validate_num_update() # Validting the actual number of objects to update
+    _calculate_time_delta() # Calculating the delta time for the update manager
 
 #region These methods SHOULD NOT BE CALLED BY OTHER SCRIPTS.
 ## This method updates the update manager and MUST only be called by 
@@ -33,7 +38,7 @@ func _update(delta: float) -> void:
                 _update_object(delta)
                 _index_update += 1
 
-## This method adds an object to the manager. THIS SHOULD ONLY BE CALLED BY
+## This method adds an object to the update manager. THIS SHOULD ONLY BE CALLED BY
 ## THE AUTOMATION LOGIC AND NO OTHER SCRIPTS!
 func _add_object(object) -> void: # TODO: Rename method to _add(object)
     if object.has_method("_is_update_object"): # Checking if object is update object
@@ -49,6 +54,24 @@ func _setup() -> void:
 func _reset_data() -> void:
     _objects.clear()
 #endregion
+
+## This method adds an object to the update manager and can be used during run time.
+func add_object(object) -> void:
+    _add_object(object)
+    _validate_num_update() # Validting the actual number of objects to update
+    _calculate_time_delta() # Calculating the delta time for the update manager
+
+## This method removes the given object.
+func remove_object(object) -> void:
+    _objects.erase(object)
+    _validate_num_update() # Validting the actual number of objects to update
+    _calculate_time_delta() # Calculating the delta time for the update manager
+
+## This method removes an object using the given index.
+func remove_object_index(index: int) -> void:
+    _objects.remove_at(index)
+    _validate_num_update() # Validting the actual number of objects to update
+    _calculate_time_delta() # Calculating the delta time for the update manager
 
 ## This method checks if the an object has already been added.
 ## True means added, false otherwise, of type bool.
@@ -76,12 +99,17 @@ func _update_object(delta: float) -> void:
 
 ## This method calculates the time delta for the update manager.
 func _calculate_time_delta() -> void:
-    _time_delta = float(_objects.size()) / float(_num_update)
+    _time_delta = float(_objects.size()) / float(_actual_num_update)
     _time_delta = 1.0 if _time_delta <= 1.0 else _time_delta
 
 ## This method calculates the actual number of objects to update.
 func _validate_num_update() -> void:
-    _actual_num_update = _objects.size() if _objects.size() <= _num_update else _num_update
+    if _is_set_num_update != null: # Checking if auto set flag is given
+        if _is_set_num_update.get_value(): # Checking if auto set is enabled
+            _actual_num_update = _objects.size()
+            _num_update = _actual_num_update # Updating the num update as well
+    else: # Manual num update setup condition
+        _actual_num_update = _objects.size() if _objects.size() <= _num_update else _num_update
 
 ## This method always sends true as the script is 
 ## update_manager. This method is needed for duck

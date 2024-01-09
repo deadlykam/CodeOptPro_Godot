@@ -39,11 +39,11 @@ func _auto_setup() -> void:
 		if _node_current.has_method("_is_update_manager"): # Checking if object is update manager
 			_update_managers.append(_node_current) # Adding the update manager
 		elif _node_current.has_method("_is_update_object"): # Checking if object is update object
-			_update_objects.append(_node_current)
+			_update_objects.append(_node_current) # Adding the update object
 		
 		_index = 0 
 		while _index < _node_current.get_child_count(): # Loop for finding children
-			_nodes_open.push_back(_node_current.get_child(_index)) # Adding new child for checking
+			_nodes_open.push_back(_node_current.get_child(_index)) # Adding a new child for checking
 			_index += 1
 
 	_index = 0
