@@ -310,6 +310,18 @@ Before using the _Auto Setup_ plugin we must first setup the update managers and
 
 Alright. We done setting up the update manager and update objects. Now in the _Auto Setup_ plugin press the _Run Current Scene_ button. If everything is alright then this should start the auto setup process and then run the scene. Once the scene runs you will see the _Counter_ value going up in the _Output_. You will also notice in the _Auto Setup_ plugin that the _Log_ has been updated showing all the process of the auto setup.
 
+##### Update Manager Runtime Functions/Methods:
+I have also added some runtime methods for the update manager. This will help tremendously during runtime of the game. Below are the methods:
+- **void add_object(Node):** This method adds a new object to the update manager. _Also please do NOT confuse this method with the private method **_add_object(Node)** as this private method does NOT handle some of the validation checks and is ONLY used by the automation script._ If you don't want any dublication then make sure to check using the method **bool COP_UpdateManager.has_object(Node)** before calling the add_object(Node) method. Below is a small example of avoiding duplication when adding object to update manager.
+```
+extends Node
+
+@export var update_manager: COP_UpdateManager
+
+func some_method(object: Node) -> void:
+   if !update_manager.has_object(object): # Checking if the object does NOT exist in the Update Manager
+      update_manager.add_object(object)
+```
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
