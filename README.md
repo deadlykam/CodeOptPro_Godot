@@ -319,8 +319,8 @@ extends Node
 @export var update_manager: COP_UpdateManager
 
 func some_method(object: Node) -> void:
-   if !update_manager.has_object(object): # Checking if the object does NOT exist in the Update Manager
-      update_manager.add_object(object)
+	if !update_manager.has_object(object): # Checking if the object does NOT exist in the Update Manager
+		update_manager.add_object(object)
 ```
 ***
 ## Updates
