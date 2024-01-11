@@ -29,10 +29,10 @@ This is a simple Godot system that helps with performance.
 Godot version **v4.1.3.stable.mono.official [f06b6836a]** and above should work. Previous Godot version of **v4.1.1.stable.mono.official [bd6af8e0e]** should work but any version before that have not been tested and may give errors.
 ***
 ## Stable Build
-[Stable-v1.8.0](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.8.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.8.1](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.8.1) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [CodeOptPro-v1.8.0.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.8.0) from the latest Stable build.
+1. First download the latest [CodeOptPro-v1.8.1.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.8.1) from the latest Stable build.
 2. Once downloaded extract/unzip the file.
 3. Enter the folder and copy the folder named **kamran_wali**.
 4. Now paste the folder in the **addons** folder of your Godot project. If your Godot project does not have the **addons** folder then just create it in the root folder, **res://**, and paste the copied folder there.
@@ -319,6 +319,8 @@ Here I will share all the updates done to the current versions. Below are the up
 4. Created a shared update feature where only one __physics_process_ or one __process_ is being shared amongst multiple objects/update objects. This thus saves some performance.
 5. Created _Auto Setup_ plugin. This plugin handles setup that is going to be done automatically. For one this plugin sets up the update managers and update objects automatically. In future any new auto setup system will be added to this plugin.
 ***
+## Bug Fix:
+1. Fixed a bug in Update Manager were _time_delta was not being calculated properly and thus was giving weird results in some exceptional cases.
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
 ***
