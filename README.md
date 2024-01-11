@@ -233,6 +233,7 @@ In CodeOptPro you can use another powerful feature that allows you to use custom
   - a. **Helper (Only available in the global types)** - This the _cop_update_manager_global_helper_ resource that helps to keep the code decoupled. The update objects will use this reference to interact with the update manager. This property is only available for the global types. There is already a _cop_update_manager_global_helper_ resource created called _default_update_manager_. You can use this as well for your project if you want to.
   - b. **Objects** - This is an array which will contain all the update objects related to this update manager. These objects will share one __physics_process_ or __process_ method from the update manager. You can manually add the update objects here but that is NOT recommended. Instead we shall use the _Auto Setup_ plugin to add update objects to update managers automatically. Will talk about how to create an update object and using _Auto Setup_ plugin later below.
   - c. **Num Update** - This value handles how many objects should be updated per frame. For example if this value is set to 5 then 5 objects will be update in one frame cycle. It there are too many update objects that needs to be updated then increasing thsi value should make the update process much better but that depends on your scripts and their logic.
+  - d. **Is Set Num Update** - If set true then will automatically set the _Num Update_ value to the number of objects added to the update manager. If null or false then the _Num Update_ value will be used and auto setup for _Num Update_ won't work. For example if there are 5 objects added and the _Num Update_ value is and _Is Set Num Update_ value is true then the actual num update value will be 5. _Note: This value can remain null as null is taken as a false flag here._
 2. **Creating And Adding Update Object** - The second step is to create an update object. It is very easy to create an update object. If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as we will needed the update object template to create our scripts. Once that is done then create a new script. In the _Inherits:_ field select _Node_. Then in the _Template:_ field either select _Cop Update Object Global Tepmlate_, if you have added the global update manager, or select _Cop Update Object Local Template_, if you have added the local update manager. Name the script anything you want and then press _Create_ button. I have commented the script with much details but I will explain what each of these properties and functions does.
     - a. **update_manager (COP_UpdateManagerGlobalHelper or COP_UpdateManager)** - This property keeps the reference of the update manager. Depending on what type you used it could be either _COP_UpdateManagerGlobalHeler_, for global update objects, or _COP_UpdateManager_, for local update objects. This reference is mainly used by the _Auto Setup_ plugin to add the update object automatically to the update managers but can also be used for using any data from the update manager.
     - b. **update(float) void** - This is the method that will update the update object every frame. So any update logic that you were going to put in either __physics_process_ or __process_ should be put in here.
@@ -312,7 +313,7 @@ Alright. We done setting up the update manager and update objects. Now in the _A
 
 ##### Update Manager Runtime Functions/Methods:
 I have also added some runtime methods for the update manager. This will help tremendously during runtime of the game. Below are the methods:
-- **void add_object(Node):** This method adds a new object to the update manager. _Also please do NOT confuse this method with the private method **_add_object(Node)** as this private method does NOT handle some of the validation checks and is ONLY used by the automation script._ If you don't want any dublication then make sure to check using the method **bool COP_UpdateManager.has_object(Node)** before calling the add_object(Node) method. Below is a small example of avoiding duplication when adding object to update manager.
+- **void add_object(Node):** This method adds a new object to the update manager. _Also please do NOT confuse this method with the private method **_add_object(Node)** as this private method does NOT handle some of the validation checks and is ONLY used by the automation script._ If you don't want any duplicate objects added then make sure to check using the method **bool COP_UpdateManager.has_object(Node)** before calling the add_object(Node) method. Below is a small example of avoiding duplicate object addition when adding object to update manager.
 ```
 extends Node
 
@@ -322,14 +323,15 @@ func some_method(object: Node) -> void:
 	if !update_manager.has_object(object): # Checking if the object does NOT exist in the Update Manager
 		update_manager.add_object(object)
 ```
+- **void remove_object(Node):** This method removes the given object. _Note: When calling this method the update method will stop working till all remove actions are done. If number of remove objects are small then the update pause won't be noticable. It is recommended NOT to call this method every frame_
+- **void remove_object_index(int):** This method removes an object using an int index value. _Note: When calling this method the update method will stop working till all remove actions are done. If number of remove objects are small then the update pause won't be noticable. It is recommended NOT to call this method every frame_
+- **int get_size():** This method gets the number of objects added to the update manager.
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
-1. Added Bar feature. For now added two types of bars which are **normal_bar** and **normal_bar_values**.
-2. Updated Godot version from **v4.1.1.stable.mono.official [bd6af8e0e]** to v4.1.3.stable.mono.official [f06b6836a]. Hopefully this will NOT give any errors.
-3. Added a new variable category called _Managers_. It only has one variable type called _COP_UpdateManagerGlobalHelper_ which is used for global update managers and global update objects.
-4. Created a shared update feature where only one __physics_process_ or one __process_ is being shared amongst multiple objects/update objects. This thus saves some performance.
-5. Created _Auto Setup_ plugin. This plugin handles setup that is going to be done automatically. For one this plugin sets up the update managers and update objects automatically. In future any new auto setup system will be added to this plugin.
+1. Added runtime functions for the update manager. Now the user can add and remove objects during runtime.
+2. Added a feature in update manager that makes the _Num Update_ value to the number of objects added to the update manager.
+3. Fixed a bug where __time_delta_ value wasn't calculated properly.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
