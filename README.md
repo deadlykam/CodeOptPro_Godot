@@ -20,6 +20,7 @@ This is a simple Godot system that helps with performance.
   - [Bars](#bars)
   - [Performant Update](#performant-update)
 - [Updates](#updates)
+- [Bug Fix](#bug-fix)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
