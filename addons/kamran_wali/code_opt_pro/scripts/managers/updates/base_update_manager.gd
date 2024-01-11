@@ -76,7 +76,7 @@ func _update_object(delta: float) -> void:
 
 ## This method calculates the time delta for the update manager.
 func _calculate_time_delta() -> void:
-    _time_delta = float(_objects.size()) / float(_num_update)
+    _time_delta = float(_objects.size()) / float(_actual_num_update)
     _time_delta = 1.0 if _time_delta <= 1.0 else _time_delta
 
 ## This method calculates the actual number of objects to update.
