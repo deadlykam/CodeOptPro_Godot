@@ -5,16 +5,16 @@ extends Node
 @export_category("Base Update Manager")
 @export var _objects: Array[Node]
 
-## This flag enables/disables auto num_update setup. If true
-## then num update will be set automatically. If null or false
-## then the user needs to give value to the num update.
-@export var _is_set_num_update: COP_FixedBoolVar
-
 ## Number of objects to update per frame. Min value is 1
 @export var _num_update := 1:
 	set(p_num_update):
 		if _num_update != p_num_update:
 			_num_update = 1 if p_num_update < 1 else p_num_update
+
+## This flag enables/disables auto num_update setup. If true
+## then num update will be set automatically. If null or false
+## then the user needs to give value to the num update.
+@export var _is_set_num_update: COP_FixedBoolVar
 
 var _remove_objects: Array[Node]
 var _pointer := 0
@@ -96,6 +96,10 @@ func get_time_delta_process() -> float:
 ## This method gets the physics process time delta value for the manager.
 func get_time_delta_physics_process() -> float:
 	return _time_delta * get_physics_process_delta_time()
+
+## This method gets the number of objects added to the update manager.
+func get_size() -> int:
+	return _objects.size()
 
 ## This method updates the active object.
 func _update_object(delta: float) -> void:
