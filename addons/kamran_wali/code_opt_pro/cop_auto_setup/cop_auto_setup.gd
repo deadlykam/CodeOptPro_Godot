@@ -7,7 +7,8 @@ var _log_label: Label
 
 # Properties needed internally.
 var _update_managers: Array[COP_UpdateManager]
-var _update_objects: Array[Object]
+var _update_objects: Array[Node]
+var _auto_setup_objects: Array[Node]
 var _nodes_open: Array[Node]
 var _node_current: Node
 var _index: int
@@ -40,6 +41,8 @@ func _auto_setup() -> void:
 			_update_managers.append(_node_current) # Adding the update manager
 		elif _node_current.has_method("_is_update_object"): # Checking if object is update object
 			_update_objects.append(_node_current) # Adding the update object
+		elif _node_current.has_method("_is_auto_setup_object"): # Checking if object is auto setup object
+			_auto_setup_objects.append(_node_current) # Adding the auto setup object
 		
 		_index = 0 
 		while _index < _node_current.get_child_count(): # Loop for finding children
@@ -56,6 +59,12 @@ func _auto_setup() -> void:
 	while _index < _update_objects.size(): # Loop for setting update objects.
 		if _update_objects[_index].has_method("_add_self_to_manager"):
 			_update_objects[_index]._add_self_to_manager() # Adding update object to correct update manager
+		_index += 1
+	
+	_index = 0
+	while _index < _auto_setup_objects.size(): # Loop for setting auto setup objects.
+		if _auto_setup_objects[_index].has_method("auto_setup"):
+			_auto_setup_objects[_index].auto_setup() # Calling the auto setup method
 		_index += 1
 	
 	_write_to_log("Auto Setup Done!")
