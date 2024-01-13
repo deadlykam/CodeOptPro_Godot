@@ -12,13 +12,16 @@ This is a simple Godot system that helps with performance.
 - [Features](#features)
   - [Performant Data Share/Use](#performant-data-shareuse)
     - [Fixed Vars](#1-fixed-vars)
-    - [Vars](#2-vars)
+    - [Managers](#2-managers)
+    - [Vars](#3-vars)
     - [Variable Creator](#variable-creator)
   - [Vector Performant Calculation](#vector-performant-calculation)
   - [Timer Countdown](#timer-countdown)
   - [Instantiate Object](#instantiate-object)
   - [Bars](#bars)
   - [Performant Update](#performant-update)
+    -  [Update Manager Runtime Functions/Methods](#update-manager-runtime-functionsmethods)
+    -  [Auto Setup Objects](#auto-setup-objects)
 - [Updates](#updates)
 - [Versioning](#versioning)
 - [Authors](#authors)
@@ -328,26 +331,44 @@ func some_method(object: Node) -> void:
 - **int get_size():** This method gets the number of objects added to the update manager.
 
 ##### Auto Setup Objects:
-This feature allows objects to be setup automatically during the auto setup process. This helps with certain task like automatically populating an array with objects. If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as that contains the script template for _auto setup object_. To declare an object as _auto setup object_ is easy. You can create a new script using the script template _COP_auto_setup_object_template.gd_ or add the methods _func auto_setup() -> void:_ and _func _is_auto_setup_object() -> bool:_ and _@tool_ to an existing script. The _auto setup object_ can extend from any other script as long as that script is a child of _Node_ object. These two methods will make the script an _auto setup object_. Let me explain what each me method does.
+This feature allows objects to be setup automatically during the auto setup process in the editor mode. This helps with certain tasks like automatically populating an array with objects. If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as that contains the script template for _auto setup object_ called _COP_auto_setup_object_template.gd_ under _Node_. To declare an object as _auto setup object_ is easy. You can create a new script using the script template _COP_auto_setup_object_template.gd_ or add the methods _func auto_setup() -> void:_ and _func _is_auto_setup_object() -> bool:_ and _@tool_ to an existing script. The _auto setup object_ can extend from any other script as long as that script is a child of _Node_ object. These two methods will make the script an _auto setup object_. Let me explain what each me method does.
 - **void auto_setup():** This method is called during the auto setup process and this is where all the logic for auto setup should be placed.
 - **bool _is_auto_setup_object():** This method is used by the auto setup process to check if the object is an auto setup object. This method MUST NOT be changed or overridden.
-I am sharing a very simple code on how to use the _auto setup object_
+Below I am sharing a very simple code on how to use the _auto setup object_. This code just populates the Arrya[Node] with children from a Node.
 ```
 @tool
 extends Node
 
 @export var _object_holder: Node
 @export var _some_objects: Array[Node]
-var _
-```
 
-If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as we will needed the update object template to create our scripts. Once that is done then create a new script.
+var _index: int
+
+## This method handles all the setup that needs to be done during 
+## automation setup process.
+func auto_setup() -> void:
+	_some_objects.clear() # Making sure every auto setup process the array is cleared so no duplication occurs
+	_index = 0
+	while _index < _object_holder.get_child_count(): # Loop for populating the array from the given Node
+		_some_objects.append(_object_holder.get_child(_index))
+		_index += 1
+
+#region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
+## This method always sends true as the script is an auto setup object.
+## This method is needed for duck typing check and SHOULD NOT BE
+## OVERRIDDEN OR CHANGED!
+func _is_auto_setup_object() -> bool:
+    return true
+#endregion
+```
+If you want to you can also make any _update objects_ to be _auto setup objects_ as well just by adding the methods _void func auto_setup()_ and _bool _is_auto_setup_object()_ to the _update object_ script. That way the object will be both _update object_ and _auto setup object_.
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
 1. Added runtime functions for the update manager. Now the user can add and remove objects during runtime.
 2. Added a feature in update manager that makes the _Num Update_ value to the number of objects added to the update manager.
 3. Fixed a bug where __time_delta_ value wasn't calculated properly.
+4. Added _auto setup object_ feature. This feature allows setup to happen during the auto setup process in the editor mode.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
