@@ -326,6 +326,22 @@ func some_method(object: Node) -> void:
 - **void remove_object(Node):** This method removes the given object. _Note: When calling this method the update method will stop working till all remove actions are done. If number of remove objects are small then the update pause won't be noticable. It is recommended NOT to call this method every frame_
 - **void remove_object_index(int):** This method removes an object using an int index value. _Note: When calling this method the update method will stop working till all remove actions are done. If number of remove objects are small then the update pause won't be noticable. It is recommended NOT to call this method every frame_
 - **int get_size():** This method gets the number of objects added to the update manager.
+
+##### Auto Setup Objects:
+This feature allows objects to be setup automatically during the auto setup process. This helps with certain task like automatically populating an array with objects. If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as that contains the script template for _auto setup object_. To declare an object as _auto setup object_ is easy. You can create a new script using the script template _COP_auto_setup_object_template.gd_ or add the methods _func auto_setup() -> void:_ and _func _is_auto_setup_object() -> bool:_ and _@tool_ to an existing script. The _auto setup object_ can extend from any other script as long as that script is a child of _Node_ object. These two methods will make the script an _auto setup object_. Let me explain what each me method does.
+- **void auto_setup():** This method is called during the auto setup process and this is where all the logic for auto setup should be placed.
+- **bool _is_auto_setup_object():** This method is used by the auto setup process to check if the object is an auto setup object. This method MUST NOT be changed or overridden.
+I am sharing a very simple code on how to use the _auto setup object_
+```
+@tool
+extends Node
+
+@export var _object_holder: Node
+@export var _some_objects: Array[Node]
+var _
+```
+
+If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as we will needed the update object template to create our scripts. Once that is done then create a new script.
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
