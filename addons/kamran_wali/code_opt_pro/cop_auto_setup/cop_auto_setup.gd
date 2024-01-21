@@ -32,6 +32,7 @@ func _auto_setup() -> void:
 	_write_to_log("Initializing Auto Setup...")
 	_update_managers.clear() # Clearing any previously stored data
 	_update_objects.clear() # Clearing any previously stored data
+	_auto_setup_objects.clear() # Clearing any previously stored data
 	_nodes_open.push_back(EDITOR_PLUGIN.get_editor_interface().get_edited_scene_root())
 
 	while !_nodes_open.is_empty(): # Loop for finding all the automated scripts
