@@ -23,6 +23,7 @@ This is a simple Godot system that helps with performance.
     -  [Update Manager Runtime Functions/Methods](#update-manager-runtime-functionsmethods)
     -  [Auto Setup Objects](#auto-setup-objects)
 - [Updates](#updates)
+- [Bug Fixes](#bug-fixes)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
