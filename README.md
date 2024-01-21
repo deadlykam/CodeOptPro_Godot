@@ -370,6 +370,9 @@ Here I will share all the updates done to the current versions. Below are the up
 3. Fixed a bug where __time_delta_ value wasn't calculated properly.
 4. Added _auto setup object_ feature. This feature allows setup to happen during the auto setup process in the editor mode.
 ***
+## Bug Fixes:
+1. Fixed a bug in auto setup process where the number of auto setup object calls are increasing exponentially after each process call. This was due to the array of the auto setup objects NOT being cleared after each process call. This bug has been fixed.
+***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
 ***
