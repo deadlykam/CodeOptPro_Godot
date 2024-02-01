@@ -22,6 +22,7 @@ This is a simple Godot system that helps with performance.
   - [Performant Update](#performant-update)
     -  [Update Manager Runtime Functions/Methods](#update-manager-runtime-functionsmethods)
     -  [Auto Setup Objects](#auto-setup-objects)
+  - [Debug](#debug)  
 - [Updates](#updates)
 - [Bug Fixes](#bug-fixes)
 - [Versioning](#versioning)
@@ -363,6 +364,54 @@ func _is_auto_setup_object() -> bool:
 #endregion
 ```
 If you want to you can also make any _update objects_ to be _auto setup objects_ as well just by adding the methods _void func auto_setup()_ and _bool _is_auto_setup_object()_ to the _update object_ script. That way the object will be both _update object_ and _auto setup object_.
+#### Debug:
+I have added a debug feature that will help with printing debugs. For now the debug will work with nodes, scripts, resources and objects. To use the debug tool simply call _COP_Debug_ from the script. Let me explain the debug methods.
+1. **void print_script(Object, String)** - This method will print the name of the script and the log message provided. If the object provided does NOT have a script or is NOT a script then the method will print an error. To use this method just call it by _COP_Debug.print_script(some_script, "some_log")_.
+2. **void print_node(Node, String)** - This method will print the name of the node and the log message provided. To use this method just call it by _COP_Debug.print_node(some_node, "some_log")_.
+3. **void print_resource(Resource, String)** - This method will print the name of the resource and the log message provided. If the object provided is NOT a resource then the method will print an error. To use this method just call it by _COP_Debug.print_resource(some_resource, "some_log")_.
+4. **void print_object(Object, String)** - This method will print the name of the object and the ID. To use this method just call it by _COP_Dubug.print_object(some_object, "some_log")_.
+5. **String get_script_log(Object, String)** - This method will return a String with the name of the script and the log message. Use this method for custom printing if needed.
+6. **String get_node_log(Node, String)** - This method will return a String with the name of the node and the log message. Use this method for custom printing if needed.
+7. **String get_resource_log(Resource, String)** - This method will return a String with the name of the resource and the log message. Use this method for custom printing if needed.
+8. **String get_object_log(Object, String)** - This method will return a String with the name and ID of the object and the log message. Use this method for custom printing if neeeded.
+
+I am sharing some examples for using the _COP_Debug_ tools.
+
+Example for printing debugs.
+```
+extends Node
+
+@export var _some_flag: COP_FixedBoolVar
+
+func _ready() -> void:
+	COP_Debug.print_script(self, "This is an attached script.")
+	COP_Debug.print_node(self, "This is the node.")
+	COP_Debug.print_resource(_some_flag, "This is a resource object.")
+```
+```
+OUTPUT:
+=========
+***script_path.some_script.gd****
+This is an attached script.
+=========
+some_node_name -> This is the node.
+some_resource_name -> This is a resource object.
+```
+
+Example for printing custom debugs.
+```
+extends Node
+
+func _ready() -> void:
+	COP_Debug.print_script(self, COP_Debug.get_node_log(self, "This is the node."))
+```
+```
+OUTPUT:
+=========
+***script_path.some_script.gd***
+some_node_name -> This is the node
+=========
+```
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
@@ -370,6 +419,7 @@ Here I will share all the updates done to the current versions. Below are the up
 2. Added a feature in update manager that makes the _Num Update_ value to the number of objects added to the update manager.
 3. Fixed a bug where __time_delta_ value wasn't calculated properly.
 4. Added _auto setup object_ feature. This feature allows setup to happen during the auto setup process in the editor mode.
+5. Added print debug feature. This feature will help the user to debug a script much better.
 ***
 ## Bug Fixes:
 1. Fixed a bug in auto setup process where the number of auto setup object calls are increasing exponentially after each process call. This was due to the array of the auto setup objects NOT being cleared after each process call. This bug has been fixed.
