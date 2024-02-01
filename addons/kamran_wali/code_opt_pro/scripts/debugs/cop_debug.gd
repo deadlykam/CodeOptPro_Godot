@@ -1,4 +1,7 @@
 class_name COP_Debug
+## Debugger to help print debugs.
+##
+## This script helps with printing debugs.
 
 ## This method prints the log message and the script name.
 static func print_script(object: Object, message: String) -> void:
@@ -8,8 +11,13 @@ static func print_script(object: Object, message: String) -> void:
 static func print_node(object: Node, message: String) -> void:
     print(get_node_log(object, message))
 
+## This method prints the log message and the resource name.
 static func print_resource(object: Resource, message: String) -> void:
     print(get_resource_log(object, message))
+
+## This method prints the log message and the object name and ID.
+static func print_object(object: Object, message: String) -> void:
+    print(get_object_log(object, message))
 
 ## This method gets the script log.
 static func get_script_log(object: Object, message: String) -> String:
@@ -29,6 +37,7 @@ static func get_resource_log(object: Resource, message: String) -> String:
     else:
         return "COP_Debug.get_resource_log() -> Error: No Resource Found! Please provide a resource."
 
+## This method gets the object log.
 static func get_object_log(object: Object, message: String) -> String:
     if object.has_method("to_string"):
         return object.to_string() + " -> " + message
