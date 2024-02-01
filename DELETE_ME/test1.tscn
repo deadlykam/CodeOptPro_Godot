@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxrjyghfk55cs"]
+
+[ext_resource type="Script" path="res://DELETE_ME/delete_script1.gd" id="1_317po"]
+[ext_resource type="Resource" uid="uid://rcjwy5m5hppb" path="res://addons/kamran_wali/code_opt_pro/variables/true.tres" id="2_utkwj"]
+
+[node name="test1" type="Node3D"]
+
+[node name="This_A_New_Node" type="Node" parent="."]
+script = ExtResource("1_317po")
+some_flag = ExtResource("2_utkwj")

@@ -6,16 +6,31 @@ static func print_script(object: Object, message: String) -> void:
 
 ## This method prints the log message the node name.
 static func print_node(object: Node, message: String) -> void:
-    print(object.name, " -> ", message)
+    print(get_node_log(object, message))
 
-# static func print_script_node(object, message: String) -> void:
-#     print_script(object, print
+static func print_resource(object: Resource, message: String) -> void:
+    print(get_resource_log(object, message))
 
 ## This method gets the script log.
 static func get_script_log(object: Object, message: String) -> String:
     if object.has_method("get_path"):
-        return object.get_script().get_path() + "=========\n" + message + "\n========="
+        return "=========\n***" + object.get_script().get_path() + "***\n" + message + "\n========="
     else:
-        return "COP_Debug -> ERROR: No Script Found! Please provide a script"
+        return "COP_Debug.get_script_log() -> ERROR: No Script Found! Please provide a script."
 
-#TODO: Create a method that gets the node log
+## This method gets the node log.
+static func get_node_log(object: Object, message: String) -> String:
+    return object.name + " -> " + message
+
+## This method gets the resource log.
+static func get_resource_log(object: Resource, message: String) -> String:
+    if object.has_method("take_over_path"):
+        return object.resource_path.get_file().trim_suffix(".tres") + " -> " + message
+    else:
+        return "COP_Debug.get_resource_log() -> Error: No Resource Found! Please provide a resource."
+
+static func get_object_log(object: Object, message: String) -> String:
+    if object.has_method("to_string"):
+        return object.to_string() + " -> " + message
+    else:
+        return "COP_Debug.get_object_log() -> Error: No Object found! Please provide an object."

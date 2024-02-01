@@ -106,7 +106,7 @@ offset_top = -0.0800171
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-text = "Version - v1.9.1a"
+text = "Version - v1.11.1a"
 
 [connection signal="text_changed" from="MainContainer/NumberContainer/Input_Number" to="." method="_on_input_number_text_changed"]
 [connection signal="pressed" from="MainContainer/InstantiateButton" to="." method="_on_duplicate_button_pressed"]
