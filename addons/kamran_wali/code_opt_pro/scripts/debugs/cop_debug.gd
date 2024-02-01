@@ -27,7 +27,7 @@ static func get_script_log(object: Object, message: String) -> String:
         return "COP_Debug.get_script_log() -> ERROR: No Script Found! Please provide a script."
 
 ## This method gets the node log.
-static func get_node_log(object: Object, message: String) -> String:
+static func get_node_log(object: Node, message: String) -> String:
     return object.name + " -> " + message
 
 ## This method gets the resource log.
