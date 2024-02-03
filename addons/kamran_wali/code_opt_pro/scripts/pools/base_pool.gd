@@ -3,9 +3,9 @@ class_name COP_Pool
 extends Node
 
 @export_category("Base Pool")
-# TODO: Give manager helper resource here which is dynamic and will only call AddRequest method. Kinda like delegates in C#
+@export var _helper: COP_PoolHelper
 @export var _is_enable_at_start: COP_FixedBoolVar
-@export var _objects: Array
+@export var _p_objects: Array
 
 var _p_index_object
 var _requests: Array
@@ -14,7 +14,7 @@ var _pointer_pool_object:= -1
 var _is_active:= false
 
 func _ready() -> void:
-    # TODO: Set the manager helper/delegateisc here.
+    _helper.set_manager(self)
     _is_active = _is_enable_at_start.get_value()
 
 ## This method updates the update object.
@@ -43,9 +43,9 @@ func add_request(object: Object) -> void:
 ## This method sets up the pool objects at start up.
 func _p_setup_object_pool() -> void:
     _p_index_object = 0
-    while(_p_index_object < _objects.size()): # Loop for populating the object array
+    while(_p_index_object < _p_objects.size()): # Loop for populating the object array
         if _p_is_pool_object(): # Checking if object is pool object
-            _objects.append(get_child(_p_index_object))
+            _p_objects.append(get_child(_p_index_object))
         _p_index_object += 1
 
 ## This method checks if the object is pool object.
@@ -54,8 +54,8 @@ func _p_is_pool_object() -> bool:
 
 ## This method gets the available pool object.
 func _get_pool_object() -> Object:
-    _pointer_pool_object = 0 if (_pointer_pool_object + 1) >= _objects.size() else _pointer_pool_object + 1
-    return _objects[_pointer_pool_object]
+    _pointer_pool_object = 0 if (_pointer_pool_object + 1) >= _p_objects.size() else _pointer_pool_object + 1
+    return _p_objects[_pointer_pool_object]
 
 ## This method process' the request.
 func _process_request() -> void:
@@ -63,7 +63,7 @@ func _process_request() -> void:
 
 ## This method adds this object to the update manager.
 func _add_self_to_manager() -> void:
-    # TODO: This method MUST be overriden in children scripts and use the correct manager to be set up.
+    # NOTE: This method MUST be overriden in children scripts and use the correct manager to be set up.
     pass
 
 #region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
