@@ -10,7 +10,6 @@ extends Node
 var _p_index_object
 var _requests: Array
 var _object_cur
-var _pointer_process:= 0
 var _pointer_pool_object:= -1
 var _is_active:= false
 
@@ -20,9 +19,9 @@ func _ready() -> void:
 
 ## This method updates the update object.
 func update(delta: float) -> void:
-    # NOTE: Your update logic MUST go here. That is the _process or
-    #       _physics_process logic.
-    pass
+    if !_requests.is_empty():
+        _object_cur = _requests.pop_front()
+        _process_request()
 
 ## This method activates/deactivates the update object.
 func set_active(is_enable: bool) -> void:
@@ -35,12 +34,32 @@ func is_active() -> bool:
 ## This method handles all the setup that needs to be done during 
 ## automation setup process.
 func auto_setup() -> void:
-    # TODO: Call the method that will probably populate the array with objects.
-    pass
+    _p_setup_object_pool() # Populating the with pool objects
 
-## TODO: This method adds a pooling request to be processed.
+## This method adds a pooling request to be processed.
 func add_request(object: Object) -> void:
     _requests.push_front(object)
+
+## This method sets up the pool objects at start up.
+func _p_setup_object_pool() -> void:
+    _p_index_object = 0
+    while(_p_index_object < _objects.size()): # Loop for populating the object array
+        if _p_is_pool_object(): # Checking if object is pool object
+            _objects.append(get_child(_p_index_object))
+        _p_index_object += 1
+
+## This method checks if the object is pool object.
+func _p_is_pool_object() -> bool:
+    return true
+
+## This method gets the available pool object.
+func _get_pool_object() -> Object:
+    _pointer_pool_object = 0 if (_pointer_pool_object + 1) >= _objects.size() else _pointer_pool_object + 1
+    return _objects[_pointer_pool_object]
+
+## This method process' the request.
+func _process_request() -> void:
+    _object_cur._receive_pool_object(_get_pool_object())
 
 ## This method adds this object to the update manager.
 func _add_self_to_manager() -> void:
