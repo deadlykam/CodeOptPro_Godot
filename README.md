@@ -413,7 +413,7 @@ some_node_name -> This is the node
 =========
 ```
 #### Pooling System:
-Added Pooling System feature to CodeOptPro. For now any Node or child of Node can be used as a pooling object. This feature will help a lot in performance for objects that will share some other common objects. For example if two gun objects have similar bullet type then they can both use a pool of those bullets. That way it will give an illusion that there are a lot of bullets but in reality they are sharing the same bullets. I have also given the option to create your own custom pooling system. To use the pooling system you will first need to create a new _PoolManagerHelper_ from the _Managers_ tab or you can use the already created pool manager called _default_pool_. For any examples below we will be using the default pool manager, _default_pool_. First lets looking into the pool manager helper.
+Added Pooling System feature to CodeOptPro. For now any Node or child of Node can be used as a pooling object. This feature will help a lot in performance for objects that will share some other common objects. For example if two gun objects have similar bullet type then they can both use a pool of those bullets. That way it will give an illusion that there are a lot of bullets but in reality they are sharing the same bullets. I have also given the option to create your own custom pooling system. To use the pooling system you will first need to create a new _PoolManagerHelper_ from the _Managers_ tab in the _Variable Creator_ or you can use the already created pool manager called _default_pool_. For any examples below we will be using the default pool manager, _default_pool_. First lets looking into the pool manager helper.
 1. **void add_request(Node)** - This is the method for requesting a pool object and MUST be called by the pool object receiver scripts. From the pool manager this is the ONLY method that needs to be called to get a pool object.
 
 To make an object into a pool object receiver you MUST add certain methods to it or just simply use the script template called _COP_pool_receiver_object_template.gd_ which is under _Node_. Let me explain the properties and methods for the pool object receiver.
@@ -433,6 +433,11 @@ func _receive_pool_object(object: Node3D) -> void:
 	_received_object = object # Storing the received object
 	print("Object Received: ", _received_object.name) # Printing the name of the received object
 ```
+2. **bool _is_pool_receiver()** - This method just checks if the script is a pool receiver through duck typing. This method will not effect your code but may later be needed for automation check.
+
+Lets use the _pool_local_ for this example. First create a new _Node_ in a scene and name it _Pool_. Then attach the script called _pool_local.gd_. Now let me explain all the properties for the _pool_local.gd_ script.
+1. **Helper** - This is the manager helper resource for the pool manager. This manager will be set by the pool manager ONLY and will be called by the pool receiver objects. By default there is already a pool manager created called _default_pool_. You can use that for your game or use a new one by creating it from the _Variable Creator_ under the _Manager_ tab.
+2. **Is Enable At Start** - This flag will decide if the pool manager will be enabled when the game starts. #TODO: Write how to enable or disable through code
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
