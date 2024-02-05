@@ -1,7 +1,7 @@
 @tool
 extends COP_Pool
 
-@export_category("Base Pool Global")
+@export_category("Pool Global")
 ## The global update manager that will update this object.
 @export var update_manager: COP_UpdateManagerGlobalHelper:
 	set(p_update_manager):

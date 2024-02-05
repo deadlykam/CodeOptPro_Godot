@@ -1,5 +1,8 @@
 @tool
-extends Node
+extends Node # The parent can be Node or any child of Node
+
+## The pool manager for requesting pool objects.
+@export var pool_manager: COP_PoolHelper
 
 # NOTE: If the type of the object is known then please provide it
 #       for better performance.

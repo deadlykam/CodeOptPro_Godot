@@ -5,17 +5,19 @@ extends Node
 @export_category("Base Pool")
 @export var _helper: COP_PoolHelper
 @export var _is_enable_at_start: COP_FixedBoolVar
-@export var _p_objects: Array
+@export var _p_objects: Array[Node]
+@export var _pool_object_holder: Node
 
 var _p_index_object
-var _requests: Array
-var _object_cur
+var _requests: Array[Node]
+var _object_cur: Node
 var _pointer_pool_object:= -1
 var _is_active:= false
 
 func _ready() -> void:
-    _helper.set_manager(self)
-    _is_active = _is_enable_at_start.get_value()
+    if !Engine.is_editor_hint():
+        _helper.set_manager(self)
+        _is_active = _is_enable_at_start.get_value()
 
 ## This method updates the update object.
 func update(delta: float) -> void:
@@ -34,22 +36,25 @@ func is_active() -> bool:
 ## This method handles all the setup that needs to be done during 
 ## automation setup process.
 func auto_setup() -> void:
+    if _pool_object_holder == null: # Condition for setting the default pool object holder
+        _pool_object_holder = self
     _p_setup_object_pool() # Populating the with pool objects
 
 ## This method adds a pooling request to be processed.
-func add_request(object: Object) -> void:
+func add_request(object: Node) -> void:
     _requests.push_front(object)
 
 ## This method sets up the pool objects at start up.
 func _p_setup_object_pool() -> void:
+    _p_objects.clear()
     _p_index_object = 0
-    while(_p_index_object < _p_objects.size()): # Loop for populating the object array
-        if _p_is_pool_object(): # Checking if object is pool object
-            _p_objects.append(get_child(_p_index_object))
+    while(_p_index_object < _pool_object_holder.get_child_count()): # Loop for populating the object array
+        if _p_is_pool_object(_pool_object_holder.get_child(_p_index_object)): # Checking if object is pool object
+            _p_objects.append(_pool_object_holder.get_child(_p_index_object))
         _p_index_object += 1
 
 ## This method checks if the object is pool object.
-func _p_is_pool_object() -> bool:
+func _p_is_pool_object(object: Node) -> bool:
     return true
 
 ## This method gets the available pool object.

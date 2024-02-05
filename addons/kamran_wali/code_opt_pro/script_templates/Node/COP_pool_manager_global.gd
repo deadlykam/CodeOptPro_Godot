@@ -1,4 +1,4 @@
-extends "res://addons/kamran_wali/code_opt_pro/scripts/pools/pool_local.gd"
+extends "res://addons/kamran_wali/code_opt_pro/scripts/pools/pool_global.gd"
 
 func update(delta: float) -> void:
     # NOTE: It is recommended to call parent's update function
@@ -10,7 +10,7 @@ func _p_setup_object_pool() -> void:
     # NOTE: If you want to set up the pool objects in your own way
     #       at start up then you can do so here. If you do do so
     #       then you can remove the above code which calls the
-    #       parent's default way of setting up the pool objects.
+    #       parent's default way of setting up the pool objects
     #       Also make sure to clear the _p_objects array so that
     #       multiple same objects are NOT added.
 

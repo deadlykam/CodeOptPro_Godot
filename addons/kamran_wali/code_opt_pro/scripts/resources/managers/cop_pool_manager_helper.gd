@@ -1,6 +1,6 @@
 @tool
 class_name COP_PoolHelper
-extends Node
+extends Resource
 
 ## Storing the manager reference. Do NOT set/get this variable directly.
 ## Use the functions instead otherwise will give error.

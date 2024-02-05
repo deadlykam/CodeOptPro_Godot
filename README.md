@@ -423,6 +423,7 @@ Here I will share all the updates done to the current versions. Below are the up
 ***
 ## Bug Fixes:
 1. Fixed a bug in auto setup process where the number of auto setup object calls are increasing exponentially after each process call. This was due to the array of the auto setup objects NOT being cleared after each process call. This bug has been fixed.
+2. Fixed a bug in auto setup process where an object could ONLY be any one type that is only an update manager or update object or auto setup object. This was due to if else checks that was only adding the object to one type of array and NOT all the types if the object were of multiple types. This bug has been fixed and now an object can have multiply types.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).

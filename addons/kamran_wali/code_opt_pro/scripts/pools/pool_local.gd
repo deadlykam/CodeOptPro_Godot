@@ -1,7 +1,7 @@
 @tool
 extends COP_Pool
 
-@export_category("Base Pool Local")
+@export_category("Pool Local")
 ## The local update manager that will update this object.
 @export var update_manager: COP_UpdateManager:
 	set(p_update_manager):
