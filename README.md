@@ -435,9 +435,23 @@ func _receive_pool_object(object: Node3D) -> void:
 ```
 2. **bool _is_pool_receiver()** - This method just checks if the script is a pool receiver through duck typing. This method will not effect your code but may later be needed for automation check.
 
-Lets use the _pool_local_ for this example. First create a new _Node_ in a scene and name it _Pool_. Then attach the script called _pool_local.gd_. Now let me explain all the properties for the _pool_local.gd_ script.
+Lets use the _pool_local_ for this example. Firstly create a new _Node_ and name it _Update_Manager_Local_ and add the script _process_manager_local.gd_. Secondly create a new _Node_ in a scene and name it _Pool_. Then attach the script called _pool_local.gd_. Now let me explain all the properties for the _pool_local.gd_ script.
+1. **update_manager** - The reference to the update manager. For local pool manager it should be local update manager and for global pool manager it should be global update manager.
 1. **Helper** - This is the manager helper resource for the pool manager. This manager will be set by the pool manager ONLY and will be called by the pool receiver objects. By default there is already a pool manager created called _default_pool_. You can use that for your game or use a new one by creating it from the _Variable Creator_ under the _Manager_ tab.
-2. **Is Enable At Start** - This flag will decide if the pool manager will be enabled when the game starts. #TODO: Write how to enable or disable through code
+2. **Is Enable At Start** - This flag will decide if the pool manager will be enabled when the game starts. If true then the pooling manager will work from the start. If false then the pooling manager will NOT work from the start. You can also enable/disable the pooling manager through script by calling the method _set_active(bool)_. You will get access to this method either through the _COP_PoolHelper_ reference or by _COP_Pool_ reference. It is recommended to use the _COP_PoolHelper_ reference.
+```
+@export var pool_manager: COP_PoolHelper
+
+func some_func() -> void:
+	pool_manager.get_manager().set_active(true) # Enabling the pooling system
+```
+3. **P Objects** - This array contains all the pool objects, _NOTE: The prefix _p means the variable is protected_. You do NOT need to populate the array as it will be done automatically when running the auto setup process. The pool manager will add all the children from _Pool Object Holder_ during the auto setup process.
+4. **Pool Object Holder** - This is the _Node_ that will contain all pool objects from which the pool objects will be added to the pool manager automatically during the auto setup process. If NO holder is provided to this field then by default the script's _Node_ will be considered as the object holder.
+
+Alright now lets fill up the fields for the _pool_local.gd_. For the _Helper_ field select the _default_pool_, _NOTE: default_pool resource can be found in res://addons/kamran_wali/code_opt_pro/variables/default_pool.tres_. For the _Is Enable At Start_ select the _true_ variable resource, _NOTE: true resource can be found in res://addons/kamran_wali/code_opt_pro/variables/true.tres_. Keep the other two fields as is because they are going to be auto populated by the auto setup process.
+
+Now add 10 _Node3D_ objects as children for the _Pool_ Node. Name all of them as Obj1, Obj2, Obj3... Obj10 etc. Now run the auto setup process manually. You will notice that the _P Objects_ array will be populated with Node3Ds children from the _Pool Object Holder_. Also you will notice that the _Pool Object Holder_ will be set as the _Pool_ Node because by default if a _Pool Object Holder_ is NOT provided then the Node that the script is attached to will be stored as the _Pool Object Holder_.
+#TODO: Create the pool receiver through the templates and then just call the pool objects by storing them and then just printing their names.#
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
