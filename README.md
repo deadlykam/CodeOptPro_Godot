@@ -451,7 +451,35 @@ func some_func() -> void:
 Alright now lets fill up the fields for the _pool_local.gd_. For the _Helper_ field select the _default_pool_, _NOTE: default_pool resource can be found in res://addons/kamran_wali/code_opt_pro/variables/default_pool.tres_. For the _Is Enable At Start_ select the _true_ variable resource, _NOTE: true resource can be found in res://addons/kamran_wali/code_opt_pro/variables/true.tres_. Keep the other two fields as is because they are going to be auto populated by the auto setup process.
 
 Now add 10 _Node3D_ objects as children for the _Pool_ Node. Name all of them as Obj1, Obj2, Obj3... Obj10 etc. Now run the auto setup process manually. You will notice that the _P Objects_ array will be populated with Node3Ds children from the _Pool Object Holder_. Also you will notice that the _Pool Object Holder_ will be set as the _Pool_ Node because by default if a _Pool Object Holder_ is NOT provided then the Node that the script is attached to will be stored as the _Pool Object Holder_.
-#TODO: Create the pool receiver through the templates and then just call the pool objects by storing them and then just printing their names.#
+
+Ok, now we need to create the pool object receiver script. It is very simple the best way to create a new pool object receiver script is to create a new script and then using _COP_pool_receiver_object_template_ template, under the Node, to create a new pool object receiver. If you haven't already then you should copy the _script_templates_ folder to the root folder to get the script templates from the CodeOptPro. Another way to make a script into a _pool receiver object_ is to add an export variable called _var pool_manager: COP_PoolHelper_ and two more methods to the script called _void _receive_pool_object(object)_ and _bool _is_pool_receiver()_ and then finally making the script a @tool script. Below is an example of a pool receiver object script.
+```
+@tool
+extends Node
+
+## The pool manager for requesting pool objects.
+@export var pool_manager: COP_PoolHelper
+
+var _pool_object: Node3D
+
+func _process(delta) -> void:
+	if Input.is_action_just_pressed("ui_left"):
+		pool_manager.get_manager().
+
+#       for better performance.
+## This method receives a pool object
+func _receive_pool_object(object) -> void:
+	_pool_object = object
+	print("Pool Object: ", _pool_object.name)
+
+#region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
+## This method always sends true as the script is a pool receiver.
+## This method is needed for duck typing check and SHOULD NOT BE
+## OVERRIDDEN OR CHANGED!
+func _is_pool_receiver() -> bool:
+    return true
+```
+
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
