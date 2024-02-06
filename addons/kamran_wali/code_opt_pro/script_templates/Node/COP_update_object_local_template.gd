@@ -37,7 +37,7 @@ func is_active() -> bool:
 #                        object is active or NOT.
 
 #region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
-## This method adds this object to the update manager._action_options
+## This method adds this object to the update manager.
 ## THIS METHOD SHOULD NOT BE CALLED OR OVERRIDDEN. IT IS ONLY USED
 ## FOR AUTOMATION!
 func _add_self_to_manager() -> void:

@@ -21,3 +21,7 @@ window/stretch/aspect="ignore"
 [dotnet]
 
 project/assembly_name="CodeOptPro_Godot"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/kamran_wali/code_opt_pro/cop_variable_creator/plugin.cfg")

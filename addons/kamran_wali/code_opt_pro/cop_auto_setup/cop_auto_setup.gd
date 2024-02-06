@@ -40,9 +40,9 @@ func _auto_setup() -> void:
 
 		if _node_current.has_method("_is_update_manager"): # Checking if object is update manager
 			_update_managers.append(_node_current) # Adding the update manager
-		elif _node_current.has_method("_is_update_object"): # Checking if object is update object
+		if _node_current.has_method("_is_update_object"): # Checking if object is update object
 			_update_objects.append(_node_current) # Adding the update object
-		elif _node_current.has_method("_is_auto_setup_object"): # Checking if object is auto setup object
+		if _node_current.has_method("_is_auto_setup_object"): # Checking if object is auto setup object
 			_auto_setup_objects.append(_node_current) # Adding the auto setup object
 		
 		_index = 0 

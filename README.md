@@ -22,7 +22,8 @@ This is a simple Godot system that helps with performance.
   - [Performant Update](#performant-update)
     -  [Update Manager Runtime Functions/Methods](#update-manager-runtime-functionsmethods)
     -  [Auto Setup Objects](#auto-setup-objects)
-  - [Debug](#debug)  
+  - [Debug](#debug)
+  - [Pooling System](#pooling-system)
 - [Updates](#updates)
 - [Bug Fixes](#bug-fixes)
 - [Versioning](#versioning)
@@ -412,6 +413,81 @@ OUTPUT:
 some_node_name -> This is the node
 =========
 ```
+#### Pooling System:
+Added Pooling System feature to CodeOptPro. For now any Node or child of Node can be used as a pooling object. This feature will help a lot in performance for objects that will share some other common objects. For example if two gun objects have similar bullet type then they can both use a pool of those bullets. That way it will give an illusion that there are a lot of bullets but in reality they are sharing the same bullets. I have also given the option to create your own custom pooling system. To use the pooling system you will first need to create a new _PoolManagerHelper_ from the _Managers_ tab in the _Variable Creator_ or you can use the already created pool manager resource called _default_pool_. For any examples below we will be using the default pool manager, _default_pool_. First lets look into the pool manager helper.
+1. **void add_request(Node)** - This is the method for requesting a pool object and MUST be called by the pool object receiver scripts. From the pool manager this is the ONLY method that needs to be called to get a pool object.
+
+To make an object into a pool object receiver you MUST add certain methods to it or just simply use the script template called _COP_pool_receiver_object_template.gd_ which is under _Node_. Let me explain the properties and methods for the pool object receiver.
+##### Properties:
+1. **pool_manager: COP_PoolHelper** - This is the pool manager that will be used to request for pool objects. Below is an example on how to requset for a pool object.
+```
+func some_func() -> void:
+	pool_manager.add_request(self) # Requesting a pool object
+```
+##### Methods:
+1. **void _receive_pool_object(Node)** - This method receives the pool object from the pool manager. It is advised to change the parameter type to the ones you are expecting to receive. That way it may help with performance a little bit more. Below is an example of when a pool object has been received.
+```
+extends Node
+var _received_object: Node3D
+
+func _receive_pool_object(object: Node3D) -> void:
+	_received_object = object # Storing the received object
+	print("Object Received: ", _received_object.name) # Printing the name of the received object
+```
+2. **bool _is_pool_receiver()** - This method just checks if the script is a pool receiver through duck typing. This method will not effect your code but may later be needed for automation check.
+
+Lets use the _pool_local_ for this example. Firstly create a new _Node_ and name it _Update_Manager_Local_ and add the script _process_manager_local.gd_. Secondly create a new _Node_ in a scene and name it _Pool_. Then attach the script called _pool_local.gd_. Now let me explain all the properties for the _pool_local.gd_ script.
+1. **Update Manager** - The reference to the update manager. For local pool manager it should be local update manager and for global pool manager it should be global update manager which is the update manager helper resource.
+1. **Helper** - This is the manager helper resource for the pool manager. This manager will be set by the pool manager ONLY and will be called by the pool receiver objects. By default there is already a pool manager created called _default_pool_. You can use that for your game or use a new one by creating it from the _Variable Creator_ under the _Manager_ tab called _PoolManagerHelper_.
+2. **Is Enable At Start** - This flag will decide if the pool manager will be enabled when the game starts. If true then the pooling manager will work from the start. If false then the pooling manager will NOT work from the start. You can also enable/disable the pooling manager through script by calling it's method called _set_active(bool)_. You will get access to this method either through the _COP_PoolHelper_ reference or by _COP_Pool_ reference. It is recommended to use the _COP_PoolHelper_ reference.
+```
+@export var pool_manager: COP_PoolHelper
+
+func some_func() -> void:
+	pool_manager.get_manager().set_active(true) # Enabling the pooling system
+```
+3. **P Objects** - This array contains all the pool objects, _NOTE: The prefix _p means the variable is protected_. You do NOT need to populate the array as it will be done automatically when running the auto setup process. The pool manager will add all the children from _Pool Object Holder_ during the auto setup process.
+4. **Pool Object Holder** - This is the _Node_ that will contain all pool objects from which the pool objects will be added to the pool manager automatically during the auto setup process. If NO holder is provided to this field then by default the script's _Node_ will be considered as the object holder.
+
+Alright now lets fill up the fields for the _pool_local.gd_. For the _Helper_ field select the _default_pool_, _NOTE: default_pool resource can be found in res://addons/kamran_wali/code_opt_pro/variables/default_pool.tres_. For the _Is Enable At Start_ select the _true_ variable resource, _NOTE: true resource can be found in res://addons/kamran_wali/code_opt_pro/variables/true.tres_. Keep the other two fields as is because they are going to be auto populated by the auto setup process.
+
+Now add 10 _Node3D_ objects as children for the _Pool_ Node. Name all of them as Obj1, Obj2, Obj3... Obj10 etc. Now run the auto setup process manually, _for how to run auto setup process manually please check out the link [Auto Setup Objects](#auto-setup-objects)_. You will notice that the _P Objects_ array will be populated with Node3Ds children from the _Pool Object Holder_. Also you will notice that the _Pool Object Holder_ will be set as the _Pool_ Node because by default if a _Pool Object Holder_ is NOT provided then the Node that the script is attached to will be stored as the _Pool Object Holder_.
+
+Ok, now we need to create the pool object receiver script. It is very simple. The best way to create a new pool object receiver script is to create a new script and then using _COP_pool_receiver_object_template_ template, under the Node, to create a new pool object receiver. If you haven't already then you should copy the _script_templates_ folder to the root folder to get the script templates from the CodeOptPro. Another way to make a script into a _pool receiver object_ is to add an export variable called _var pool_manager: COP_PoolHelper_ and two more methods to the script called _void _receive_pool_object(object)_ and _bool _is_pool_receiver()_ and then finally making the script a @tool script. Below is an example of a pool receiver object script.
+```
+@tool
+extends Node
+
+## The pool manager for requesting pool objects.
+@export var pool_manager: COP_PoolHelper
+
+var _pool_object: Node3D
+
+func _process(delta) -> void:
+	if Input.is_action_just_pressed("ui_left"):
+		pool_manager.get_manager().
+
+## This method receives a pool object
+func _receive_pool_object(object) -> void:
+	_pool_object = object
+	print("Pool Object: ", _pool_object.name)
+
+## This method always sends true as the script is a pool receiver.
+## This method is needed for duck typing check and SHOULD NOT BE
+## OVERRIDDEN OR CHANGED!
+func _is_pool_receiver() -> bool:
+	return true
+```
+
+Now go back to the editor and create a new Node and name it _Pool Receiver Object_ and attach the _pool receiver object_ script to it. Select the _Pool Receiver Object_ and give it the _default_pool_ resource in the _Pool Manager_ field. Finally just run the game.
+
+After running the game keep pressing the left arrow key button. You will notice that the _Output_ window is printing all the pool objects' name 1 by 1 and then it cycles back to the first pool object. This is how the pooling system works in CodeOptPro.
+
+You can also create your own custom pooling managers. All you have to do is to create a new script using the either _COP_pool_manager_local_template.gd_ or _COP_pool_manager_global_template.gd_. I have given notes in the template as well to further help to understand how to create a new custom pooling manager. Let me explain the methods in both the templates.
+1. **void update(float)** - This is the frame update method of the pooling system. It is recommended to call the parent's update method here as well so that the request processes can happen. Also any type of frame dependent logic should be put here.
+2. **void _p_setup_object_pool()** - This method is responsible for populating the pool object array during the auto setup process. It is recommended to keep it as is but if you want to make some changes here then you can.
+3. **bool _p_is_pool_object(Node)** - During auto setup process this method checks if the added object is a pool object. The default way is the fastest way to check if the object is a pool object. It does so by sending the value _true_ all the time. But if you want to check for a pool object, lets say if the object has a certain method by calling the method _has_method(String)_, then you should do it here.
+4. **bool _p_is_pool_object_available(Node)** - This method checks if a pool object is available to send to a request object for example if a flag of a certain object is false only then send it.
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
@@ -420,9 +496,11 @@ Here I will share all the updates done to the current versions. Below are the up
 3. Fixed a bug where __time_delta_ value wasn't calculated properly.
 4. Added _auto setup object_ feature. This feature allows setup to happen during the auto setup process in the editor mode.
 5. Added print debug feature. This feature will help the user to debug a script much better.
+6. Added pooling system feature. This feature will help with performance by reusing certain objects.
 ***
 ## Bug Fixes:
 1. Fixed a bug in auto setup process where the number of auto setup object calls are increasing exponentially after each process call. This was due to the array of the auto setup objects NOT being cleared after each process call. This bug has been fixed.
+2. Fixed a bug in auto setup process where an object could ONLY be any one type that is only an update manager or update object or auto setup object. This was due to if else checks that was only adding the object to one type of array and NOT all the types if the object were of multiple types. This bug has been fixed and now an object can have multiply types.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
