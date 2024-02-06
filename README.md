@@ -22,7 +22,8 @@ This is a simple Godot system that helps with performance.
   - [Performant Update](#performant-update)
     -  [Update Manager Runtime Functions/Methods](#update-manager-runtime-functionsmethods)
     -  [Auto Setup Objects](#auto-setup-objects)
-  - [Debug](#debug)  
+  - [Debug](#debug)
+  - [Pooling System](#pooling-system)
 - [Updates](#updates)
 - [Bug Fixes](#bug-fixes)
 - [Versioning](#versioning)
@@ -484,7 +485,11 @@ Now go back to the editor and create a new Node and name it _Pool Receiver Objec
 
 After running the game keep pressing the left arrow key button. You will notice that the _Output_ window is printing all the pool objects' name 1 by 1 and then it cycles back to the first pool object. This is how the pooling system works in CodeOptPro.
 
-#TODO: Explain how to create a custom pooling system#
+You can also create your own custom pooling managers. All you have to do is to create a new script using the either _COP_pool_manager_local_template.gd_ or _COP_pool_manager_global_template.gd_. I have given notes in the template as well to further help to understand how to create a new custom pooling manager. Let me explain the methods in both the templates.
+1. **void update(float)** - This is the frame update method of the pooling system. It is recommended to call the parent's update method here as well so that the request processes can happen. Also any type of frame dependent logic should be put here.
+2. **void _p_setup_object_pool()** - This method is responsible for populating the pool object array during the auto setup process. It is recommended to keep it as is but if you want to make some changes here then you can.
+3. **bool _p_is_pool_object(Node)** - During auto setup process this method checks if the added object is a pool object. The default way is the fastest way to check if the object is a pool object. It does so by sending the value _true_ all the time. But if you want to check for a pool object, lets say if the object has a certain method, then you should do it here.
+4. **bool _p_is_pool_object_available(Node)** - This method checks if a pool object is available to send to a request for example if a flag of a certain object is false only then send it.
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
@@ -493,6 +498,7 @@ Here I will share all the updates done to the current versions. Below are the up
 3. Fixed a bug where __time_delta_ value wasn't calculated properly.
 4. Added _auto setup object_ feature. This feature allows setup to happen during the auto setup process in the editor mode.
 5. Added print debug feature. This feature will help the user to debug a script much better.
+6. Added pooling system feature. This feature will help with performance by reusing certain objects.
 ***
 ## Bug Fixes:
 1. Fixed a bug in auto setup process where the number of auto setup object calls are increasing exponentially after each process call. This was due to the array of the auto setup objects NOT being cleared after each process call. This bug has been fixed.
