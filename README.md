@@ -452,7 +452,7 @@ Alright now lets fill up the fields for the _pool_local.gd_. For the _Helper_ fi
 
 Now add 10 _Node3D_ objects as children for the _Pool_ Node. Name all of them as Obj1, Obj2, Obj3... Obj10 etc. Now run the auto setup process manually. You will notice that the _P Objects_ array will be populated with Node3Ds children from the _Pool Object Holder_. Also you will notice that the _Pool Object Holder_ will be set as the _Pool_ Node because by default if a _Pool Object Holder_ is NOT provided then the Node that the script is attached to will be stored as the _Pool Object Holder_.
 
-Ok, now we need to create the pool object receiver script. It is very simple the best way to create a new pool object receiver script is to create a new script and then using _COP_pool_receiver_object_template_ template, under the Node, to create a new pool object receiver. If you haven't already then you should copy the _script_templates_ folder to the root folder to get the script templates from the CodeOptPro. Another way to make a script into a _pool receiver object_ is to add an export variable called _var pool_manager: COP_PoolHelper_ and two more methods to the script called _void _receive_pool_object(object)_ and _bool _is_pool_receiver()_ and then finally making the script a @tool script. Below is an example of a pool receiver object script.
+Ok, now we need to create the pool object receiver script. It is very simple. The best way to create a new pool object receiver script is to create a new script and then using _COP_pool_receiver_object_template_ template, under the Node, to create a new pool object receiver. If you haven't already then you should copy the _script_templates_ folder to the root folder to get the script templates from the CodeOptPro. Another way to make a script into a _pool receiver object_ is to add an export variable called _var pool_manager: COP_PoolHelper_ and two more methods to the script called _void _receive_pool_object(object)_ and _bool _is_pool_receiver()_ and then finally making the script a @tool script. Below is an example of a pool receiver object script.
 ```
 @tool
 extends Node
@@ -477,9 +477,14 @@ func _receive_pool_object(object) -> void:
 ## This method is needed for duck typing check and SHOULD NOT BE
 ## OVERRIDDEN OR CHANGED!
 func _is_pool_receiver() -> bool:
-    return true
+	return true
 ```
 
+Now go back to the editor and create a new Node and name it _Pool Receiver Object_ and attach the _pool receiver object_ script to it. Select the _Pool Receiver Object_ and give it the _default_pool_ resource in the _Pool Manager_ field. Finally just run the game.
+
+After running the game keep pressing the left arrow key button. You will notice that the _Output_ window is printing all the pool objects' name 1 by 1 and then it cycles back to the first pool object. This is how the pooling system works in CodeOptPro.
+
+#TODO: Explain how to create a custom pooling system#
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
