@@ -7,7 +7,7 @@ extends Node # The parent can be Node or any child of Node
 # NOTE: If the type of the object is known then please provide it
 #       for better performance.
 ## This method receives a pool object
-func _receive_pool_object(object) -> void:
+func _receive_pool_object(object: Node) -> void:
     # NOTE: Any logic for receiving the pool object should be done here.
     pass
 

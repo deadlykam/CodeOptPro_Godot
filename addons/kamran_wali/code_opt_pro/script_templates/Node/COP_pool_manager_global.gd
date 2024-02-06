@@ -1,3 +1,4 @@
+@tool
 extends "res://addons/kamran_wali/code_opt_pro/scripts/pools/pool_global.gd"
 
 func update(delta: float) -> void:
@@ -25,3 +26,10 @@ func _p_is_pool_object(object: Node) -> bool:
     #       should be added to. The variable _p_index_object is the
     #       loop counter.
     return super._p_is_pool_object(object)
+
+## This method checks if the pool object is available.
+func _p_is_pool_object_available(object: Node) -> bool:
+    # Note: You can give conditions to check if a pool object
+    #       is ready to be used. The object provided in the
+    #       parameter is a pool object.
+    return super._p_is_pool_object_available(object)

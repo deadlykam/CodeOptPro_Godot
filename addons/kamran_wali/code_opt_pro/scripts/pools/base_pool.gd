@@ -18,12 +18,16 @@ func _ready() -> void:
     if !Engine.is_editor_hint():
         _helper.set_manager(self)
         _is_active = _is_enable_at_start.get_value()
+        _object_cur = null
+        _requests.clear()
 
 ## This method updates the update object.
 func update(delta: float) -> void:
-    if !_requests.is_empty():
-        _object_cur = _requests.pop_front()
-        _process_request()
+    if !_requests.is_empty(): # Condition for getting a new request object
+        _object_cur = _requests.pop_front() if _object_cur == null else _object_cur
+
+    if _object_cur != null: # Condition for processing a current object
+        _process_request(_get_pool_object())
 
 ## This method activates/deactivates the update object.
 func set_active(is_enable: bool) -> void:
@@ -42,7 +46,7 @@ func auto_setup() -> void:
 
 ## This method adds a pooling request to be processed.
 func add_request(object: Node) -> void:
-    _requests.push_front(object)
+    _requests.append(object)
 
 ## This method sets up the pool objects at start up.
 func _p_setup_object_pool() -> void:
@@ -57,14 +61,20 @@ func _p_setup_object_pool() -> void:
 func _p_is_pool_object(object: Node) -> bool:
     return true
 
+## This method checks if the pool object is available.
+func _p_is_pool_object_available(object: Node) -> bool:
+    return true
+
 ## This method gets the available pool object.
 func _get_pool_object() -> Object:
     _pointer_pool_object = 0 if (_pointer_pool_object + 1) >= _p_objects.size() else _pointer_pool_object + 1
     return _p_objects[_pointer_pool_object]
 
 ## This method process' the request.
-func _process_request() -> void:
-    _object_cur._receive_pool_object(_get_pool_object())
+func _process_request(object: Node) -> void:
+    if _p_is_pool_object_available(object): # Validating pool object
+        _object_cur._receive_pool_object(object)
+        _object_cur = null # Current object processing done
 
 ## This method adds this object to the update manager.
 func _add_self_to_manager() -> void:
