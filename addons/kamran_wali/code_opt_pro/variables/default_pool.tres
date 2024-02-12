@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="COP_PoolHelper" load_steps=2 format=3 uid="uid://ccquyg25vf0lu"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/scripts/resources/managers/cop_pool_manager_helper.gd" id="1_0qqbg"]
+
+[resource]
+script = ExtResource("1_0qqbg")

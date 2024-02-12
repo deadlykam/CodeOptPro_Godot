@@ -20,7 +20,12 @@ This is a simple Godot system that helps with performance.
   - [Instantiate Object](#instantiate-object)
   - [Bars](#bars)
   - [Performant Update](#performant-update)
+    -  [Update Manager Runtime Functions/Methods](#update-manager-runtime-functionsmethods)
+    -  [Auto Setup Objects](#auto-setup-objects)
+  - [Debug](#debug)
+  - [Pooling System](#pooling-system)
 - [Updates](#updates)
+- [Bug Fixes](#bug-fixes)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -30,10 +35,10 @@ This is a simple Godot system that helps with performance.
 Godot version **v4.1.3.stable.mono.official [f06b6836a]** and above should work. Previous Godot version of **v4.1.1.stable.mono.official [bd6af8e0e]** should work but any version before that have not been tested and may give errors.
 ***
 ## Stable Build
-[Stable-v1.8.1](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.8.1) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.13.0](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.13.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [CodeOptPro-v1.8.1.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.8.1) from the latest Stable build.
+1. First download the latest [CodeOptPro-v1.13.0.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.13.0) from the latest Stable build.
 2. Once downloaded extract/unzip the file.
 3. Enter the folder and copy the folder named **kamran_wali**.
 4. Now paste the folder in the **addons** folder of your Godot project. If your Godot project does not have the **addons** folder then just create it in the root folder, **res://**, and paste the copied folder there.
@@ -234,13 +239,16 @@ In CodeOptPro you can use another powerful feature that allows you to use custom
   - a. **Helper (Only available in the global types)** - This the _cop_update_manager_global_helper_ resource that helps to keep the code decoupled. The update objects will use this reference to interact with the update manager. This property is only available for the global types. There is already a _cop_update_manager_global_helper_ resource created called _default_update_manager_. You can use this as well for your project if you want to.
   - b. **Objects** - This is an array which will contain all the update objects related to this update manager. These objects will share one __physics_process_ or __process_ method from the update manager. You can manually add the update objects here but that is NOT recommended. Instead we shall use the _Auto Setup_ plugin to add update objects to update managers automatically. Will talk about how to create an update object and using _Auto Setup_ plugin later below.
   - c. **Num Update** - This value handles how many objects should be updated per frame. For example if this value is set to 5 then 5 objects will be update in one frame cycle. It there are too many update objects that needs to be updated then increasing thsi value should make the update process much better but that depends on your scripts and their logic.
+  - d. **Is Set Num Update** - If set true then will automatically set the _Num Update_ value to the number of objects added to the update manager. If null or false then the _Num Update_ value will be used and auto setup for _Num Update_ won't work. For example if there are 5 objects added and the _Num Update_ value is and _Is Set Num Update_ value is true then the actual num update value will be 5. _Note: This value can remain null as null is taken as a false flag here._
 2. **Creating And Adding Update Object** - The second step is to create an update object. It is very easy to create an update object. If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as we will needed the update object template to create our scripts. Once that is done then create a new script. In the _Inherits:_ field select _Node_. Then in the _Template:_ field either select _Cop Update Object Global Tepmlate_, if you have added the global update manager, or select _Cop Update Object Local Template_, if you have added the local update manager. Name the script anything you want and then press _Create_ button. I have commented the script with much details but I will explain what each of these properties and functions does.
     - a. **update_manager (COP_UpdateManagerGlobalHelper or COP_UpdateManager)** - This property keeps the reference of the update manager. Depending on what type you used it could be either _COP_UpdateManagerGlobalHeler_, for global update objects, or _COP_UpdateManager_, for local update objects. This reference is mainly used by the _Auto Setup_ plugin to add the update object automatically to the update managers but can also be used for using any data from the update manager.
     - b. **update(float) void** - This is the method that will update the update object every frame. So any update logic that you were going to put in either __physics_process_ or __process_ should be put in here.
     - c. **set_active(bool) void** - This method enables/disables the update object. So if any flags that are going to be used for activation check must be able to be updated by this function.
     - d. **is_active() bool** - This method checks if the update object is active or NOT. If it is NOT active then the update manager will NOT call it's _update(float)_ method. Again use a separate flag that will be used to check for activation.
+	- e. **on_enable() void** - This method is called whenever the linked _Update Manager_ is enabled by calling the method _UpdateManager.set_enabled(true)_.
+	- d. **on_disable() void** - This method is called whenever the linked _Update Manager_ is disabled by calling the method _UpdateManager.set_enabled(false)_.
 
-The last two methods can be ignored and should NEVER be called by any script or overridden. These are used by the _Auto Setup_ plugin for automation. I have commented extensively here to avoid any errors. Also you can change the extension of the script to anything else you want but as long as the object is a child of Node then it will be fine. Below is an example script of a global update object called _update_object1.gd_.
+The last two methods, _which are NOT shown here_, can be ignored and should NEVER be called by any script or overridden. These are used by the _Auto Setup_ plugin for automation. I have commented extensively here to avoid any errors. Also you can change the extension of the script to anything else you want but as long as the object is a child of Node then it will be fine. Below is an example script of a global update object called _update_object1.gd_.
 ```
 @tool
 extends Node
@@ -268,7 +276,6 @@ func _get_configuration_warnings():
 func update(delta: float) -> void:
 	_counter += 1
 	print("Counter: ", _counter)
-	pass
 
 ## This method activates/deactivates the update object.
 func set_active(is_enable: bool) -> void:
@@ -277,6 +284,19 @@ func set_active(is_enable: bool) -> void:
 ## This method checks if the update object is active or NOT.
 func is_active() -> bool:
 	return _is_active
+
+## This method is ONLY called by the Update Manager when the update
+## manager is enabled through script, which is UM.set_enable(true). 
+## Note: This method can be removed if NEVER needed.
+func on_enable() -> void:
+	_counter = 0 # Resetting counter on object enable
+	print("Counter has been resetted")
+
+## This method is ONLY called by the Update Manager when the update
+## manager is disabled through script, which is UM.set_enabled(false).
+## Note: This method can be removed if NEVER needed.
+func on_disable() -> void:
+	print("Counter stopped at: ", _counter) # Showing the last value of the counter
 
 #region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
 ## This method adds this object to the update manager._action_options
@@ -311,14 +331,195 @@ Before using the _Auto Setup_ plugin we must first setup the update managers and
 
 Alright. We done setting up the update manager and update objects. Now in the _Auto Setup_ plugin press the _Run Current Scene_ button. If everything is alright then this should start the auto setup process and then run the scene. Once the scene runs you will see the _Counter_ value going up in the _Output_. You will also notice in the _Auto Setup_ plugin that the _Log_ has been updated showing all the process of the auto setup.
 
+##### Update Manager Runtime Functions/Methods:
+I have also added some runtime methods for the update manager. This will help tremendously during runtime of the game. Below are the methods:
+- **void add_object(Node):** This method adds a new object to the update manager. _Also please do NOT confuse this method with the private method **_add_object(Node)** as this private method does NOT handle some of the validation checks and is ONLY used by the automation script._ If you don't want any duplicate objects added then make sure to check using the method **bool COP_UpdateManager.has_object(Node)** before calling the add_object(Node) method. Below is a small example of avoiding duplicate object addition when adding object to update manager.
+```
+extends Node
+
+@export var update_manager: COP_UpdateManager
+
+func some_method(object: Node) -> void:
+	if !update_manager.has_object(object): # Checking if the object does NOT exist in the Update Manager
+		update_manager.add_object(object)
+```
+- **void remove_object(Node):** This method removes the given object. _Note: When calling this method the update method will stop working till all remove actions are done. If number of remove objects are small then the update pause won't be noticable. It is recommended NOT to call this method every frame_
+- **void remove_object_index(int):** This method removes an object using an int index value. _Note: When calling this method the update method will stop working till all remove actions are done. If number of remove objects are small then the update pause won't be noticable. It is recommended NOT to call this method every frame_
+- **int get_size():** This method gets the number of objects added to the update manager.
+- **Node get_object_index(int):** This method gets the indexth object. If the index value given is higher than the size of the update object array then a null object will be returned.
+- **void set_enabled(bool):** This method enables/disables the update manager. True means to enable and false means to disable. If disabled then another script MUST be used to enable it.
+- **bool is_enabled():** This method checks if the update manager is enabled or NOT.
+
+##### Auto Setup Objects:
+This feature allows objects to be setup automatically during the auto setup process in the editor mode. This helps with certain tasks like automatically populating an array with objects. If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as that contains the script template for _auto setup object_ called _COP_auto_setup_object_template.gd_ under _Node_. To declare an object as _auto setup object_ is easy. You can create a new script using the script template _COP_auto_setup_object_template.gd_ or add the methods _func auto_setup() -> void:_ and _func _is_auto_setup_object() -> bool:_ and _@tool_ to an existing script. The _auto setup object_ can extend from any other script as long as that script is a child of _Node_ object. These two methods will make the script an _auto setup object_. Let me explain what each me method does.
+- **void auto_setup():** This method is called during the auto setup process and this is where all the logic for auto setup should be placed.
+- **bool _is_auto_setup_object():** This method is used by the auto setup process to check if the object is an auto setup object. This method MUST NOT be changed or overridden.
+Below I am sharing a very simple code on how to use the _auto setup object_. This code just populates the Arrya[Node] with children from a Node.
+```
+@tool
+extends Node
+
+@export var _object_holder: Node
+@export var _some_objects: Array[Node]
+
+var _index: int
+
+## This method handles all the setup that needs to be done during 
+## automation setup process.
+func auto_setup() -> void:
+	_some_objects.clear() # Making sure every auto setup process the array is cleared so no duplication occurs
+	_index = 0
+	while _index < _object_holder.get_child_count(): # Loop for populating the array from the given Node
+		_some_objects.append(_object_holder.get_child(_index))
+		_index += 1
+
+#region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
+## This method always sends true as the script is an auto setup object.
+## This method is needed for duck typing check and SHOULD NOT BE
+## OVERRIDDEN OR CHANGED!
+func _is_auto_setup_object() -> bool:
+    return true
+#endregion
+```
+If you want to you can also make any _update objects_ to be _auto setup objects_ as well just by adding the methods _void func auto_setup()_ and _bool _is_auto_setup_object()_ to the _update object_ script. That way the object will be both _update object_ and _auto setup object_.
+#### Debug:
+I have added a debug feature that will help with printing debugs. For now the debug will work with nodes, scripts, resources and objects. To use the debug tool simply call _COP_Debug_ from the script. Let me explain the debug methods.
+1. **void print_script(Object, String)** - This method will print the name of the script and the log message provided. If the object provided does NOT have a script or is NOT a script then the method will print an error. To use this method just call it by _COP_Debug.print_script(some_script, "some_log")_.
+2. **void print_node(Node, String)** - This method will print the name of the node and the log message provided. To use this method just call it by _COP_Debug.print_node(some_node, "some_log")_.
+3. **void print_resource(Resource, String)** - This method will print the name of the resource and the log message provided. If the object provided is NOT a resource then the method will print an error. To use this method just call it by _COP_Debug.print_resource(some_resource, "some_log")_.
+4. **void print_object(Object, String)** - This method will print the name of the object and the ID. To use this method just call it by _COP_Dubug.print_object(some_object, "some_log")_.
+5. **String get_script_log(Object, String)** - This method will return a String with the name of the script and the log message. Use this method for custom printing if needed.
+6. **String get_node_log(Node, String)** - This method will return a String with the name of the node and the log message. Use this method for custom printing if needed.
+7. **String get_resource_log(Resource, String)** - This method will return a String with the name of the resource and the log message. Use this method for custom printing if needed.
+8. **String get_object_log(Object, String)** - This method will return a String with the name and ID of the object and the log message. Use this method for custom printing if neeeded.
+
+I am sharing some examples for using the _COP_Debug_ tools.
+
+Example for printing debugs.
+```
+extends Node
+
+@export var _some_flag: COP_FixedBoolVar
+
+func _ready() -> void:
+	COP_Debug.print_script(self, "This is an attached script.")
+	COP_Debug.print_node(self, "This is the node.")
+	COP_Debug.print_resource(_some_flag, "This is a resource object.")
+```
+```
+OUTPUT:
+=========
+***script_path.some_script.gd****
+This is an attached script.
+=========
+some_node_name -> This is the node.
+some_resource_name -> This is a resource object.
+```
+
+Example for printing custom debugs.
+```
+extends Node
+
+func _ready() -> void:
+	COP_Debug.print_script(self, COP_Debug.get_node_log(self, "This is the node."))
+```
+```
+OUTPUT:
+=========
+***script_path.some_script.gd***
+some_node_name -> This is the node
+=========
+```
+#### Pooling System:
+Added Pooling System feature to CodeOptPro. For now any Node or child of Node can be used as a pooling object. This feature will help a lot in performance for objects that will share some other common objects. For example if two gun objects have similar bullet type then they can both use a pool of those bullets. That way it will give an illusion that there are a lot of bullets but in reality they are sharing the same bullets. I have also given the option to create your own custom pooling system. To use the pooling system you will first need to create a new _PoolManagerHelper_ from the _Managers_ tab in the _Variable Creator_ or you can use the already created pool manager resource called _default_pool_. For any examples below we will be using the default pool manager, _default_pool_. First lets look into the pool manager helper.
+1. **void add_request(Node)** - This is the method for requesting a pool object and MUST be called by the pool object receiver scripts. From the pool manager this is the ONLY method that needs to be called to get a pool object.
+
+To make an object into a pool object receiver you MUST add certain methods to it or just simply use the script template called _COP_pool_receiver_object_template.gd_ which is under _Node_. Let me explain the properties and methods for the pool object receiver.
+##### Properties:
+1. **pool_manager: COP_PoolHelper** - This is the pool manager that will be used to request for pool objects. Below is an example on how to requset for a pool object.
+```
+func some_func() -> void:
+	pool_manager.add_request(self) # Requesting a pool object
+```
+##### Methods:
+1. **void _receive_pool_object(Node)** - This method receives the pool object from the pool manager. It is advised to change the parameter type to the ones you are expecting to receive. That way it may help with performance a little bit more. Below is an example of when a pool object has been received.
+```
+extends Node
+var _received_object: Node3D
+
+func _receive_pool_object(object: Node3D) -> void:
+	_received_object = object # Storing the received object
+	print("Object Received: ", _received_object.name) # Printing the name of the received object
+```
+2. **bool _is_pool_receiver()** - This method just checks if the script is a pool receiver through duck typing. This method will not effect your code but may later be needed for automation check.
+
+Lets use the _pool_local_ for this example. Firstly create a new _Node_ and name it _Update_Manager_Local_ and add the script _process_manager_local.gd_. Secondly create a new _Node_ in a scene and name it _Pool_. Then attach the script called _pool_local.gd_. Now let me explain all the properties for the _pool_local.gd_ script.
+1. **Update Manager** - The reference to the update manager. For local pool manager it should be local update manager and for global pool manager it should be global update manager which is the update manager helper resource.
+1. **Helper** - This is the manager helper resource for the pool manager. This manager will be set by the pool manager ONLY and will be called by the pool receiver objects. By default there is already a pool manager created called _default_pool_. You can use that for your game or use a new one by creating it from the _Variable Creator_ under the _Manager_ tab called _PoolManagerHelper_.
+2. **Is Enable At Start** - This flag will decide if the pool manager will be enabled when the game starts. If true then the pooling manager will work from the start. If false then the pooling manager will NOT work from the start. You can also enable/disable the pooling manager through script by calling it's method called _set_active(bool)_. You will get access to this method either through the _COP_PoolHelper_ reference or by _COP_Pool_ reference. It is recommended to use the _COP_PoolHelper_ reference.
+```
+@export var pool_manager: COP_PoolHelper
+
+func some_func() -> void:
+	pool_manager.get_manager().set_active(true) # Enabling the pooling system
+```
+3. **P Objects** - This array contains all the pool objects, _NOTE: The prefix _p means the variable is protected_. You do NOT need to populate the array as it will be done automatically when running the auto setup process. The pool manager will add all the children from _Pool Object Holder_ during the auto setup process.
+4. **Pool Object Holder** - This is the _Node_ that will contain all pool objects from which the pool objects will be added to the pool manager automatically during the auto setup process. If NO holder is provided to this field then by default the script's _Node_ will be considered as the object holder.
+
+Alright now lets fill up the fields for the _pool_local.gd_. For the _Helper_ field select the _default_pool_, _NOTE: default_pool resource can be found in res://addons/kamran_wali/code_opt_pro/variables/default_pool.tres_. For the _Is Enable At Start_ select the _true_ variable resource, _NOTE: true resource can be found in res://addons/kamran_wali/code_opt_pro/variables/true.tres_. Keep the other two fields as is because they are going to be auto populated by the auto setup process.
+
+Now add 10 _Node3D_ objects as children for the _Pool_ Node. Name all of them as Obj1, Obj2, Obj3... Obj10 etc. Now run the auto setup process manually, _for how to run auto setup process manually please check out the link [Auto Setup Objects](#auto-setup-objects)_. You will notice that the _P Objects_ array will be populated with Node3Ds children from the _Pool Object Holder_. Also you will notice that the _Pool Object Holder_ will be set as the _Pool_ Node because by default if a _Pool Object Holder_ is NOT provided then the Node that the script is attached to will be stored as the _Pool Object Holder_.
+
+Ok, now we need to create the pool object receiver script. It is very simple. The best way to create a new pool object receiver script is to create a new script and then using _COP_pool_receiver_object_template_ template, under the Node, to create a new pool object receiver. If you haven't already then you should copy the _script_templates_ folder to the root folder to get the script templates from the CodeOptPro. Another way to make a script into a _pool receiver object_ is to add an export variable called _var pool_manager: COP_PoolHelper_ and two more methods to the script called _void _receive_pool_object(object)_ and _bool _is_pool_receiver()_ and then finally making the script a @tool script. Below is an example of a pool receiver object script.
+```
+@tool
+extends Node
+
+## The pool manager for requesting pool objects.
+@export var pool_manager: COP_PoolHelper
+
+var _pool_object: Node3D
+
+func _process(delta) -> void:
+	if Input.is_action_just_pressed("ui_left"):
+		pool_manager.get_manager().
+
+## This method receives a pool object
+func _receive_pool_object(object) -> void:
+	_pool_object = object
+	print("Pool Object: ", _pool_object.name)
+
+## This method always sends true as the script is a pool receiver.
+## This method is needed for duck typing check and SHOULD NOT BE
+## OVERRIDDEN OR CHANGED!
+func _is_pool_receiver() -> bool:
+	return true
+```
+
+Now go back to the editor and create a new Node and name it _Pool Receiver Object_ and attach the _pool receiver object_ script to it. Select the _Pool Receiver Object_ and give it the _default_pool_ resource in the _Pool Manager_ field. Finally just run the game.
+
+After running the game keep pressing the left arrow key button. You will notice that the _Output_ window is printing all the pool objects' name 1 by 1 and then it cycles back to the first pool object. This is how the pooling system works in CodeOptPro.
+
+You can also create your own custom pooling managers. All you have to do is to create a new script using the either _COP_pool_manager_local_template.gd_ or _COP_pool_manager_global_template.gd_. I have given notes in the template as well to further help to understand how to create a new custom pooling manager. Let me explain the methods in both the templates.
+1. **void update(float)** - This is the frame update method of the pooling system. It is recommended to call the parent's update method here as well so that the request processes can happen. Also any type of frame dependent logic should be put here.
+2. **void _p_setup_object_pool()** - This method is responsible for populating the pool object array during the auto setup process. It is recommended to keep it as is but if you want to make some changes here then you can.
+3. **bool _p_is_pool_object(Node)** - During auto setup process this method checks if the added object is a pool object. The default way is the fastest way to check if the object is a pool object. It does so by sending the value _true_ all the time. But if you want to check for a pool object, lets say if the object has a certain method by calling the method _has_method(String)_, then you should do it here.
+4. **bool _p_is_pool_object_available(Node)** - This method checks if a pool object is available to send to a request object for example if a flag of a certain object is false only then send it.
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
-1. Added Bar feature. For now added two types of bars which are **normal_bar** and **normal_bar_values**.
-2. Updated Godot version from **v4.1.1.stable.mono.official [bd6af8e0e]** to v4.1.3.stable.mono.official [f06b6836a]. Hopefully this will NOT give any errors.
-3. Added a new variable category called _Managers_. It only has one variable type called _COP_UpdateManagerGlobalHelper_ which is used for global update managers and global update objects.
-4. Created a shared update feature where only one __physics_process_ or one __process_ is being shared amongst multiple objects/update objects. This thus saves some performance.
-5. Created _Auto Setup_ plugin. This plugin handles setup that is going to be done automatically. For one this plugin sets up the update managers and update objects automatically. In future any new auto setup system will be added to this plugin.
+1. Added runtime functions for the update manager. Now the user can add and remove objects during runtime.
+2. Added a feature in update manager that makes the _Num Update_ value to the number of objects added to the update manager.
+3. Fixed a bug where __time_delta_ value wasn't calculated properly.
+4. Added _auto setup object_ feature. This feature allows setup to happen during the auto setup process in the editor mode.
+5. Added print debug feature. This feature will help the user to debug a script much better.
+6. Added pooling system feature. This feature will help with performance by reusing certain objects.
+7. Added a feature in update manager which enables and disables it.
+8. Added on enable and on disable method calls on update objects by the update managers.
+***
+## Bug Fixes:
+1. Fixed a bug in auto setup process where the number of auto setup object calls are increasing exponentially after each process call. This was due to the array of the auto setup objects NOT being cleared after each process call. This bug has been fixed.
+2. Fixed a bug in auto setup process where an object could ONLY be any one type that is only an update manager or update object or auto setup object. This was due to if else checks that was only adding the object to one type of array and NOT all the types if the object were of multiple types. This bug has been fixed and now an object can have multiply types.
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
