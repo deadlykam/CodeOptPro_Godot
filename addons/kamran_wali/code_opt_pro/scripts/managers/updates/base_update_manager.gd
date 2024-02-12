@@ -101,6 +101,19 @@ func get_time_delta_physics_process() -> float:
 func get_size() -> int:
 	return _objects.size()
 
+## This method gets the indexth object.
+func get_object_index(index: int) -> Node:
+	return _objects[index] if index < _objects.size() else null
+
+## This method enables/disables the update manager. True means to enable
+## and false means to disable.
+func set_enabled(is_enable: bool) -> void:
+	pass
+
+## This method checks if the update manager is enabled.
+func is_enabled() -> bool:
+	return true
+
 ## This method updates the active object.
 func _update_object(delta: float) -> void:
 	if _objects[_pointer].is_active(): # Checking if object is active

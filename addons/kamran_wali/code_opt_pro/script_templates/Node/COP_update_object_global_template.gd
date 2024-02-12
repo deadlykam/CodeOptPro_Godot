@@ -36,6 +36,18 @@ func is_active() -> bool:
 #                        that will be used for checking if the update
 #                        object is active or NOT.
 
+## This method is ONLY called by the Update Manager when the update
+## manager is enabled through script, which is UM.set_enable(true). 
+## Note: This method can be removed if NEVER needed.
+func on_enable() -> void:
+	pass
+
+## This method is ONLY called by the Update Manager when the update
+## manager is disabled through script, which is UM.set_enabled(false).
+## Note: This method can be removed if NEVER needed.
+func on_disable() -> void:
+	pass
+
 #region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
 ## This method adds this object to the update manager.
 ## THIS METHOD SHOULD NOT BE CALLED OR OVERRIDDEN. IT IS ONLY USED
