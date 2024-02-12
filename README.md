@@ -245,8 +245,10 @@ In CodeOptPro you can use another powerful feature that allows you to use custom
     - b. **update(float) void** - This is the method that will update the update object every frame. So any update logic that you were going to put in either __physics_process_ or __process_ should be put in here.
     - c. **set_active(bool) void** - This method enables/disables the update object. So if any flags that are going to be used for activation check must be able to be updated by this function.
     - d. **is_active() bool** - This method checks if the update object is active or NOT. If it is NOT active then the update manager will NOT call it's _update(float)_ method. Again use a separate flag that will be used to check for activation.
+	- e. **on_enable() void** - This method is called whenever the linked _Update Manager_ is enabled by calling the method _UpdateManager.set_enabled(true)_.
+	- d. **on_disable() void** - This method is called whenever the linked _Update Manager_ is disabled by calling the method _UpdateManager.set_enabled(false)_.
 
-The last two methods can be ignored and should NEVER be called by any script or overridden. These are used by the _Auto Setup_ plugin for automation. I have commented extensively here to avoid any errors. Also you can change the extension of the script to anything else you want but as long as the object is a child of Node then it will be fine. Below is an example script of a global update object called _update_object1.gd_.
+The last two methods, _which are NOT shown here_, can be ignored and should NEVER be called by any script or overridden. These are used by the _Auto Setup_ plugin for automation. I have commented extensively here to avoid any errors. Also you can change the extension of the script to anything else you want but as long as the object is a child of Node then it will be fine. Below is an example script of a global update object called _update_object1.gd_.
 ```
 @tool
 extends Node
@@ -274,7 +276,6 @@ func _get_configuration_warnings():
 func update(delta: float) -> void:
 	_counter += 1
 	print("Counter: ", _counter)
-	pass
 
 ## This method activates/deactivates the update object.
 func set_active(is_enable: bool) -> void:
@@ -283,6 +284,19 @@ func set_active(is_enable: bool) -> void:
 ## This method checks if the update object is active or NOT.
 func is_active() -> bool:
 	return _is_active
+
+## This method is ONLY called by the Update Manager when the update
+## manager is enabled through script, which is UM.set_enable(true). 
+## Note: This method can be removed if NEVER needed.
+func on_enable() -> void:
+	_counter = 0 # Resetting counter on object enable
+	print("Counter has been resetted")
+
+## This method is ONLY called by the Update Manager when the update
+## manager is disabled through script, which is UM.set_enabled(false).
+## Note: This method can be removed if NEVER needed.
+func on_disable() -> void:
+	print("Counter stopped at: ", _counter) # Showing the last value of the counter
 
 #region The logic in this section MUST NOT BE CHANGED OR OVERRIDDEN!
 ## This method adds this object to the update manager._action_options
@@ -332,6 +346,9 @@ func some_method(object: Node) -> void:
 - **void remove_object(Node):** This method removes the given object. _Note: When calling this method the update method will stop working till all remove actions are done. If number of remove objects are small then the update pause won't be noticable. It is recommended NOT to call this method every frame_
 - **void remove_object_index(int):** This method removes an object using an int index value. _Note: When calling this method the update method will stop working till all remove actions are done. If number of remove objects are small then the update pause won't be noticable. It is recommended NOT to call this method every frame_
 - **int get_size():** This method gets the number of objects added to the update manager.
+- **Node get_object_index(int):** This method gets the indexth object. If the index value given is higher than the size of the update object array then a null object will be returned.
+- **void set_enabled(bool):** This method enables/disables the update manager. True means to enable and false means to disable. If disabled then another script MUST be used to enable it.
+- **bool is_enabled():** This method checks if the update manager is enabled or NOT.
 
 ##### Auto Setup Objects:
 This feature allows objects to be setup automatically during the auto setup process in the editor mode. This helps with certain tasks like automatically populating an array with objects. If you haven't copied the folder _script_templates_ to the main folder _res://_ then do that now as that contains the script template for _auto setup object_ called _COP_auto_setup_object_template.gd_ under _Node_. To declare an object as _auto setup object_ is easy. You can create a new script using the script template _COP_auto_setup_object_template.gd_ or add the methods _func auto_setup() -> void:_ and _func _is_auto_setup_object() -> bool:_ and _@tool_ to an existing script. The _auto setup object_ can extend from any other script as long as that script is a child of _Node_ object. These two methods will make the script an _auto setup object_. Let me explain what each me method does.
@@ -497,6 +514,8 @@ Here I will share all the updates done to the current versions. Below are the up
 4. Added _auto setup object_ feature. This feature allows setup to happen during the auto setup process in the editor mode.
 5. Added print debug feature. This feature will help the user to debug a script much better.
 6. Added pooling system feature. This feature will help with performance by reusing certain objects.
+7. Added a feature in update manager which enables and disables it.
+8. Added on enable and on disable method calls on update objects by the update managers.
 ***
 ## Bug Fixes:
 1. Fixed a bug in auto setup process where the number of auto setup object calls are increasing exponentially after each process call. This was due to the array of the auto setup objects NOT being cleared after each process call. This bug has been fixed.
