@@ -23,5 +23,6 @@ func _ready() -> void:
 
 #region Automation methods. SHOULD NOT BE CALLED FROM OTHER SCRIPTS
 func _setup() -> void:
+    super._setup()
     _helper.set_manager(self)
 #endregion
