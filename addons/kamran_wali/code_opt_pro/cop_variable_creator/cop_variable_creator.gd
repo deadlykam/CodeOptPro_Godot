@@ -15,6 +15,7 @@ const _SETTINGS = "settings"
 # Global Properties
 var _path_fixed_vars : COP_VariablePaths
 var _path_managers: COP_VariablePaths
+var _path_observers : COP_VariablePaths
 var _path_vars : COP_VariablePaths
 
 # Properties from the scene.
@@ -55,6 +56,7 @@ func _enter_tree():
 	# Setting up global properties
 	_path_fixed_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_fixed_vars.tres")
 	_path_managers = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_managers.tres")
+	_path_observers = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_observers.tres")
 	_path_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_vars.tres")
 	
 	# Setting up the scene variables
