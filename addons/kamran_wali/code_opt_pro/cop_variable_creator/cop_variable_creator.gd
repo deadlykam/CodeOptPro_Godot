@@ -12,11 +12,9 @@ const _FIXED_VECTOR2 = "fixed_vector2"
 const _FIXED_VECTOR3 = "fixed_vector3"
 const _SETTINGS = "settings"
 
-# Global Properties
-var _path_fixed_vars : COP_VariablePaths
-var _path_managers: COP_VariablePaths
-var _path_observers : COP_VariablePaths
-var _path_vars : COP_VariablePaths
+# Path Properties
+var _paths: Array[COP_VariablePaths]
+var _c_paths:= 0
 
 # Properties from the scene.
 var _name_txt: LineEdit
@@ -53,11 +51,14 @@ var _temp_vec3: Vector3
 func _enter_tree():
 	super._enter_tree()
 	
-	# Setting up global properties
-	_path_fixed_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_fixed_vars.tres")
-	_path_managers = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_managers.tres")
-	_path_observers = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_observers.tres")
-	_path_vars = load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_vars.tres")
+	# Setting up the paths, append a new variable path here and make sure they are in alphabetical order
+	# NOTE: If the new variable does NOT require input then by just appending them here will do the job.
+	#		No need to change any code to make it work. Made the code dynamic for adding a new type.
+	_paths.clear() # Clearing any previous data
+	_paths.append(load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_fixed_vars.tres")) # Fixed Vars Path
+	_paths.append(load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_managers.tres")) # Managers Path
+	_paths.append(load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_observers.tres")) # Observers Path
+	_paths.append(load("res://addons/kamran_wali/code_opt_pro/variables/default_settings/path_vars.tres")) # Vars Path
 	
 	# Setting up the scene variables
 	_name_txt = $MainContainer/NameContainer/Name_Txt
@@ -201,16 +202,11 @@ func _set_file_data() -> void:
 ## This method checks if the number of paths and variables are same. If NOT then will update the 
 ## paths to hold more paths.
 func _check_paths() -> void:
-	for _index in range(0, _data_folders.size()):
-		# Checking and setting fixed var path.
-		if _index == 0 && _data_files[_index].size() != _path_fixed_vars.get_size():
-			_set_path_to_default(_path_fixed_vars, _data_files[_index].size())
-		# Checking and setting managers path.
-		if _index == 1 && _data_files[_index].size() != _path_managers.get_size():
-			_set_path_to_default(_path_managers, _data_files[_index].size())
-		# Checking and setting var path.
-		if _index == 2 && _data_files[_index].size() != _path_vars.get_size():
-			_set_path_to_default(_path_vars, _data_files[_index].size())
+	_c_paths = 0
+	while _c_paths < _paths.size(): # Loop to check if the number of paths and variables are same
+		if _data_files[_c_paths].size() != _paths[_c_paths].get_size():
+			_set_path_to_default(_paths[_c_paths], _data_files[_c_paths].size())
+		_c_paths += 1
 
 
 ## This method updates the size of the given path and changes all the path
@@ -359,31 +355,15 @@ func _set_fixed_var_value(variable, value) -> void:
 ## This method updates the path_txt. This is manual work so make sure to setup the order based
 ## on how the var folders are ordered.
 func _update_path_txt() -> void:
-	if _index_category == 0: # Fixed Var path
-		_path_txt.text = _path_fixed_vars.get_var_path(_index_actions)
-	elif _index_category == 1: # Manager path
-		_path_txt.text = _path_managers.get_var_path(_index_actions)
-	elif _index_category == 2: # Var path
-		_path_txt.text = _path_vars.get_var_path(_index_actions)
+	_path_txt.text = _paths[_index_category].get_var_path(_index_actions)
 
 ## This method updates the path.
 func _update_path() -> void:
-	if _index_category == 0: # Fixed Var
-		_path_fixed_vars.update_var_path(_index_actions, _path_txt.text)
-	elif _index_category == 1: # Manager
-		_path_managers.update_var_path(_index_actions, _path_txt.text)
-	elif _index_category == 2: # Var
-		_path_vars.update_var_path(_index_actions, _path_txt.text)
+	_paths[_index_category].update_var_path(_index_actions, _path_txt.text)
 
 ## This method gets the variable path.
 func _get_path_variable() -> String:
-	if _index_category == 0: # Fixed Var
-		return _path_fixed_vars.get_var_path(_index_actions)
-	elif _index_category == 1: # Manager
-		return _path_managers.get_var_path(_index_actions)
-	elif _index_category == 2: # Var
-		return _path_vars.get_var_path(_index_actions)
-	return ""
+	return _paths[_index_category].get_var_path(_index_actions)
 
 ## This method updates the button name.
 func _update_create_button_name() -> void:

@@ -70,12 +70,14 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
 alignment = 1
 selected = 0
-item_count = 3
+item_count = 4
 popup/item_0/text = "FixedVars"
 popup/item_1/text = "Managers"
 popup/item_1/id = 1
-popup/item_2/text = "Vars"
+popup/item_2/text = "Observers"
 popup/item_2/id = 2
+popup/item_3/text = "Vars"
+popup/item_3/id = 3
 
 [node name="ActionContainer" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2
