@@ -13,7 +13,8 @@ This is a simple Godot system that helps with performance.
   - [Performant Data Share/Use](#performant-data-shareuse)
     - [Fixed Vars](#1-fixed-vars)
     - [Managers](#2-managers)
-    - [Vars](#3-vars)
+    - [Observers](#3-observers)
+    - [Vars](#4-vars)
     - [Variable Creator](#variable-creator)
   - [Vector Performant Calculation](#vector-performant-calculation)
   - [Timer Countdown](#timer-countdown)
@@ -32,13 +33,13 @@ This is a simple Godot system that helps with performance.
 
 ## Prerequisites
 #### Godot Game Engine
-Godot version **v4.1.3.stable.mono.official [f06b6836a]** and above should work. Previous Godot version of **v4.1.1.stable.mono.official [bd6af8e0e]** should work but any version before that have not been tested and may give errors.
+Godot version **v4.3.stable.mono.official [77dcf97d8]** and above should work. Previous Godot version of **v4.1.3.stable.mono.official [f06b6836a]** and **v4.1.1.stable.mono.official [bd6af8e0e]** should work but any version before that have not been tested and may give errors.
 ***
 ## Stable Build
-[Stable-v1.13.0](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.13.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.14.0](https://github.com/deadlykam/CodeOptPro_Godot/tree/Stable-v1.14.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [CodeOptPro-v1.13.0.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.13.0) from the latest Stable build.
+1. First download the latest [CodeOptPro-v1.14.0.zip](https://github.com/deadlykam/CodeOptPro_Godot/releases/tag/v1.14.0) from the latest Stable build.
 2. Once downloaded extract/unzip the file.
 3. Enter the folder and copy the folder named **kamran_wali**.
 4. Now paste the folder in the **addons** folder of your Godot project. If your Godot project does not have the **addons** folder then just create it in the root folder, **res://**, and paste the copied folder there.
@@ -62,7 +63,16 @@ In this category different type of data types are shared, example bool, float, i
 This category shares different type of managers instead of data types. Managers are scripts that have a bit of complex logic to it and these manager resources helps to share the references to those managers in a decoupled way. In this case unfortunately _Variable Creator_ will only create managers that are created in _CodeOptPro_ but if you want to create your own custom manager then you can use the _manager_helper_template_ which is under the Resources while creating a script. The manager that is going to be referenced MUST be the only one that calls the method _set_manager(manager) void_ and provides _self_ as reference. Other scripts using this manager helper resource reference MUST only call the method _get_manager()_ and then use the manager's methods from there. You can check out the script [cop_update_manager_global_helper](https://github.com/deadlykam/CodeOptPro_Godot/blob/98f9f276ef7cc5a25555bc95e77be0b654b5e081/addons/kamran_wali/code_opt_pro/scripts/resources/managers/cop_update_manager_global_helper.gd) to see how the manager resource script is created.
 - **COP_UpdateManagerGlobalHelper** - This manager reference type stores and uses the reference for global update managers and global update objects.
 
-##### 3. Vars
+##### 3. Observers
+This category shares different type of observers like bool, float, int and string. The variables in this category uses the [observer pattern](https://en.wikipedia.org/wiki/Observer_pattern) to send signals to the observer. Basically when the value in the observer changes then it will emit that change to the observers. The emit is done using [Godot's Signals](https://docs.godotengine.org/en/stable/getting_started/step_by_step/signals.html). The observers is similar to the the [Vars](#4-vars) but the only difference being that the observers can emit signals. Read the [Vars](#4-vars) to understand how the values are stored.
+- **COP_ObserverBool** - This observer type shares and emits the _bool_ data type. To set the value simply call _void COP_ObserverBool.set_value(bool value)_. To set the value and emit it simply call _void COP_ObserverBool.set_value_emit(bool value)_. To get the value just call _bool COP_ObserverBool.get_value()_. To get the value and emit it then just call _bool COP_ObserverBool.get_value_emit()_.
+- **COP_ObserverFloat** - This observer type shares and emits the _float_ data type. To set the value simply call _void COP_ObserverFloat.set_value(float value)_. To set the value and emit it simply call _void COP_ObserverFloat.set_value_emit(float value)_. To get the value just call _float COP_ObserverFloat.get_value()_. To get the value and emit it then just call _float COP_ObserverFloat.get_value_emit()_.
+- **COP_ObserverInt** - This observer type shares and emits the _int_ data type. To set the value simply call _void COP_ObserverInt.set_value(int value)_. To set the value and emit it simply call _void COP_ObserverInt.set_value_emit(int value)_. To get the value just call _int COP_ObserverInt.get_value()_. To get the value and emit it then just call _int COP_ObserverInt.get_value_emit()_.
+- **COP_ObserverString** - This observer type shares and emits the _string_ data type. To set the value simply call _void COP_ObserverString.set_value(string value)_. To set the value and emit it simply call _void COP_ObserverString.set_value_emit(string value)_. To get the value just call _string COP_ObserverString.get_value()_. To get the value and emit it then just call _string COP_ObserverString.get_value_emit()_.
+- **COP_ObserverVector2** - This observer type shares and emits the _Vector2_ data type. To set the value simply call _void COP_ObserverVector2.set_value(Vector3 value)_. To set the value and emit it simply call _void COP_ObserverVector2.set_value_emit(Vector2 value)_. To get the value just call _Vector2 COP_ObserverVector2.get_value()_. To get the value and emit it then just call _Vector2 COP_ObserverVector2.get_value_emit()_.
+- **COP_ObserverVector3** - This observer type shares and emits the _Vector3_ data type. To set the value simply call _void COP_ObserverVector3.set_value(Vector3 value)_. To set the value and emit it simply call _void COP_ObserverVector3.set_value_emit(Vector3 value)_. To get the value just call _Vector3 COP_ObserverVector3.get_value()_. To get the value and emit it then just call _Vector3 COP_ObserverVector3.get_value_emit()_.
+
+##### 4. Vars
 Just like FixedVars this category shares different type of data types as well, example bool, float, int, string etc. The only difference is that you can **NOT** set any values here like FixedVars and the values may change through custom scripts. Vars basically share values that are constantly changing. For example - You have 5 objects that wants to know the player's position. Then just create a COP_Vector3Var and make the player script constantly update the newly created Vector3Var. Then add the newly created Vector3Var to the other 5 objects. Now all of those 5 objects have access to the player's position without the need of player script reference. Also use the functions _get_value()_ and _set_value(type)_ for getting and setting the value. Do **NOT** get or set the property **_value** directly through script as this may result in error later on. Below are all the types.
 - **COP_BoolVar** - This Var type shares _bool_ data types. To set the value simply call _void COP_BoolVar.set_value(bool value)_. To get the value just call _bool COP_BoolVar.get_value()_. To use COP_BoolVar simply change the type of a var to COP_BoolVar.
 - **COP_Camera2DVar** - This Var type shares _Camera2D_ data types. To set the value simply call _void COP_Camera2DVar.set_value(Camera2D value)_. To get the value just call _Camera2D COP_Camera2DVar.get_value()_. To use COP_Camera2DVar simply change the type of a var to COP_Camera2DVar.
@@ -87,7 +97,7 @@ For now the only way to create a new variable is to use the _Variable Creator_ p
 - **a.** _Name_ - This is where you give the name of the variable you want to create. If name given already exists in the path then the newly created variable will replace the old one and it does not matter what type it was.
 - **b.** _Path_ - This is the path or folder location where the new variable will be created. You can update this path as well. Foll the instructions in _c._ to see how to update the path.
 - **c.** _Update Path_ - If you want to update the path where the new variable will be created then right click the folder where the variable should be created and select _Copy Path_. Paste the copied path in the path field, _b._. Finally press the _Update Path_ button and the path will be updated. This will only update the path for 1 variable type, in this case _FixedBoolVar_ types. This way the _Variable Creator_ will allow you to have different paths for different variable types. The default path is _res://addons/kamran_wali/code_opt_pro/variables/_.
-- **d.** _Category_ - This is where you get to select from which category the variable will be created. For now there are 2 categories which are _FixedVars_ and _Vars_.
+- **d.** _Category_ - This is where you get to select from which category the variable will be created. For now there are 4 categories which are _FixedVars_, _Managers_, _Observers_ and _Vars_.
 - **e.** _Variable Type_ - This is where you get to select which type of variable to create. Each category have different type of variable types.
 - **f.** _Create Variable_ - This button will create the new variable type. Remember to give a name to the variable otherwise this button will **NOT** be visible. Also the name of the button _Create Variable_ will change with the variable type selected so that you will know what type you are creating.
 
@@ -508,19 +518,12 @@ You can also create your own custom pooling managers. All you have to do is to c
 ***
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
-1. Added runtime functions for the update manager. Now the user can add and remove objects during runtime.
-2. Added a feature in update manager that makes the _Num Update_ value to the number of objects added to the update manager.
-3. Fixed a bug where __time_delta_ value wasn't calculated properly.
-4. Added _auto setup object_ feature. This feature allows setup to happen during the auto setup process in the editor mode.
-5. Added print debug feature. This feature will help the user to debug a script much better.
-6. Added pooling system feature. This feature will help with performance by reusing certain objects.
-7. Added a feature in update manager which enables and disables it.
-8. Added on enable and on disable method calls on update objects by the update managers.
+1. Added a new variable type which are the [Observers](#3-observers) types.
+2. Added a new script template for the observers.
+3. Made adding new variables much more dynamic. Now it will be easier to add a new variable with less chances of getting errors/bugs.
 ***
 ## Bug Fixes:
-1. Fixed a bug in auto setup process where the number of auto setup object calls are increasing exponentially after each process call. This was due to the array of the auto setup objects NOT being cleared after each process call. This bug has been fixed.
-2. Fixed a bug in auto setup process where an object could ONLY be any one type that is only an update manager or update object or auto setup object. This was due to if else checks that was only adding the object to one type of array and NOT all the types if the object were of multiple types. This bug has been fixed and now an object can have multiply types.
-***
+No bugs found in this version.
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
 ***
