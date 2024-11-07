@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="CodeOptPro_Godot"
-config/features=PackedStringArray("4.1", "Forward Plus")
+config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
@@ -21,3 +21,7 @@ window/stretch/aspect="ignore"
 [dotnet]
 
 project/assembly_name="CodeOptPro_Godot"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/kamran_wali/code_opt_pro/cop_variable_creator/plugin.cfg")
