@@ -21,3 +21,8 @@ func set_value(value: String) -> void: _value = value
 func set_value_emit(value:String) -> void:
     set_value(value)
     value_changed.emit(_value)
+
+## This method removes/disconnects all the connected callable objects.
+func disconnect_all() -> void:
+    for dict in value_changed.get_connections():
+        value_changed.disconnect(dict.Callable)
