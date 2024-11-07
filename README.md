@@ -521,7 +521,8 @@ Here I will share all the updates done to the current versions. Below are the up
 1. Added a new variable type which are the [Observers](#3-observers) types.
 2. Added a new script template for the observers.
 3. Clearing the input fields once a variable is created. This allows less accidental creation by the user.
-4. Devs - Made adding new variables much more dynamic. Now it will be easier to add a new variable with less chances of getting errors/bugs.
+4. Upgraded to Godot version **v4.3.stable.mono.official [77dcf97d8]**.
+5. Devs - Made adding new variables much more dynamic. Now it will be easier to add a new variable with less chances of getting errors/bugs.
 ***
 ## Bug Fixes:
 No bugs found in this version.
