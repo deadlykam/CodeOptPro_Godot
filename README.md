@@ -520,7 +520,7 @@ You can also create your own custom pooling managers. All you have to do is to c
 Here I will share all the updates done to the current versions. Below are the updates.
 1. Added a new variable type which are the [Observers](#3-observers) types.
 2. Added a new script template for the observers.
-3. Made adding new variables much more dynamic. Now it will be easier to add a new variable with less chances of getting errors/bugs.
+3. Devs - Made adding new variables much more dynamic. Now it will be easier to add a new variable with less chances of getting errors/bugs.
 ***
 ## Bug Fixes:
 No bugs found in this version.
