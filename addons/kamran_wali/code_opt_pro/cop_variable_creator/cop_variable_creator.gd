@@ -124,7 +124,7 @@ func _on_create_button_pressed():
 			_set_fixed_var_value(variable, _temp_vec3)
 	
 	ResourceSaver.save(variable, _get_path_variable() + _name_txt.text + ".tres", 0)
-	_name_txt.clear()
+	_clear_all_inputs() # Clearing all the input fields
 
 func _on_path_update_button_pressed():
 	_update_path()
@@ -376,3 +376,13 @@ func _set_data_inputs() -> void:
 	_data_inputs.append(_input_txt)
 	_data_inputs.append(_vector2_input_holder)
 	_data_inputs.append(_vector3_input_holder)
+
+## This method clears all the input fields.
+func _clear_all_inputs() -> void:
+	_name_txt.clear()
+	_input_txt.clear()
+	_input_vec2_x.clear()
+	_input_vec2_y.clear()
+	_input_vec3_x.clear()
+	_input_vec3_y.clear()
+	_input_vec3_z.clear()
