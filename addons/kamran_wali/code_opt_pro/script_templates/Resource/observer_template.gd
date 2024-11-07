@@ -16,7 +16,7 @@ func get_value(): return _value
 ## This method gets the value and emits the signal
 func get_value_emit():
     value_changed.emit(_value)
-    return get_value()
+    return _value
 
 # Set the parameter type for better performance.
 ## This method sets the value.

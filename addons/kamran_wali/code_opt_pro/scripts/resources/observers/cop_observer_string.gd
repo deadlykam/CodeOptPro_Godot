@@ -1,15 +1,23 @@
 @tool
 class_name COP_ObserverString
-extends COP_StringVar
+extends Resource
 
 signal value_changed(value:String)
 
+var _value: String
+
+## This method gets the value.
+func get_value() -> String: return _value
+
 ## This method gets the value and emits the signal.
 func get_value_emit() -> String:
-    value_changed.emit(get_value())
-    return get_value()
+    value_changed.emit(_value)
+    return _value
+
+## This method sets the value.
+func set_value(value: String) -> void: _value = value
 
 ## This method sets the value and emits the signal.
 func set_value_emit(value:String) -> void:
     set_value(value)
-    value_changed.emit(value)
+    value_changed.emit(_value)

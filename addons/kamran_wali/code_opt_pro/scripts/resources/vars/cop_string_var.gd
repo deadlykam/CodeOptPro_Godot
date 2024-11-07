@@ -5,10 +5,8 @@ extends Resource
 var _value: String
 
 ## This method gets the value.
-func get_value() -> String:
-	return _value
+func get_value() -> String: return _value
 	
 ## This method sets the value.
-func set_value(value: String) -> void:
-	_value = value
+func set_value(value: String) -> void: _value = value
 
