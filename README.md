@@ -54,6 +54,7 @@ Here I will share all the updates done to the current versions. Below are the up
 ***
 ## Bug Fixes:
 1. Fixed calculation bugs in [base_bar.add(value)](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_bar#void-add-int-value) and [normal_bar.subtract(value)](https://github.com/deadlykam/CodeOptPro_Godot/wiki/normal_bar#void-subtract--int-value-). In both the methods 0 and negative values will be ignored. Only positive values will be allowed for calculation.
+2. Gave the variable [base_pool._p_index_object](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_pool#int-_p_index_object--0) [int](https://docs.godotengine.org/en/stable/classes/class_int.html#class-int). Now this variable is no longer untype.
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
 ***
