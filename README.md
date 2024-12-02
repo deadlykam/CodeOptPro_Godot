@@ -53,7 +53,10 @@ Here I will share all the updates done to the current versions. Below are the up
 6. Created [Wiki](https://github.com/deadlykam/CodeOptPro_Godot/wiki) and moved all the tutorials there.
 ***
 ## Bug Fixes:
-No bugs found in this version.
+1. Fixed calculation bugs in [base_bar.add(value)](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_bar#void-add-int-value) and [normal_bar.subtract(value)](https://github.com/deadlykam/CodeOptPro_Godot/wiki/normal_bar#void-subtract--int-value-). In both the methods 0 and negative values will be ignored. Only positive values will be allowed for calculation.
+2. Gave the variable [base_pool._p_index_object](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_pool#int-_p_index_object--0) [int](https://docs.godotengine.org/en/stable/classes/class_int.html#class-int). Now this variable is no longer untype.
+3. Gave the method [pool_global._add_self_to_manager()](https://github.com/deadlykam/CodeOptPro_Godot/wiki/pool_global#void-_add_self_to_manager-) void type.
+4. Gave the method [cop_bool_var.set_value()](https://github.com/deadlykam/CodeOptPro_Godot/wiki/cop_bool_var#void-set_value--bool-value-) void type.
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
 ***

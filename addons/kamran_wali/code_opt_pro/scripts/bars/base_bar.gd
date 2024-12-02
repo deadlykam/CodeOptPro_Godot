@@ -18,7 +18,8 @@ func get_normal() -> float:
 
 ## The amount of value to add to the bar, limit is 0 to max value.
 func add(value: int) -> void:
-	_value_cur = _value_cur + value if (_value_cur + value) < _value_max else _value_max
+	if value > 0: # Condition for allowing current value addition
+		_value_cur = _value_cur + value if (_value_cur + value) < _value_max else _value_max
 
 ## This method gets the max value of the bar.
 func get_value_max() -> int:

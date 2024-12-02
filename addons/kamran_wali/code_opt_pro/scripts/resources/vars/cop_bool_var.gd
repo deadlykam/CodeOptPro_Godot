@@ -9,5 +9,5 @@ func get_value() -> bool:
 	return _value
 	
 ## This method sets the value.
-func set_value(value: bool):
+func set_value(value: bool) -> void:
 	_value = value

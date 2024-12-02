@@ -8,7 +8,7 @@ extends Node
 @export var _p_objects: Array[Node]
 @export var _pool_object_holder: Node
 
-var _p_index_object
+var _p_index_object:= 0
 var _requests: Array[Node]
 var _object_cur: Node
 var _pointer_pool_object:= -1
