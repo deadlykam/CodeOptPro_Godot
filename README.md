@@ -45,7 +45,7 @@ I have added lot of features to **CodeOptPro** below is a list of feature added.
 
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
-1. Added a new variable type which are the [Observers](#3-observers) types.
+1. Added a new variable type which are the [Observers](https://github.com/deadlykam/CodeOptPro_Godot/wiki/Tutorial-Variable-Creator#observers) types.
 2. Added a new script template for the observers.
 3. Clearing the input fields once a variable is created. This allows less accidental creation by the user.
 4. Upgraded to Godot version **v4.3.stable.mono.official [77dcf97d8]**.
