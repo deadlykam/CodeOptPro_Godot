@@ -22,7 +22,7 @@ func _get_configuration_warnings():
 ## This method adds this object to the update manager.
 ## THIS METHOD SHOULD NOT BE CALLED OR OVERRIDDEN. IT IS ONLY USED
 ## FOR AUTOMATION!
-func _add_self_to_manager():
+func _add_self_to_manager() -> void:
 	if update_manager:
 		update_manager.get_manager()._add_object(self)
 	else:
