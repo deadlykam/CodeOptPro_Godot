@@ -3,6 +3,10 @@ extends COP_UpdateManager
 
 var _index_status:= 0
 
+func _ready() -> void:
+	super._ready()
+	if _is_enabled_start != null: set_process(_is_enabled_start.get_value()) # Enabling/Disabling the Update Manager
+
 func _process(delta: float) -> void:
 	if !Engine.is_editor_hint():
 		_update(delta * get_time_delta())

@@ -16,6 +16,13 @@ extends Node
 ## then the user needs to give value to the num update.
 @export var _is_set_num_update: COP_FixedBoolVar
 
+## This flag enables/disables the Update Manager at start up
+## which is when the application starts. If null or true then it means
+## the Update Manager will be active at start up. If false then
+## the Update Manager will be inactive at start up. If inactive then
+## the user needs to activate it manually using the set_enabled method.
+@export var _is_enabled_start: COP_FixedBoolVar
+
 var _remove_objects: Array[Node]
 var _pointer := 0
 var _index_update: int
