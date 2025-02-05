@@ -20,7 +20,7 @@ extends Node
 ## which is when the application starts. If null or true then it means
 ## the Update Manager will be active at start up. If false then
 ## the Update Manager will be inactive at start up. If inactive then
-## the user needs to activate it manually using the set_enabled method.
+## it can be activated manually by calling the set_enabled(bool) method.
 @export var _is_enabled_start: COP_FixedBoolVar
 
 var _remove_objects: Array[Node]
