@@ -45,18 +45,9 @@ I have added lot of features to **CodeOptPro** below is a list of feature added.
 
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
-1. Added a new variable type which are the [Observers](https://github.com/deadlykam/CodeOptPro_Godot/wiki/Tutorial-Variable-Creator#observers) types.
-2. Added a new script template for the observers.
-3. Clearing the input fields once a variable is created. This allows less accidental creation by the user.
-4. Upgraded to Godot version **v4.3.stable.mono.official [77dcf97d8]**.
-5. Devs - Made adding new variables much more dynamic. Now it will be easier to add a new variable with less chances of getting errors/bugs.
-6. Created [Wiki](https://github.com/deadlykam/CodeOptPro_Godot/wiki) and moved all the tutorials there.
+1. Added a flag variable in the Update Manager called [_is_enable_start](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_update_manager#cop_fixedboolvar-_is_enable_start). Now it is possible to enable/disable the Update Manager at the start up. If disabled then the only way to enable the Update Manager is through script by calling the method [set_enabled(bool)](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_update_manager#void-set_enabled--bool-is_enable-). More info is available in the [Wiki page](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_update_manager#cop_fixedboolvar-_is_enable_start).
 ***
 ## Bug Fixes:
-1. Fixed calculation bugs in [base_bar.add(value)](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_bar#void-add-int-value) and [normal_bar.subtract(value)](https://github.com/deadlykam/CodeOptPro_Godot/wiki/normal_bar#void-subtract--int-value-). In both the methods 0 and negative values will be ignored. Only positive values will be allowed for calculation.
-2. Gave the variable [base_pool._p_index_object](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_pool#int-_p_index_object--0) [int](https://docs.godotengine.org/en/stable/classes/class_int.html#class-int). Now this variable is no longer untype.
-3. Gave the method [pool_global._add_self_to_manager()](https://github.com/deadlykam/CodeOptPro_Godot/wiki/pool_global#void-_add_self_to_manager-) void type.
-4. Gave the method [cop_bool_var.set_value()](https://github.com/deadlykam/CodeOptPro_Godot/wiki/cop_bool_var#void-set_value--bool-value-) void type.
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
 ***
