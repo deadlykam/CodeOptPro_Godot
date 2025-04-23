@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="COP_FixedStringVar" load_steps=2 format=3 uid="uid://b6y3guvbnxojv"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/scripts/resources/fixed_vars/cop_fixed_string_var.gd" id="1_3sljq"]
+[ext_resource type="Script" uid="uid://b0s4nylma7igb" path="res://addons/kamran_wali/code_opt_pro/scripts/resources/fixed_vars/cop_fixed_string_var.gd" id="1_3sljq"]
 
 [resource]
 script = ExtResource("1_3sljq")
-_value = "Version - v1.14.0"
+_value = "Version - v1.15.0"
