@@ -72,6 +72,7 @@ alignment = 1
 selected = 0
 item_count = 4
 popup/item_0/text = "FixedVars"
+popup/item_0/id = 0
 popup/item_1/text = "Managers"
 popup/item_1/id = 1
 popup/item_2/text = "Observers"
@@ -94,18 +95,31 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
 alignment = 1
 selected = 0
-item_count = 6
+item_count = 12
 popup/item_0/text = "FixedBoolVar"
-popup/item_1/text = "FixedFloatVar"
+popup/item_0/id = 0
+popup/item_1/text = "FixedBoolVar.gd."
 popup/item_1/id = 1
-popup/item_2/text = "FixedIntVar"
+popup/item_2/text = "FixedFloatVar"
 popup/item_2/id = 2
-popup/item_3/text = "FixedStringVar"
+popup/item_3/text = "FixedFloatVar.gd."
 popup/item_3/id = 3
-popup/item_4/text = "FixedVector2Var"
+popup/item_4/text = "FixedIntVar"
 popup/item_4/id = 4
-popup/item_5/text = "FixedVector3Var"
+popup/item_5/text = "FixedIntVar.gd."
 popup/item_5/id = 5
+popup/item_6/text = "FixedStringVar"
+popup/item_6/id = 6
+popup/item_7/text = "FixedStringVar.gd."
+popup/item_7/id = 7
+popup/item_8/text = "FixedVector2Var"
+popup/item_8/id = 8
+popup/item_9/text = "FixedVector2Var.gd."
+popup/item_9/id = 9
+popup/item_10/text = "FixedVector3Var"
+popup/item_10/id = 10
+popup/item_11/text = "FixedVector3Var.gd."
+popup/item_11/id = 11
 
 [node name="InputContainer" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2
@@ -223,7 +237,7 @@ offset_top = -0.0800171
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-text = "Version - v1.14.0"
+text = "Version - v1.15.0"
 
 [connection signal="text_submitted" from="MainContainer/PathContainer/Path_Txt" to="." method="_on_path_txt_text_submitted"]
 [connection signal="pressed" from="MainContainer/PathContainer/PathUpdateButton" to="." method="_on_path_update_button_pressed"]
