@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="COP_VariablePaths" load_steps=2 format=3 uid="uid://d3nox8k8x8ljj"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/scripts/resources/settings/cop_variable_paths.gd" id="1_6bt08"]
+[ext_resource type="Script" uid="uid://ki87cgleo8fq" path="res://addons/kamran_wali/code_opt_pro/scripts/resources/settings/cop_variable_paths.gd" id="1_6bt08"]
 
 [resource]
 script = ExtResource("1_6bt08")
-_paths = Array[String](["res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/"])
+_paths = Array[String](["res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/", "res://addons/kamran_wali/code_opt_pro/variables/"])
