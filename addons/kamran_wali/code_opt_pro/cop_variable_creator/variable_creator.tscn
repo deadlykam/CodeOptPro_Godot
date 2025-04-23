@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b1sog8efg7lqq"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_variable_creator/cop_variable_creator.gd" id="1_uubsq"]
+[ext_resource type="Script" uid="uid://cpya47kbxp3ko" path="res://addons/kamran_wali/code_opt_pro/cop_variable_creator/cop_variable_creator.gd" id="1_uubsq"]
 [ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="2_gswbk"]
 
 [node name="Variable Creator" type="Control"]

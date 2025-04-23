@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cr1tvl1q0k4y1"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_instantiate_object/cop_instantiate_object.gd" id="1_ixc8a"]
+[ext_resource type="Script" uid="uid://ojqnjv4y0obw" path="res://addons/kamran_wali/code_opt_pro/cop_instantiate_object/cop_instantiate_object.gd" id="1_ixc8a"]
 [ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="2_406mk"]
 
 [node name="Instantiate Object" type="Control"]

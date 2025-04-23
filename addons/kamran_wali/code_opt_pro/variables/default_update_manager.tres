@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="COP_BaseUpdateManagerGlobal" load_steps=2 format=3 uid="uid://c8wglxmg7l8r6"]
+[gd_resource type="Resource" script_class="COP_UpdateManagerGlobalHelper" load_steps=2 format=3 uid="uid://c8wglxmg7l8r6"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/scripts/resources/managers/cop_update_manager_global_helper.gd" id="1_jbmyx"]
+[ext_resource type="Script" uid="uid://cqh30af6v5ltr" path="res://addons/kamran_wali/code_opt_pro/scripts/resources/managers/cop_update_manager_global_helper.gd" id="1_jbmyx"]
 
 [resource]
 script = ExtResource("1_jbmyx")
