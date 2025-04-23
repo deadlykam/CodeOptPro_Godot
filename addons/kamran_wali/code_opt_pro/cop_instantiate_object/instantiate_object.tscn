@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cr1tvl1q0k4y1"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_instantiate_object/cop_instantiate_object.gd" id="1_ixc8a"]
+[ext_resource type="Script" uid="uid://ojqnjv4y0obw" path="res://addons/kamran_wali/code_opt_pro/cop_instantiate_object/cop_instantiate_object.gd" id="1_ixc8a"]
 [ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="2_406mk"]
 
 [node name="Instantiate Object" type="Control"]
@@ -34,6 +34,7 @@ theme_override_font_sizes/font_size = 12
 text = "Scene: "
 
 [node name="SceneStatusLabel" type="Label" parent="MainContainer/SceneContainer"]
+custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.803922, 0.360784, 0.360784, 1)
@@ -55,6 +56,7 @@ theme_override_font_sizes/font_size = 12
 text = "Parent:   "
 
 [node name="ParentStatus" type="Label" parent="MainContainer/ParentContainer"]
+custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.803922, 0.360784, 0.360784, 1)
@@ -106,7 +108,7 @@ offset_top = -0.0800171
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-text = "Version - v1.14.0"
+text = "Version - v1.15.0"
 
 [connection signal="text_changed" from="MainContainer/NumberContainer/Input_Number" to="." method="_on_input_number_text_changed"]
 [connection signal="pressed" from="MainContainer/InstantiateButton" to="." method="_on_duplicate_button_pressed"]

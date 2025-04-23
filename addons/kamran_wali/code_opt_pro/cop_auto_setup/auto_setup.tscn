@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://s44urdv253ey"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/code_opt_pro/cop_auto_setup/cop_auto_setup.gd" id="1_x6dts"]
+[ext_resource type="Script" uid="uid://ct162ctnkf0vb" path="res://addons/kamran_wali/code_opt_pro/cop_auto_setup/cop_auto_setup.gd" id="1_x6dts"]
 [ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="1_yv8bq"]
 [ext_resource type="Texture2D" uid="uid://qs7xed7x85l7" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Project_Normal.png" id="2_l2vmk"]
 [ext_resource type="Texture2D" uid="uid://cxtwuxgfusvni" path="res://addons/kamran_wali/code_opt_pro/textures/auto_setup_uis/Run_Project_Hover.png" id="3_5mqlc"]
