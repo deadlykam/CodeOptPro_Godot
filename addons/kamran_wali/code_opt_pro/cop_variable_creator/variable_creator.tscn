@@ -206,6 +206,12 @@ size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 12
 
+[node name="Input_Color" type="ColorPickerButton" parent="MainContainer/InputContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 1)
+
 [node name="CreateButton" type="Button" parent="MainContainer"]
 visible = false
 layout_mode = 2

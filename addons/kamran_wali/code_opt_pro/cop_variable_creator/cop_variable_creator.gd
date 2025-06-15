@@ -10,6 +10,7 @@ const _FIXED_INT = "fixed_int"
 const _FIXED_STRING = "fixed_string"
 const _FIXED_VECTOR2 = "fixed_vector2"
 const _FIXED_VECTOR3 = "fixed_vector3"
+const _FIXED_COLOR = "fixed_color"
 const _SETTINGS = "settings"
 
 # Path Properties
@@ -32,6 +33,7 @@ var _vector3_input_holder: HBoxContainer
 var _input_vec3_x: TextEdit
 var _input_vec3_y: TextEdit
 var _input_vec3_z: TextEdit
+var _input_color_picker: ColorPickerButton
 
 # Properties needed internally.
 var _data_folders: Array[String]
@@ -76,6 +78,7 @@ func _enter_tree():
 	_input_vec3_x = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_X
 	_input_vec3_y = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Y
 	_input_vec3_z = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Z
+	_input_color_picker = $MainContainer/InputContainer/Input_Color
 	
 	# Setting up the scene at start #
 	_set_data_inputs() # Setting the data inputs
@@ -176,6 +179,7 @@ func _get_file_names(path: String) -> Array[String]:
 		_dir.list_dir_begin()
 		_file_name = _dir.get_next()
 		while !_file_name.is_empty():
+			# TODO: Check the name here
 			_temp_array.append(_file_name)
 			_file_name = _dir.get_next()
 	return _temp_array
@@ -376,6 +380,7 @@ func _set_data_inputs() -> void:
 	_data_inputs.append(_input_txt)
 	_data_inputs.append(_vector2_input_holder)
 	_data_inputs.append(_vector3_input_holder)
+	_data_inputs.append(_input_color_picker)
 
 ## This method clears all the input fields.
 func _clear_all_inputs() -> void:
