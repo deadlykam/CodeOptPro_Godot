@@ -12,7 +12,7 @@ const _FIXED_VECTOR2 = "fixed_vector2"
 const _FIXED_VECTOR3 = "fixed_vector3"
 const _FIXED_COLOR = "fixed_color"
 const _SETTINGS = "settings"
-const _UID = ".uid"
+const _UID = ".uid" # For check if a file has .uid in its name.
 
 # Path Properties
 var _paths: Array[COP_VariablePaths]

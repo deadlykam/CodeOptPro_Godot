@@ -9,4 +9,3 @@ func get_value() -> String: return _value
 	
 ## This method sets the value.
 func set_value(value: String) -> void: _value = value
-
