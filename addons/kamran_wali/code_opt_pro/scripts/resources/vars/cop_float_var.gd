@@ -5,10 +5,7 @@ extends Resource
 var _value: float
 
 ## This method gets the value.
-func get_value() -> float:
-	return _value
+func get_value() -> float: return _value
 	
 ## This method sets the value.
-func set_value(value: float) -> void:
-	_value = value
-
+func set_value(value: float) -> void: _value = value

@@ -45,10 +45,10 @@ I have added lot of features to **CodeOptPro** below is a list of feature added.
 
 ## Updates
 Here I will share all the updates done to the current versions. Below are the updates.
-1. Added a flag variable in the Update Manager called [_is_enable_start](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_update_manager#cop_fixedboolvar-_is_enable_start). Now it is possible to enable/disable the Update Manager at the start up. If disabled then the only way to enable the Update Manager is through script by calling the method [set_enabled(bool)](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_update_manager#void-set_enabled--bool-is_enable-). More info is available in the [Wiki page](https://github.com/deadlykam/CodeOptPro_Godot/wiki/base_update_manager#cop_fixedboolvar-_is_enable_start).
-2. Updated the Godot version to v4.4.1.stable.mono.official [49a5bc7b6]. This will make sure that CodeOptPro is working with the latest Godot version. Also if you are coming from Godot 4.3 with an older CodeOptPro version then make sure to delete the file **addons/kamran_wali/code_opt_pro/variables/default_settings/paths_fixed_var.tres** file. This is to make sure the that there are no UID duplicate warnings given by Godot. If you do NOT have the file then you are good to go.
+1. Added a new variable type which is based on the Godot's [Color](https://docs.godotengine.org/en/stable/classes/class_color.html) type. Now you can use [cop_fixed_color_var](https://github.com/deadlykam/CodeOptPro_Godot/wiki/cop_fixed_color_var), [cop_observer_color](https://github.com/deadlykam/CodeOptPro_Godot/wiki/cop_observer_color) and [cop_color_var](https://github.com/deadlykam/CodeOptPro_Godot/wiki/cop_color_var) of the [Color](https://docs.godotengine.org/en/stable/classes/class_color.html) type. Check out the [Tutorial Variable Creator](https://github.com/deadlykam/CodeOptPro_Godot/wiki/Tutorial-Variable-Creator) for more info on how to use this new var.
 ***
 ## Bug Fixes:
+1. Fixed a bug where the drop down menu would show double vars for each var type. This bug started after updating to Godot version **v4.4.1.stable.mono.official [49a5bc7b6]**. The issue was the way Godot would search for files in the directory. But now this bug has been fixed and shows the correct number of vars.
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
 ***

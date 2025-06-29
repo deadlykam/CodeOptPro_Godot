@@ -10,7 +10,9 @@ const _FIXED_INT = "fixed_int"
 const _FIXED_STRING = "fixed_string"
 const _FIXED_VECTOR2 = "fixed_vector2"
 const _FIXED_VECTOR3 = "fixed_vector3"
+const _FIXED_COLOR = "fixed_color"
 const _SETTINGS = "settings"
+const _UID = ".uid" # For check if a file has .uid in its name.
 
 # Path Properties
 var _paths: Array[COP_VariablePaths]
@@ -32,6 +34,7 @@ var _vector3_input_holder: HBoxContainer
 var _input_vec3_x: TextEdit
 var _input_vec3_y: TextEdit
 var _input_vec3_z: TextEdit
+var _input_color_picker: ColorPickerButton
 
 # Properties needed internally.
 var _data_folders: Array[String]
@@ -76,6 +79,7 @@ func _enter_tree():
 	_input_vec3_x = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_X
 	_input_vec3_y = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Y
 	_input_vec3_z = $MainContainer/InputContainer/Vector3_Input_Holder/Input_Vec3_Z
+	_input_color_picker = $MainContainer/InputContainer/Input_Color
 	
 	# Setting up the scene at start #
 	_set_data_inputs() # Setting the data inputs
@@ -96,8 +100,7 @@ func update(delta: float) -> void:
 	if _create_button.visible != _is_show_create_button():
 		_create_button.visible = _is_show_create_button()
 
-func get_version_lbl_path() -> String:
-	return "Version"
+func get_version_lbl_path() -> String: return "Version"
 
 func _on_create_button_pressed():
 	var variable = load(_RESOURCE_PATH + "/" + _data_folders[_index_category] + "/" 
@@ -122,6 +125,8 @@ func _on_create_button_pressed():
 			_temp_vec3.y = _input_vec3_y.text.to_float()
 			_temp_vec3.z = _input_vec3_z.text.to_float()
 			_set_fixed_var_value(variable, _temp_vec3)
+		if _is_fixed_color():
+			_set_fixed_var_value(variable, _input_color_picker.color)
 	
 	ResourceSaver.save(variable, _get_path_variable() + _name_txt.text + ".tres", 0)
 	_clear_all_inputs() # Clearing all the input fields
@@ -147,23 +152,12 @@ func _on_action_options_item_selected(index):
 	_update_path_txt()
 	_update_create_button_name()
 
-func _on_input_txt_text_changed():
-	_set_input_txt_colour()
-
-func _on_input_vec_2_x_text_changed():
-	_set_input_vec2_x_colour()
-
-func _on_input_vec_2_y_text_changed():
-	_set_input_vec2_y_colour()
-
-func _on_input_vec_3_x_text_changed():
-	_set_input_vec3_x_colour()
-
-func _on_input_vec_3_y_text_changed():
-	_set_input_vec3_y_colour()
-
-func _on_input_vec_3_z_text_changed():
-	_set_input_vec3_z_colour()
+func _on_input_txt_text_changed(): _set_input_txt_colour()
+func _on_input_vec_2_x_text_changed(): _set_input_vec2_x_colour()
+func _on_input_vec_2_y_text_changed(): _set_input_vec2_y_colour()
+func _on_input_vec_3_x_text_changed(): _set_input_vec3_x_colour()
+func _on_input_vec_3_y_text_changed(): _set_input_vec3_y_colour()
+func _on_input_vec_3_z_text_changed(): _set_input_vec3_z_colour()
 
 ## This method gets an array of all the files in the path
 func _get_file_names(path: String) -> Array[String]:
@@ -176,7 +170,7 @@ func _get_file_names(path: String) -> Array[String]:
 		_dir.list_dir_begin()
 		_file_name = _dir.get_next()
 		while !_file_name.is_empty():
-			_temp_array.append(_file_name)
+			if !_file_name.contains(_UID): _temp_array.append(_file_name) # Condition to NOT add .uid names
 			_file_name = _dir.get_next()
 	return _temp_array
 
@@ -208,7 +202,6 @@ func _check_paths() -> void:
 			_set_path_to_default(_paths[_c_paths], _data_files[_c_paths].size())
 		_c_paths += 1
 
-
 ## This method updates the size of the given path and changes all the path
 ## location to default.
 func _set_path_to_default(path: COP_VariablePaths, size: int) -> void:
@@ -227,6 +220,8 @@ func _set_inputs() -> void:
 			_set_inputs_visible(_vector2_input_holder, true)
 		if _is_fixed_vector3():
 			_set_inputs_visible(_vector3_input_holder, true)
+		if _is_fixed_color():
+			_set_inputs_visible(_input_color_picker, true)
 	elif _input_container.visible:
 		_input_container.hide()
 
@@ -239,12 +234,10 @@ func _set_inputs_visible(item: CanvasItem, is_show: bool) -> void:
 				_index_actions.visible = false
 	
 	# Checking if the item is NOT null.
-	if item:
-		item.visible = is_show
+	if item: item.visible = is_show
 	
 	# Condition for showing the input container
-	if !_input_container.visible:
-		_input_container.show()
+	if !_input_container.visible: _input_container.show()
 
 ## This method checks if the current category is fixed vars.
 func _is_fixed_vars() -> bool:
@@ -273,6 +266,9 @@ func _is_fixed_vector2() -> bool:
 ## This method checks if the current action type is fixed vector3.
 func _is_fixed_vector3() -> bool:
 	return _data_files[_index_category][_index_actions].contains(_FIXED_VECTOR3)
+
+func _is_fixed_color() -> bool:
+	return _data_files[_index_category][_index_actions].contains(_FIXED_COLOR)
 
 ## This method shows the correct colour when the input is valid or invalid.
 func _set_input_txt_colour() -> void:
@@ -341,7 +337,7 @@ func _set_font_colour(text_editor: TextEdit, is_white: bool) -> void:
 ## This method checks if the condition for showing the create button has been fulfilled.
 func _is_show_create_button() -> bool:
 	return (
-		((_is_input_txt() || _is_fixed_bool()
+		((_is_input_txt() || _is_fixed_bool() || _is_fixed_color()
 		|| (_is_input_vec2_x() && _is_input_vec2_y() if _is_fixed_vector2() else false)
 		|| (_is_input_vec3_x() && _is_input_vec3_y() && _is_input_vec3_z() if _is_fixed_vector3() else false)
 		) if _is_fixed_vars() else true)
@@ -349,21 +345,17 @@ func _is_show_create_button() -> bool:
 		)
 
 ## This method sets the value for the fixed variables.
-func _set_fixed_var_value(variable, value) -> void:
-	variable._value = value
+func _set_fixed_var_value(variable, value) -> void: variable._value = value
 
 ## This method updates the path_txt. This is manual work so make sure to setup the order based
 ## on how the var folders are ordered.
-func _update_path_txt() -> void:
-	_path_txt.text = _paths[_index_category].get_var_path(_index_actions)
+func _update_path_txt() -> void: _path_txt.text = _paths[_index_category].get_var_path(_index_actions)
 
 ## This method updates the path.
-func _update_path() -> void:
-	_paths[_index_category].update_var_path(_index_actions, _path_txt.text)
+func _update_path() -> void: _paths[_index_category].update_var_path(_index_actions, _path_txt.text)
 
 ## This method gets the variable path.
-func _get_path_variable() -> String:
-	return _paths[_index_category].get_var_path(_index_actions)
+func _get_path_variable() -> String: return _paths[_index_category].get_var_path(_index_actions)
 
 ## This method updates the button name.
 func _update_create_button_name() -> void:
@@ -376,6 +368,7 @@ func _set_data_inputs() -> void:
 	_data_inputs.append(_input_txt)
 	_data_inputs.append(_vector2_input_holder)
 	_data_inputs.append(_vector3_input_holder)
+	_data_inputs.append(_input_color_picker)
 
 ## This method clears all the input fields.
 func _clear_all_inputs() -> void:
@@ -386,3 +379,4 @@ func _clear_all_inputs() -> void:
 	_input_vec3_x.clear()
 	_input_vec3_y.clear()
 	_input_vec3_z.clear()
+	_input_color_picker.color = Color.WHITE
