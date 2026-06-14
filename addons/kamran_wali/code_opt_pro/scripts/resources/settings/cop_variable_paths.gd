@@ -10,13 +10,10 @@ func update_var_path(index: int, path: String) -> void:
 	ResourceSaver.save(self, resource_path, 0)
 
 ## This method gets the variable path.
-func get_var_path(index: int) -> String:
-	return _paths[index]
+func get_var_path(index: int) -> String: return _paths[index]
 
 ## This method gets the size of the path.
-func get_size() -> int:
-	return _paths.size()
+func get_size() -> int: return _paths.size()
 
 ## This method resizes the path size.
-func set_new_path_size(size: int) -> void:
-	_paths.resize(size)
+func set_new_path_size(size: int) -> void: _paths.resize(size)

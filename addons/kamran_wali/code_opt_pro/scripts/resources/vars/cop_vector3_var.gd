@@ -9,4 +9,3 @@ func get_value() -> Vector3: return _value
 	
 ## This method sets the value.
 func set_value(value: Vector3) -> void: _value = value
-
