@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cr1tvl1q0k4y1"]
+[gd_scene format=3 uid="uid://cr1tvl1q0k4y1"]
 
 [ext_resource type="Script" uid="uid://ojqnjv4y0obw" path="res://addons/kamran_wali/code_opt_pro/cop_instantiate_object/cop_instantiate_object.gd" id="1_ixc8a"]
 [ext_resource type="Texture2D" uid="uid://ddib3b0wqsk84" path="res://addons/kamran_wali/code_opt_pro/textures/CodeOptProLogo.png" id="2_406mk"]
 
-[node name="Instantiate Object" type="Control"]
+[node name="Instantiate Object" type="Control" unique_id=1679024997]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ixc8a")
 
-[node name="MainContainer" type="VBoxContainer" parent="."]
+[node name="MainContainer" type="VBoxContainer" parent="." unique_id=1058882100]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,20 +20,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SceneContainer" type="HBoxContainer" parent="MainContainer"]
+[node name="SceneContainer" type="HBoxContainer" parent="MainContainer" unique_id=653113206]
 layout_mode = 2
 
-[node name="SceneLockButton" type="CheckButton" parent="MainContainer/SceneContainer"]
+[node name="SceneLockButton" type="CheckButton" parent="MainContainer/SceneContainer" unique_id=1910728393]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Lock"
 
-[node name="SceneLabel" type="Label" parent="MainContainer/SceneContainer"]
+[node name="SceneLabel" type="Label" parent="MainContainer/SceneContainer" unique_id=1997861656]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Scene: "
 
-[node name="SceneStatusLabel" type="Label" parent="MainContainer/SceneContainer"]
+[node name="SceneStatusLabel" type="Label" parent="MainContainer/SceneContainer" unique_id=837126296]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -42,20 +42,20 @@ theme_override_font_sizes/font_size = 12
 text = "Scene object NOT selected."
 autowrap_mode = 3
 
-[node name="ParentContainer" type="HBoxContainer" parent="MainContainer"]
+[node name="ParentContainer" type="HBoxContainer" parent="MainContainer" unique_id=1086924998]
 layout_mode = 2
 
-[node name="LockButton" type="CheckButton" parent="MainContainer/ParentContainer"]
+[node name="LockButton" type="CheckButton" parent="MainContainer/ParentContainer" unique_id=1290236791]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Lock"
 
-[node name="ParentPathLabel" type="Label" parent="MainContainer/ParentContainer"]
+[node name="ParentPathLabel" type="Label" parent="MainContainer/ParentContainer" unique_id=1377196860]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Parent:   "
 
-[node name="ParentStatus" type="Label" parent="MainContainer/ParentContainer"]
+[node name="ParentStatus" type="Label" parent="MainContainer/ParentContainer" unique_id=1254944964]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -64,26 +64,26 @@ theme_override_font_sizes/font_size = 12
 text = "Please select a parent Node object."
 autowrap_mode = 3
 
-[node name="NumberContainer" type="HBoxContainer" parent="MainContainer"]
+[node name="NumberContainer" type="HBoxContainer" parent="MainContainer" unique_id=63602831]
 layout_mode = 2
 
-[node name="NumberLabel" type="Label" parent="MainContainer/NumberContainer"]
+[node name="NumberLabel" type="Label" parent="MainContainer/NumberContainer" unique_id=518160202]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Number of Instantiation"
 
-[node name="Input_Number" type="LineEdit" parent="MainContainer/NumberContainer"]
+[node name="Input_Number" type="LineEdit" parent="MainContainer/NumberContainer" unique_id=131636395]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
 
-[node name="InstantiateButton" type="Button" parent="MainContainer"]
+[node name="InstantiateButton" type="Button" parent="MainContainer" unique_id=1844733527]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Instantiate Object"
 
-[node name="Logo" type="TextureRect" parent="."]
+[node name="Logo" type="TextureRect" parent="." unique_id=1830474583]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.633
@@ -98,7 +98,7 @@ texture = ExtResource("2_406mk")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Version" type="Label" parent="."]
+[node name="Version" type="Label" parent="." unique_id=215633408]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.96
@@ -108,7 +108,7 @@ offset_top = -0.0800171
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-text = "Version - v1.15.0"
+text = "Version - v1.16.0"
 
 [connection signal="text_changed" from="MainContainer/NumberContainer/Input_Number" to="." method="_on_input_number_text_changed"]
 [connection signal="pressed" from="MainContainer/InstantiateButton" to="." method="_on_duplicate_button_pressed"]
